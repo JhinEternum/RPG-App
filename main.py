@@ -9,6 +9,7 @@ from src.home.home import Home
 from src.item.create_item import CreateItem
 from src.proficiency.create_proficiency import CreateProficiency
 from src.proficiency.proficiency_level import ProficiencyLevel
+from src.search.search import Search
 from src.title.create_title import CreateTitle
 
 
@@ -37,19 +38,23 @@ class Game(tk.Tk):
         self.create_title = None
         self.create_proficiency = None
 
+        self.search = None
+
         self.frames = {
             Home: self.home,
             CreateAvatar: self.create_avatar,
             CreateItem: self.create_item,
             CreateAbility: self.create_ability,
             CreateTitle: self.create_title,
-            CreateProficiency: self.create_proficiency
+            CreateProficiency: self.create_proficiency,
+            Search: self.search
         }
 
         self.home = Home(
             parent=self,
             create_entity=self.create_entity_frame,
             proficiencies_level=self.show_proficiencies_level,
+            show_search=self.show_search
         )
         self.home.grid(row=0, column=0, sticky='NSEW')
 
@@ -95,6 +100,19 @@ class Game(tk.Tk):
 
     def show_proficiencies_level(self, **kwargs) -> None:
         ProficiencyLevel(parent=self, **kwargs)
+
+    def show_search(self, **kwargs):
+        check_frame_existence(self.search)
+
+        self.search = Search(
+            parent=self,
+            home=lambda: self.show_frame(Home),
+            **kwargs
+        )
+        self.search.grid(row=0, column=0, sticky='NSEW')
+
+        self.frames[Search] = self.search
+        self.show_frame(Search)
 
 
 root = Game()

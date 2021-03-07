@@ -47,7 +47,8 @@ class TemplateScroll(tk.Canvas):
 
         self.container = container
         self.kwargs = kwargs
-        isScroll = kwargs['isScroll'] if 'isScroll' in kwargs else False
+        scroll = kwargs['scroll'] if 'scroll' in kwargs else False
+        single_widgets = kwargs['single_widgets'] if 'single_widgets' in kwargs else False
 
         self.screen = tk.Frame(container)
         self.screen.columnconfigure(0, weight=1)
@@ -67,7 +68,7 @@ class TemplateScroll(tk.Canvas):
         self.bind("<Configure>", configure_window_size)
         self.screen.bind("<Configure>", configure_scroll_region)
 
-        if isScroll:
+        if scroll:
             self.bind_all("<MouseWheel>", self._on_mouse_wheel)
 
         scrollbar = ttk.Scrollbar(container, orient="vertical", command=self.yview)
@@ -78,7 +79,10 @@ class TemplateScroll(tk.Canvas):
 
         self.widgets = ttk.Frame(self.screen)
         self.widgets.grid(row=0, column=0, sticky='NSEW')
-        self.widgets.columnconfigure((0, 1), weight=1)
+        if single_widgets:
+            self.widgets.columnconfigure(0, weight=1)
+        else:
+            self.widgets.columnconfigure((0, 1), weight=1)
 
         self.buttons = ttk.Frame(self.screen)
         self.buttons.grid(row=1, column=0, sticky='EW')

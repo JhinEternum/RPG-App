@@ -15,6 +15,7 @@ class HomeWidget:
         widgets = kwargs['widgets']
         buttons = kwargs['buttons']
         self.proficiencies_level = kwargs['proficiencies_level'] if 'proficiencies_level' in kwargs else None
+        self.search = kwargs['search']
 
         self.type_values = ('Character', 'NPC', 'Monster', 'Proficiency', 'Armor', 'Weapon', 'Title', 'Ability', 'Wiki')
 
@@ -59,6 +60,7 @@ class HomeWidget:
         search_button = ttk.Button(
             buttons,
             text='Search',
+            command=self.search,
             cursor='hand2'
         )
         search_button.grid(row=0)
