@@ -4,6 +4,7 @@ from tkinter import ttk
 from src.ability.create_ability import CreateAbility
 from src.avatar.create_avatar import CreateAvatar
 from src.item.create_item import CreateItem
+from src.proficiency.create_proficiency import CreateProficiency
 from src.title.create_title import CreateTitle
 
 
@@ -99,7 +100,7 @@ class HomeWidget:
         create_proficiency_button = ttk.Button(
             buttons,
             text='Crate Proficiency',
-            command=lambda: self.create_entity(container=main.create_avatar, container_class=CreateAvatar),
+            command=lambda: self.create_entity(container=main.create_proficiency, container_class=CreateProficiency),
             cursor='hand2'
         )
         create_proficiency_button.grid(row=5)

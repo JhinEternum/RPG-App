@@ -7,6 +7,7 @@ from src.ability.create_ability import CreateAbility
 from src.avatar.create_avatar import CreateAvatar
 from src.home.home import Home
 from src.item.create_item import CreateItem
+from src.proficiency.create_proficiency import CreateProficiency
 from src.proficiency.proficiency_level import ProficiencyLevel
 from src.title.create_title import CreateTitle
 
@@ -20,7 +21,7 @@ class Game(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        self.title('Game')
+        self.title('RPG')
 
         self.resizable(False, False)
 
@@ -41,7 +42,8 @@ class Game(tk.Tk):
             CreateAvatar: self.create_avatar,
             CreateItem: self.create_item,
             CreateAbility: self.create_ability,
-            CreateTitle: self.create_title
+            CreateTitle: self.create_title,
+            CreateProficiency: self.create_proficiency
         }
 
         self.home = Home(
@@ -87,6 +89,9 @@ class Game(tk.Tk):
         elif container_class == CreateTitle:
             self.create_title = container
             return self.create_title
+        elif container_class == CreateProficiency:
+            self.create_proficiency = container
+            return self.create_proficiency
 
     def show_proficiencies_level(self, **kwargs) -> None:
         ProficiencyLevel(parent=self, **kwargs)

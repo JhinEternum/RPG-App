@@ -52,7 +52,7 @@ class TitleWidget:
         # --- Name ---
         name_label = ttk.Label(
             widgets,
-            text="Name"
+            text='Name'
         )
         name_label.grid(row=2, column=0, sticky="EW")
 
@@ -66,7 +66,7 @@ class TitleWidget:
         # --- User ---
         user_label = ttk.Label(
             widgets,
-            text="User"
+            text='User'
         )
         user_label.grid(row=3, column=0, sticky="EW")
 
@@ -138,7 +138,7 @@ class TitleWidget:
         # --- Requirements ---
         requirements_label = ttk.Label(
             widgets,
-            text="Requirements"
+            text='Requirements'
         )
         requirements_label.grid(row=6, column=0, sticky="EW")
 
@@ -163,14 +163,14 @@ class TitleWidget:
         # --- Description ---
         description_label = ttk.Label(
             widgets,
-            text="Description"
+            text='Description'
         )
         description_label.grid(row=7, column=0, sticky="EW")
 
         self.description_entry = tk.Text(
             widgets,
             width=1,
-            height=7
+            height=10
         )
         self.description_entry.grid(row=7, column=1, sticky="EW")
 
