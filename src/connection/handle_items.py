@@ -18,8 +18,6 @@ def add_item(item, user_name) -> bool:
     effects = item['effects']
     description = item['description']
 
-    abilities_id = item['abilities']
-
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
@@ -28,10 +26,6 @@ def add_item(item, user_name) -> bool:
                        (name, type_, reduction, damage, range_, health, area, effects, description))
 
         item_id = cursor.lastrowid
-
-        if len(abilities_id) > 0:
-            for ability in abilities_id:
-                cursor.execute('INSERT INTO items_abilities (ability_id, item_id) VALUES (?, ?)', (ability, item_id))
 
         user_types = ['Character', 'NPC', 'Monster']
 
@@ -52,19 +46,12 @@ def update_item(item, id_) -> bool:
     effects = item['effects']
     description = item['description']
 
-    abilities_id = item['abilities']
-
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
         cursor.execute('UPDATE items SET name=?, type=?, reduction=?,'
                        'damage=?, range=?, health=?, area=?, effects=?, description=? WHERE id=?',
                        (name, type_, reduction, damage, range_, health, area, effects, description, id_))
-
-        cursor.execute('DELETE FROM items_abilities WHERE item_id=?', (id_,))
-        if len(abilities_id) > 0:
-            for ability in abilities_id:
-                cursor.execute('INSERT INTO items_abilities (ability_id, item_id) VALUES (?, ?)', (ability, id_))
 
     return True
 

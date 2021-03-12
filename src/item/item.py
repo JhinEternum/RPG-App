@@ -10,7 +10,6 @@ class Item:
         self.range_ = kwargs['range_']
         self.health = kwargs['health']
         self.area = kwargs['area']
-        self.abilities = kwargs['abilities']
         self.effects = kwargs['effects']
         self.description = kwargs['description']
         self.user = kwargs['user'] if 'user' in kwargs else None
@@ -23,7 +22,6 @@ class Item:
             'range': self.range_,
             'health': self.health,
             'area': self.area,
-            'abilities': self.abilities,
             'effects': self.effects,
             'description': self.description
         }

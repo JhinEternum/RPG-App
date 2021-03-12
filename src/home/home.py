@@ -31,6 +31,7 @@ class Home(TemplateFrame):
 
         if search_result:
             self.show_search(
+                name=name,
                 entities=search_result,
                 type_=type_,
                 scroll=True,

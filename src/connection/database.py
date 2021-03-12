@@ -4,6 +4,7 @@ from .handle_users import *
 from .handle_titles import *
 from .handle_abilities import *
 from .handle_proficiencies import *
+from .attributes import get_item_attributes
 
 
 def get_list(cursor):

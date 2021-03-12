@@ -5,7 +5,9 @@ from typing import Union
 
 from src.ability.create_ability import CreateAbility
 from src.avatar.create_avatar import CreateAvatar
+from src.edit.edit import Edit
 from src.home.home import Home
+from src.interface.interface import Interface
 from src.item.create_item import CreateItem
 from src.proficiency.create_proficiency import CreateProficiency
 from src.proficiency.proficiency_level import ProficiencyLevel
@@ -39,6 +41,8 @@ class Game(tk.Tk):
         self.create_proficiency = None
 
         self.search = None
+        self.interface = None
+        self.edit = None
 
         self.frames = {
             Home: self.home,
@@ -47,7 +51,9 @@ class Game(tk.Tk):
             CreateAbility: self.create_ability,
             CreateTitle: self.create_title,
             CreateProficiency: self.create_proficiency,
-            Search: self.search
+            Search: self.search,
+            Interface: self.interface,
+            Edit: self.edit
         }
 
         self.home = Home(
@@ -101,18 +107,52 @@ class Game(tk.Tk):
     def show_proficiencies_level(self, **kwargs) -> None:
         ProficiencyLevel(parent=self, **kwargs)
 
-    def show_search(self, **kwargs):
+    def show_search(self, **kwargs) -> None:
         check_frame_existence(self.search)
 
         self.search = Search(
             parent=self,
             home=lambda: self.show_frame(Home),
+            show_interface=self.show_interface,
             **kwargs
         )
         self.search.grid(row=0, column=0, sticky='NSEW')
 
         self.frames[Search] = self.search
         self.show_frame(Search)
+
+    def show_interface(self, **kwargs) -> None:
+        check_frame_existence(self.interface)
+
+        self.interface = Interface(
+            parent=self,
+            home=lambda: self.show_frame(Home),
+            show_search=self.show_search,
+            show_interface=self.show_interface,
+            edit=self.show_edit,
+            scroll=True,
+            single_widgets=True,
+            **kwargs
+        )
+        self.interface.grid(row=0, column=0, sticky='NSEW')
+
+        self.frames[Interface] = self.interface
+        self.show_frame(Interface)
+
+    def show_edit(self, **kwargs) -> None:
+        check_frame_existence(self.edit)
+
+        self.edit = Edit(
+            parent=self,
+            home=lambda: self.show_frame(Home),
+            show_interface=self.show_interface,
+            show_proficiencies_level=self.show_proficiencies_level,
+            **kwargs
+        )
+        self.edit.grid(row=0, column=0, sticky='NSEW')
+
+        self.frames[Edit] = self.edit
+        self.show_frame(Edit)
 
 
 root = Game()

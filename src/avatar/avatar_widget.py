@@ -152,12 +152,25 @@ class AvatarWidget:
         )
         adrenaline_entry.grid(row=5, column=1, sticky='EW')
 
+        # --- Physical Ability ---
+        physical_ability_label = ttk.Label(
+            widgets,
+            text='Physical Ab.'
+        )
+        physical_ability_label.grid(row=6, column=0, sticky='EW')
+
+        physical_ability_entry = ttk.Entry(
+            widgets,
+            textvariable=self.physical_ability
+        )
+        physical_ability_entry.grid(row=6, column=1, sticky='EW')
+
         # --- Class ---
         class_label = ttk.Label(
             widgets,
             text='Class'
         )
-        class_label.grid(row=6, column=0, sticky='EW')
+        class_label.grid(row=7, column=0, sticky='EW')
 
         self.class_entry = tk.Listbox(
             widgets,
@@ -170,13 +183,13 @@ class AvatarWidget:
             width=1,
             height=5
         )
-        self.class_entry.grid(row=6, column=1, sticky='EW')
+        self.class_entry.grid(row=7, column=1, sticky='EW')
 
         self.class_entry.select_set(0)
 
         class_scrollbar = ttk.Scrollbar(widgets, orient='vertical')
         class_scrollbar.config(command=self.class_entry.yview)
-        class_scrollbar.grid(row=6, column=2, sticky='NS')
+        class_scrollbar.grid(row=7, column=2, sticky='NS')
 
         self.class_entry.config(yscrollcommand=class_scrollbar.set)
 
@@ -185,7 +198,7 @@ class AvatarWidget:
             widgets,
             text='Armor'
         )
-        armor_label.grid(row=7, column=0, sticky='EW')
+        armor_label.grid(row=8, column=0, sticky='EW')
 
         armor_entry = ttk.Combobox(
             widgets,
@@ -193,14 +206,14 @@ class AvatarWidget:
             values=self.armors,
             state='readonly'
         )
-        armor_entry.grid(row=7, column=1, sticky='EW')
+        armor_entry.grid(row=8, column=1, sticky='EW')
 
         # --- Weapon ---
         weapon_label = ttk.Label(
             widgets,
             text='Weapon'
         )
-        weapon_label.grid(row=8, column=0, sticky='EW')
+        weapon_label.grid(row=9, column=0, sticky='EW')
 
         self.weapon_entry = tk.Listbox(
             widgets,
@@ -213,28 +226,15 @@ class AvatarWidget:
             width=1,
             height=5
         )
-        self.weapon_entry.grid(row=8, column=1, sticky='EW')
+        self.weapon_entry.grid(row=9, column=1, sticky='EW')
 
         self.weapon_entry.select_set(0)
 
         weapon_scrollbar = ttk.Scrollbar(widgets, orient='vertical')
         weapon_scrollbar.config(command=self.weapon_entry.yview)
-        weapon_scrollbar.grid(row=8, column=2, sticky='NS')
+        weapon_scrollbar.grid(row=9, column=2, sticky='NS')
 
         self.weapon_entry.config(yscrollcommand=weapon_scrollbar.set)
-
-        # --- Physical Ability ---
-        physical_ability_label = ttk.Label(
-            widgets,
-            text='Physical Ab.'
-        )
-        physical_ability_label.grid(row=9, column=0, sticky='EW')
-
-        physical_ability_entry = ttk.Entry(
-            widgets,
-            textvariable=self.physical_ability
-        )
-        physical_ability_entry.grid(row=9, column=1, sticky='EW')
 
         # --- Title ---
         title_label = ttk.Label(

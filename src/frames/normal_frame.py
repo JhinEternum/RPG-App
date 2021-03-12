@@ -20,8 +20,8 @@ class TemplateFrame(ttk.Frame):
         self.buttons.grid(row=1, column=0, pady=10, sticky='NSEW')
         self.buttons.columnconfigure(0, weight=1)
 
-        self.widgets.grid_configure(padx=10, pady=5, sticky='EW')
-        self.buttons.grid_configure(padx=10, pady=5, sticky='EW')
+        self.widgets.grid_configure(padx=10, pady=15, sticky='EW')
+        self.buttons.grid_configure(padx=10, pady=15, sticky='EW')
 
     def set_widgets_conf(self) -> None:
         for child in self.widgets.winfo_children():

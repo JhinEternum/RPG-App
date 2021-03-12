@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk, font
 
 from src.connection.database import get_search_entities
-from src.connection.handle_abilities import get_abilities_name_by_type
 
 
 class ItemWidget:
@@ -21,8 +20,6 @@ class ItemWidget:
         self.npcs = ['None', 'NPC'] + get_search_entities('', 'NPC')
         self.monsters = ['None', 'Monster'] + get_search_entities('', 'Monster')
 
-        self.abilities = ['None', 'Ability'] + get_abilities_name_by_type(4)
-
         # --- Attributes ---
         self.item = 'Item ' + self.frame_id
         self.name = tk.StringVar()
@@ -36,14 +33,12 @@ class ItemWidget:
         self.character = tk.StringVar(value=self.characters[1])
         self.npc = tk.StringVar(value=self.npcs[0])
         self.monster = tk.StringVar(value=self.monsters[0])
-        self.ability = tk.StringVar(value=self.abilities)
 
         # --- Widgets ---
         self.character_menu = ttk.Combobox()
         self.npc_menu = ttk.Combobox()
         self.monster_menu = ttk.Combobox()
 
-        self.abilities_entry = tk.Listbox()
         self.effects_entry = tk.Text()
         self.description_entry = tk.Text()
 
@@ -203,34 +198,6 @@ class ItemWidget:
             width=60
         )
         area_entry.grid(row=11, column=1, sticky="EW")
-
-        # --- Abilities ---
-        abilities_label = ttk.Label(
-            widgets,
-            text="Abilities"
-        )
-        abilities_label.grid(row=12, column=0, sticky="EW")
-
-        self.abilities_entry = tk.Listbox(
-            widgets,
-            listvariable=self.ability,
-            selectmode="extended",
-            exportselection=False,
-            selectbackground="#2CCC5B",
-            highlightcolor="#1DE557",
-            font=self.font,
-            width=1,
-            height=5
-        )
-        self.abilities_entry.grid(row=12, column=1, sticky="EW")
-
-        self.abilities_entry.select_set(0)
-
-        abilities_scrollbar = ttk.Scrollbar(widgets, orient="vertical")
-        abilities_scrollbar.config(command=self.abilities_entry.yview)
-        abilities_scrollbar.grid(row=12, column=2, sticky="NS")
-
-        self.abilities_entry.config(yscrollcommand=abilities_scrollbar.set)
 
         # --- Effects ---
         effects_label = ttk.Label(

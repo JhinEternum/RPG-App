@@ -11,6 +11,8 @@ class TemplateScrollFrame(ttk.Frame):
         self.parent = kwargs['parent']
 
         self.home = kwargs['home']
+        self.show_interface = kwargs['show_interface'] if 'show_interface' in kwargs else None
+        self.show_search = kwargs['show_search'] if 'show_search' in kwargs else None
 
         # --- Create Widget Frame ---
         self.rowconfigure(0, weight=1)
@@ -36,7 +38,19 @@ class TemplateScrollFrame(ttk.Frame):
         home_button.grid()
 
         for child in self.template_scroll.buttons.winfo_children():
-            child.grid_configure(padx=15, pady=5, sticky='EW')
+            child.grid_configure(padx=5, pady=5, sticky='EW')
+
+    def back(self, go_parent: bool, **kwargs) -> None:
+        print(go_parent)
+        print(kwargs)
+        if go_parent:
+            self.show_interface(**kwargs)
+        else:
+            self.show_search(
+                scroll=True,
+                single_widgets=True,
+                **kwargs
+            )
 
 
 class TemplateScroll(tk.Canvas):
@@ -88,10 +102,10 @@ class TemplateScroll(tk.Canvas):
         self.buttons.grid(row=1, column=0, sticky='EW')
         self.buttons.columnconfigure(0, weight=1)
 
-    def _on_mouse_wheel(self, event):
+    def _on_mouse_wheel(self, event) -> None:
         self.yview_scroll(-int(event.delta/120), "units")
 
-    def add_entity_frame(self, Entity):
+    def add_entity_frame(self, Entity) -> None:
         current_rows = self.screen.grid_size()[1]
         frame_number = str(len(self.frames) + 1)
 
@@ -110,3 +124,10 @@ class TemplateScroll(tk.Canvas):
         self.buttons.grid_configure(row=current_rows)
 
         print(self.frames)
+
+    def bind_label(self, labels):
+        def reconfigure_labels(event):
+            for label in labels:
+                label.configure(wraplength=self.widgets.winfo_width() - 25)
+
+        self.widgets.bind("<Configure>", reconfigure_labels)

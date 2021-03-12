@@ -20,12 +20,14 @@ class ProficiencyLevel(tk.Toplevel):
 
         self.proficiencies = kwargs['proficiencies']
         self.proficiency_result = kwargs['proficiency_result']
-        self.avatar_frame = kwargs['create_avatar']
-        self.edit_user = kwargs['edit_user'] if 'edit_user' in kwargs else None
+        self.create_avatar = kwargs['create_avatar'] if 'create_avatar' in kwargs else None
+        self.edit = kwargs['edit'] if 'edit' in kwargs else None
         self.user_proficiencies = kwargs['user_proficiencies'] if 'user_proficiencies' in kwargs else None
 
         self.levels = (1, 2, 3, 4, 5)
+        self.ranks = ('None', 'S', 'A', 'B')
         self.proficiencies_list = []
+        self.proficiencies_rank = []
 
         proficiency_frame = ttk.Frame(self)
         proficiency_frame.grid(row=0, column=0, sticky="NSEW")
@@ -34,6 +36,7 @@ class ProficiencyLevel(tk.Toplevel):
         index = 0
         for proficiency in self.proficiencies:
             proficiency_variable = tk.StringVar(value=self.levels[self.set_level(proficiency) - 1])
+            rank_variable = tk.StringVar(value=self.ranks[self.set_rank(proficiency)])
 
             proficiency_label = ttk.Label(
                 proficiency_frame,
@@ -49,7 +52,16 @@ class ProficiencyLevel(tk.Toplevel):
             )
             proficiency_entry.grid(row=index, column=1)
 
+            proficiency_rank = ttk.Combobox(
+                proficiency_frame,
+                textvariable=rank_variable,
+                values=self.ranks,
+                state='readonly'
+            )
+            proficiency_rank.grid(row=index, column=2)
+
             self.proficiencies_list.append(proficiency_variable)
+            self.proficiencies_rank.append(rank_variable)
             index += 1
 
         button_frame = ttk.Frame(self)
@@ -61,7 +73,7 @@ class ProficiencyLevel(tk.Toplevel):
 
         create_button = ttk.Button(
             button_frame,
-            text='Create Avatar',
+            text='Create Avatar' if self.edit is None else 'Finalize',
             command=self.get_proficiencies,
             cursor='hand2'
         )
@@ -80,16 +92,33 @@ class ProficiencyLevel(tk.Toplevel):
 
         return 1
 
+    def set_rank(self, proficiency_name: str) -> int:
+        if self.user_proficiencies is None:
+            return 0
+
+        for proficiency in self.user_proficiencies:
+            if proficiency['name'] == proficiency_name:
+                return int(proficiency['rank'])
+
+        return 0
+
     def get_proficiencies(self) -> None:
         proficiencies_result = []
 
         for index in range(len(self.proficiency_result)):
-            proficiencies_result.append((self.proficiency_result[index], self.proficiencies_list[index].get()))
+            print(f'asdoasdjkkqwjfk{self.ranks.index(self.proficiencies_rank[index].get())}')
+            proficiencies_result.append(
+                (
+                    self.proficiency_result[index],
+                    self.proficiencies_list[index].get(),
+                    self.ranks.index(self.proficiencies_rank[index].get())
+                )
+            )
 
-        if self.edit_user is None:
-            self.avatar_frame.create_avatar(tuple(proficiencies_result))
+        if self.edit is None:
+            self.create_avatar(tuple(proficiencies_result))
         else:
-            self.edit_user.edit_entity(tuple(proficiencies_result))
+            self.edit(tuple(proficiencies_result))
 
         self.destroy()
         self.update()

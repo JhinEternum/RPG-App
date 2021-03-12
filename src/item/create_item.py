@@ -1,7 +1,7 @@
 from src.frames.scroll_frame import TemplateScrollFrame
 from src.item.item import Item
 from src.item.item_widget import ItemWidget
-from src.methods import handle_selection_change, choose_user, get_entity_ids, get_text_data, popup_showinfo
+from src.methods import choose_user, get_text_data, popup_showinfo
 
 
 class CreateItem(TemplateScrollFrame):
@@ -30,9 +30,6 @@ class CreateItem(TemplateScrollFrame):
             npc = item_frame.npc_menu.get()
             monster = item_frame.monster_menu.get()
 
-            abilities = handle_selection_change(item_frame.abilities_entry, item_frame.abilities)
-            abilities_result = get_entity_ids('ability', abilities)
-
             user = choose_user(character, npc, monster)
 
             name = item_frame.name.get()
@@ -53,7 +50,6 @@ class CreateItem(TemplateScrollFrame):
                 range_=range_,
                 health=health,
                 area=area,
-                abilities=abilities_result,
                 effects=effects,
                 description=description,
                 user=user

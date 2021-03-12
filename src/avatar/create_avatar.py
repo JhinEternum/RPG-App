@@ -28,7 +28,7 @@ class CreateAvatar(TemplateScrollFrame):
             self.proficiencies_level(
                 proficiencies=proficiencies,
                 proficiency_result=proficiency_result,
-                create_avatar=self
+                create_avatar=self.create_avatar
             )
         else:
             self.create_avatar()
