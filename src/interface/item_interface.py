@@ -15,6 +15,7 @@ class ItemInterface:
         widgets = kwargs['widgets']
         buttons = kwargs['buttons']
         self.bind_label = kwargs['bind_label']
+        self.edit = kwargs['edit']
 
         self.search_parent_name = kwargs['search_parent_name'] if 'search_parent_name' in kwargs else None
         self.parent_name = kwargs['parent_name'] if 'parent_name' in kwargs else None
@@ -152,6 +153,15 @@ class ItemInterface:
         edit_button = ttk.Button(
             buttons,
             text='Edit',
+            command=lambda: self.edit(
+                name=self.search_name,
+                entity=self.entity,
+                type_=self.search_type,
+                search_parent_name=self.search_parent_name,
+                parent_name=self.parent_name,
+                parent_type=self.parent_type,
+                go_parent=self.go_parent
+            ),
             cursor='hand2'
         )
         edit_button.grid(row=1)

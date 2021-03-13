@@ -42,7 +42,8 @@ class TemplateScrollFrame(ttk.Frame):
 
     def back(self, go_parent: bool, **kwargs) -> None:
         print(go_parent)
-        print(kwargs)
+        print(f'kwargs {kwargs}')
+        kwargs['go_parent'] = go_parent
         if go_parent:
             self.show_interface(**kwargs)
         else:

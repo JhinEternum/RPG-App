@@ -486,9 +486,8 @@ class EditAvatar:
                 entities=search_result,
                 type_=self.search_type
             )
-            # interface(name, type_, self.show_interface, self.search_entities_name, self.search_type)
         else:
-            popup_showinfo(edit_avatar)
+            popup_showinfo('Something went wrong, try again!')
 
     def generate_armor(self):
         for item in self.user_items:
