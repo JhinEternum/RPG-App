@@ -1,6 +1,7 @@
 from src.edit.edit_ability import EditAbility
 from src.edit.edit_avatar import EditAvatar
 from src.edit.edit_item import EditItem
+from src.edit.edit_proficiency import EditProficiency
 from src.edit.edit_title import EditTitle
 
 
@@ -15,3 +16,5 @@ class EditWidget:
             EditAbility(**kwargs)
         elif type_ == 'Title':
             EditTitle(**kwargs)
+        elif type_ == 'Proficiency':
+            EditProficiency(**kwargs)
