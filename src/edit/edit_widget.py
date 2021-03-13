@@ -1,6 +1,7 @@
 from src.edit.edit_ability import EditAbility
 from src.edit.edit_avatar import EditAvatar
 from src.edit.edit_item import EditItem
+from src.edit.edit_title import EditTitle
 
 
 class EditWidget:
@@ -12,3 +13,5 @@ class EditWidget:
             EditItem(**kwargs)
         elif type_ == 'Ability':
             EditAbility(**kwargs)
+        elif type_ == 'Title':
+            EditTitle(**kwargs)
