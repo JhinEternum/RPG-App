@@ -1,3 +1,4 @@
+from src.edit.edit_ability import EditAbility
 from src.edit.edit_avatar import EditAvatar
 from src.edit.edit_item import EditItem
 
@@ -9,3 +10,5 @@ class EditWidget:
             EditAvatar(**kwargs)
         elif type_ == 'Item' or type_ == 'Armor' or type_ == 'Weapon':
             EditItem(**kwargs)
+        elif type_ == 'Ability':
+            EditAbility(**kwargs)

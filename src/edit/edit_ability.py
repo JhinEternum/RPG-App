@@ -1,12 +1,12 @@
 import tkinter as tk
 from tkinter import ttk, font
 
+from src.ability.ability import Ability
 from src.connection import get_entity
-from src.item.item import Item
 from src.methods import get_text_data, popup_showinfo
 
 
-class EditItem:
+class EditAbility:
     def __init__(self, **kwargs):
         self.search_name = kwargs['name']
         self.search_type = kwargs['type_']
@@ -30,30 +30,24 @@ class EditItem:
 
         self.font = font.Font(size=11)
 
-        self.types_ = ('Armor', 'Weapon')
-
-        # --- Item ---
+        # --- Ability ---
         self.id = self.entity['id']
-        self.item_name = self.entity['name']
-        self.item_type = self.entity['type']
-        self.item_reduction = self.entity['reduction']
-        self.item_damage = self.entity['damage']
-        self.item_range = self.entity['range']
-        self.item_health = self.entity['health']
-        self.item_area = self.entity['area']
-        self.item_effects = self.entity['effects']
-        self.item_description = self.entity['description']
+        self.ability_name = self.entity['name']
+        self.ability_casting = self.entity['casting']
+        self.ability_components = self.entity['components']
+        self.ability_requirements = self.entity['requirements']
+        self.ability_conditions = self.entity['conditions']
+        self.ability_effects = self.entity['effects']
+        self.ability_description = self.entity['description']
 
         # --- Attributes ---
-        self.name = tk.StringVar(value=self.item_name)
-        self.type_ = tk.StringVar(value=self.types_[self.item_type - 1])
-        self.reduction = tk.StringVar(value=self.item_reduction)
-        self.damage = tk.StringVar(value=self.item_damage)
-        self.range_ = tk.StringVar(value=self.item_range)
-        self.health = tk.StringVar(value=self.item_health)
-        self.area = tk.StringVar(value=self.item_area)
+        self.name = tk.StringVar(value=self.ability_name)
+        self.casting = tk.StringVar(value=self.ability_casting)
+        self.components = tk.StringVar(value=self.ability_components)
 
         # --- Widgets ---
+        self.requirements_entry = tk.Text()
+        self.conditions_entry = tk.Text()
         self.effects_entry = tk.Text()
         self.description_entry = tk.Text()
 
@@ -75,97 +69,87 @@ class EditItem:
         )
         name_entry.grid(row=0, column=1, sticky="EW")
 
-        # --- Type ---
+        # --- Casting ---
 
-        type_label = ttk.Label(
+        casting_label = ttk.Label(
             widgets,
-            text="Type"
+            text="Casting"
         )
-        type_label.grid(row=1, column=0, sticky="EW")
+        casting_label.grid(row=1, column=0, sticky="EW")
 
-        type_entry = ttk.Combobox(
+        casting_entry = ttk.Entry(
             widgets,
-            textvariable=self.type_,
-            values=self.types_,
-            exportselection=False,
-            state="readonly"
-        )
-        type_entry.grid(row=1, column=1, sticky="EW")
-
-        # --- Reduction ---
-
-        reduction_label = ttk.Label(
-            widgets,
-            text="Reduction"
-        )
-        reduction_label.grid(row=2, column=0, sticky="EW")
-
-        reduction_entry = ttk.Entry(
-            widgets,
-            textvariable=self.reduction,
+            textvariable=self.casting,
             width=60
         )
-        reduction_entry.grid(row=2, column=1, sticky="EW")
+        casting_entry.grid(row=1, column=1, sticky="EW")
 
-        # --- Damage ---
+        # --- Components ---
 
-        damage_label = ttk.Label(
+        components_label = ttk.Label(
             widgets,
-            text="Damage"
+            text="Components"
         )
-        damage_label.grid(row=3, column=0, sticky="EW")
+        components_label.grid(row=2, column=0, sticky="EW")
 
-        damage_entry = ttk.Entry(
+        components_entry = ttk.Entry(
             widgets,
-            textvariable=self.damage,
+            textvariable=self.components,
             width=60
         )
-        damage_entry.grid(row=3, column=1, sticky="EW")
+        components_entry.grid(row=2, column=1, sticky="EW")
 
-        # --- Range ---
+        # --- Requirements ---
 
-        range_label = ttk.Label(
+        requirements_label = ttk.Label(
             widgets,
-            text="Range"
+            text="Requirements"
         )
-        range_label.grid(row=4, column=0, sticky="EW")
+        requirements_label.grid(row=3, column=0, sticky="EW")
 
-        range_entry = ttk.Entry(
+        self.requirements_entry = tk.Text(
             widgets,
-            textvariable=self.range_,
-            width=60
+            width=1,
+            height=3
         )
-        range_entry.grid(row=4, column=1, sticky="EW")
+        self.requirements_entry.grid(row=3, column=1, sticky="EW")
 
-        # --- Health ---
-
-        health_label = ttk.Label(
+        requirements_scroll = ttk.Scrollbar(
             widgets,
-            text="Health"
+            orient="vertical",
+            command=self.requirements_entry.yview
         )
-        health_label.grid(row=5, column=0, sticky="EW")
+        requirements_scroll.grid(row=3, column=2, sticky="ns")
 
-        health_entry = ttk.Entry(
+        self.requirements_entry["yscrollcommand"] = requirements_scroll.set
+
+        self.requirements_entry.insert(tk.END, self.ability_requirements)
+
+        # --- Conditions ---
+
+        conditions_label = ttk.Label(
             widgets,
-            textvariable=self.health,
-            width=60
+            text="Conditions"
         )
-        health_entry.grid(row=5, column=1, sticky="EW")
+        conditions_label.grid(row=4, column=0, sticky="EW")
 
-        # --- Area ---
-
-        area_label = ttk.Label(
+        self.conditions_entry = tk.Text(
             widgets,
-            text="Area"
+            width=1,
+            height=3
         )
-        area_label.grid(row=6, column=0, sticky="EW")
+        self.conditions_entry.grid(row=4, column=1, sticky="EW")
 
-        area_entry = ttk.Entry(
+        conditions_scroll = ttk.Scrollbar(
             widgets,
-            textvariable=self.area,
-            width=60
+            orient="vertical",
+            command=self.conditions_entry.yview
         )
-        area_entry.grid(row=6, column=1, sticky="EW")
+        conditions_scroll.grid(row=4, column=2, sticky="ns")
+
+        self.conditions_entry["yscrollcommand"] = conditions_scroll.set
+
+        self.conditions_entry.insert(tk.END, self.ability_conditions)
 
         # --- Effects ---
 
@@ -173,25 +157,25 @@ class EditItem:
             widgets,
             text="Effects"
         )
-        effects_label.grid(row=7, column=0, sticky="EW")
+        effects_label.grid(row=5, column=0, sticky="EW")
 
         self.effects_entry = tk.Text(
             widgets,
             width=1,
             height=10
         )
-        self.effects_entry.grid(row=7, column=1, sticky="EW")
+        self.effects_entry.grid(row=5, column=1, sticky="EW")
 
         effects_scroll = ttk.Scrollbar(
             widgets,
             orient="vertical",
             command=self.effects_entry.yview
         )
-        effects_scroll.grid(row=7, column=2, sticky="ns")
+        effects_scroll.grid(row=5, column=2, sticky="ns")
 
         self.effects_entry["yscrollcommand"] = effects_scroll.set
 
-        self.effects_entry.insert(tk.END, self.item_effects)
+        self.effects_entry.insert(tk.END, self.ability_effects)
 
         # --- Description ---
 
@@ -199,28 +183,28 @@ class EditItem:
             widgets,
             text="Description"
         )
-        description_label.grid(row=8, column=0, sticky="EW")
+        description_label.grid(row=6, column=0, sticky="EW")
 
         self.description_entry = tk.Text(
             widgets,
             width=1,
             height=5
         )
-        self.description_entry.grid(row=8, column=1, sticky="EW")
+        self.description_entry.grid(row=6, column=1, sticky="EW")
 
         description_scroll = ttk.Scrollbar(
             widgets,
             orient="vertical",
             command=self.description_entry.yview
         )
-        description_scroll.grid(row=8, column=2, sticky="ns")
+        description_scroll.grid(row=6, column=2, sticky="ns")
 
         self.description_entry["yscrollcommand"] = description_scroll.set
 
-        self.description_entry.insert(tk.END, self.item_description)
+        self.description_entry.insert(tk.END, self.ability_description)
 
     def set_buttons(self, buttons) -> None:
-        self.search_result = get_entity(self.item_name, self.search_type)
+        self.search_result = get_entity(self.ability_name, self.search_type)
 
         save_button = ttk.Button(
             buttons,
@@ -248,35 +232,29 @@ class EditItem:
         back_button.grid(row=1)
 
     def edit(self) -> None:
-        type_dict = {'Armor': 1, 'Weapon': 2}
-
         name = self.name.get()
-        type_ = type_dict[self.type_.get()]
-        reduction = self.reduction.get()
-        damage = self.damage.get()
-        range_ = self.range_.get()
-        health = self.health.get()
-        area = self.area.get()
+        casting = self.casting.get()
+        components = self.components.get()
+        requirements = get_text_data(self.requirements_entry)
+        conditions = get_text_data(self.conditions_entry)
         effects = get_text_data(self.effects_entry)
         description = get_text_data(self.description_entry)
 
-        item = Item(
+        ability = Ability(
             name=name,
-            type_=type_,
-            reduction=reduction,
-            damage=damage,
-            range_=range_,
-            health=health,
-            area=area,
+            casting=casting,
+            components=components,
+            requirements=requirements,
+            conditions=conditions,
             effects=effects,
             description=description
         )
 
-        update_item = item.update_item(self.id)
+        update_ability = ability.update_ability(self.id)
 
         self.search_result = get_entity(name, self.search_type)
 
-        if update_item:
+        if update_ability:
             self.back(
                 self.go_parent,
                 name=self.search_name,

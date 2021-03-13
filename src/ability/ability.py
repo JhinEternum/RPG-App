@@ -10,7 +10,7 @@ class Ability:
         self.conditions = kwargs['conditions']
         self.effects = kwargs['effects']
         self.description = kwargs['description']
-        self.type_ = kwargs['type_']
+        self.type_ = kwargs['type_'] if 'type_' in kwargs else None
         self.user = kwargs['user'] if 'user' in kwargs else None
 
         self.ability = {

@@ -44,7 +44,10 @@ class TemplateScrollFrame(ttk.Frame):
         print(go_parent)
         print(f'kwargs {kwargs}')
         kwargs['go_parent'] = go_parent
+        is_edit = kwargs['is_edit'] if 'is_edit' in kwargs else False
         if go_parent:
+            self.show_interface(**kwargs)
+        elif is_edit:
             self.show_interface(**kwargs)
         else:
             self.show_search(
