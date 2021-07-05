@@ -18,6 +18,11 @@ class Wiki:
         self.chapters = list()
         self.topics = list()
 
+        self.category_mapping = {}
+        self.section_mapping = {}
+        self.chapter_mapping = {}
+        self.topic_mapping = {}
+
         self.last_section = dict()
         self.last_chapter = dict()
         self.last_topic = dict()
@@ -36,18 +41,22 @@ class Wiki:
 
     def get_categories(self) -> list:
         self.categories = [Category(**category) for category in get_categories()]
+        self.category_mapping = {category.name: category.id for category in self.categories}
         return self.categories
 
     def get_sections(self, category_id: int = 0) -> list:
         self.sections = [Section(**section) for section in get_sections(category_id)]
+        self.section_mapping = {section.name: section.id for section in self.sections}
         return self.sections
 
     def get_chapters(self, section_id: int = 0) -> list:
         self.chapters = [Chapter(**chapter) for chapter in get_chapters(section_id)]
+        self.chapter_mapping = {chapter.name: chapter.id for chapter in self.chapters}
         return self.chapters
 
     def get_topics(self, chapter_id: int = 0) -> list:
         self.topics = [Topic(**topic) for topic in get_topics(chapter_id)]
+        self.topic_mapping = {topic.name: topic.id for topic in self.topics}
         return self.topics
 
     def update(self) -> None:

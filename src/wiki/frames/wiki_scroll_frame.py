@@ -9,6 +9,7 @@ class WikiScrollFrame(ttk.Frame):
 
         self.kwargs = kwargs
         self.parent = kwargs['parent']
+        self.back = kwargs['back'] if 'back' in kwargs else 'home'
 
         self.home = kwargs['home']
 
@@ -42,9 +43,6 @@ class WikiScrollFrame(ttk.Frame):
 
         for child in self.template_scroll.buttons.winfo_children():
             child.grid_configure(padx=5, pady=5, sticky='EW')
-
-    def back(self, **kwargs) -> None:
-        print('back')
 
 
 class WikiTemplateScroll(tk.Canvas):

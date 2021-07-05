@@ -1,17 +1,12 @@
 import tkinter as tk
 from tkinter import ttk, font
 
-from src.wiki.wiki import Wiki
+from src.wiki.wiki_template import WikiTemplate
 
 
-class WikiTopic:
+class WikiTopic(WikiTemplate):
     def __init__(self, **kwargs):
-        self.wiki: Wiki = kwargs['wiki']
-
-        self.show_wiki = kwargs['show_wiki']
-        self.widgets = kwargs['widgets']
-        buttons = kwargs['buttons']
-        self.bind_label = kwargs['bind_label']
+        super().__init__(**kwargs)
 
         self.topic = kwargs['topic']
 

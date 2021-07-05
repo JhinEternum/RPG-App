@@ -2,23 +2,18 @@ import tkinter as tk
 from tkinter import ttk, font
 
 from src.methods import get_text_data, popup_showinfo
-from src.wiki.wiki import Wiki
+from src.wiki.wiki_template import WikiTemplate
 
 
-class CreateCategory:
+class CreateCategory(WikiTemplate):
     def __init__(self, **kwargs):
-        self.wiki: Wiki = kwargs['wiki']
-
-        self.show_wiki = kwargs['show_wiki']
-        self.widgets = kwargs['widgets']
-        buttons = kwargs['buttons']
-        self.bind_label = kwargs['bind_label']
+        super().__init__(**kwargs)
 
         self.name = tk.StringVar()
         self.description_entry = tk.Text
 
         self.set_widgets()
-        self.set_buttons(buttons)
+        self.set_buttons()
 
     def set_widgets(self):
         title_label = ttk.Label(
@@ -70,9 +65,9 @@ class CreateCategory:
 
         self.description_entry.insert(tk.END, 'None')
 
-    def set_buttons(self, buttons: ttk.Frame):
+    def set_buttons(self):
         create_button = ttk.Button(
-            buttons,
+            self.buttons,
             text='Create Category',
             command=self.create_category,
             cursor='hand2'
@@ -85,4 +80,4 @@ class CreateCategory:
 
         create = self.wiki.create_category(name, description)
 
-        self.show_wiki(factory='home') if create else popup_showinfo('Error!')
+        self.show_wiki(factory=self.back) if create else popup_showinfo('Error!')

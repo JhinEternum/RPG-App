@@ -1,24 +1,18 @@
 import tkinter as tk
 from tkinter import ttk, font
 
+from src.wiki.wiki_template import WikiTemplate
 from src.wiki.topic import Topic
-from src.wiki.wiki import Wiki
 
 
-class WikiChapter:
+class WikiChapter(WikiTemplate):
     def __init__(self, **kwargs):
-        self.wiki: Wiki = kwargs['wiki']
-
-        self.show_wiki = kwargs['show_wiki']
-        self.widgets = kwargs['widgets']
-        buttons = kwargs['buttons']
-        self.bind_label = kwargs['bind_label']
-
+        super().__init__(**kwargs)
         self.chapter = kwargs['chapter']
         self.topics = self.wiki.get_topics(self.chapter.id)
 
         self.set_chapter()
-        self.set_buttons(buttons)
+        self.set_buttons()
 
     def set_chapter(self) -> None:
         name = ttk.Label(
@@ -59,7 +53,7 @@ class WikiChapter:
             )
             button.grid(column=0, sticky='EW')
 
-    def set_buttons(self, buttons: ttk.Frame) -> None:
+    def set_buttons(self) -> None:
         pass
 
     def select_topic(self, topic: Topic) -> None:

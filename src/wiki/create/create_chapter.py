@@ -5,14 +5,14 @@ from src.methods import get_text_data, popup_showinfo
 from src.wiki.wiki_template import WikiTemplate
 
 
-class CreateSection(WikiTemplate):
+class CreateChapter(WikiTemplate):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.categories = [category.name for category in self.wiki.get_categories()]
+        self.sections = [section.name for section in self.wiki.get_sections()]
 
         self.name = tk.StringVar()
-        self.category_name = tk.StringVar(value=self.categories[0])
+        self.section_name = tk.StringVar(value=self.sections[0])
 
         self.description_entry = tk.Text
 
@@ -45,19 +45,19 @@ class CreateSection(WikiTemplate):
         )
         name_entry.grid(row=2, column=1, sticky='EW')
 
-        category_label = ttk.Label(
+        section_label = ttk.Label(
             self.widgets,
-            text='Category'
+            text='Section'
         )
-        category_label.grid(row=3, column=0, sticky='EW')
+        section_label.grid(row=3, column=0, sticky='EW')
 
-        category_menu = ttk.Combobox(
+        section_menu = ttk.Combobox(
             self.widgets,
-            textvariable=self.category_name,
-            values=self.categories,
+            textvariable=self.section_name,
+            values=self.sections,
             state="readonly"
         )
-        category_menu.grid(row=3, column=1, sticky='EW')
+        section_menu.grid(row=3, column=1, sticky='EW')
 
         description_label = ttk.Label(
             self.widgets,
@@ -86,18 +86,18 @@ class CreateSection(WikiTemplate):
     def set_buttons(self):
         create_button = ttk.Button(
             self.buttons,
-            text='Create Section',
-            command=self.create_section,
+            text='Create Chapter',
+            command=self.create_chapter,
             cursor='hand2'
         )
         create_button.grid(row=0, column=0, sticky='EW')
 
-    def create_section(self):
+    def create_chapter(self):
         name = self.name.get()
         description = get_text_data(self.description_entry)
-        category = self.category_name.get()
-        category_id = self.wiki.category_mapping[category]
+        section = self.section_name.get()
+        section_id = self.wiki.section_mapping[section]
 
-        create = self.wiki.create_section(name, description, category_id)
+        create = self.wiki.create_chapter(name, description, section_id)
 
-        self.show_wiki(factory=self.back) if create else popup_showinfo('Error!')
+        self.show_wiki(factory='home') if create else popup_showinfo('Error!')
