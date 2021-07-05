@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 import tkinter.font as font
-from typing import Union
 
 from src.ability.create_ability import CreateAbility
 from src.avatar.create_avatar import CreateAvatar
@@ -13,6 +12,8 @@ from src.proficiency.create_proficiency import CreateProficiency
 from src.proficiency.proficiency_level import ProficiencyLevel
 from src.search.search import Search
 from src.title.create_title import CreateTitle
+from src.wiki.wiki import Wiki
+from src.wiki.wiki_factory import WikiFactory
 
 
 def check_frame_existence(frame) -> None:
@@ -44,6 +45,8 @@ class Game(tk.Tk):
         self.interface = None
         self.edit = None
 
+        self.wiki = None
+
         self.frames = {
             Home: self.home,
             CreateAvatar: self.create_avatar,
@@ -53,14 +56,16 @@ class Game(tk.Tk):
             CreateProficiency: self.create_proficiency,
             Search: self.search,
             Interface: self.interface,
-            Edit: self.edit
+            Edit: self.edit,
+            WikiFactory: self.wiki
         }
 
         self.home = Home(
             parent=self,
             create_entity=self.create_entity_frame,
             proficiencies_level=self.show_proficiencies_level,
-            show_search=self.show_search
+            show_search=self.show_search,
+            show_wiki=self.show_wiki
         )
         self.home.grid(row=0, column=0, sticky='NSEW')
 
@@ -153,6 +158,23 @@ class Game(tk.Tk):
 
         self.frames[Edit] = self.edit
         self.show_frame(Edit)
+
+    def show_wiki(self, **kwargs) -> None:
+        check_frame_existence(self.wiki)
+
+        self.wiki = WikiFactory(
+            parent=self,
+            home=lambda: self.show_frame(Home),
+            wiki=Wiki(),
+            show_wiki=self.show_wiki,
+            scroll=True,
+            single_widgets=kwargs['widgets_type'] if 'widgets_type' in kwargs else True,
+            **kwargs
+        )
+        self.wiki.grid(row=0, column=0, sticky='NSEW')
+
+        self.frames[WikiFactory] = self.wiki
+        self.show_frame(WikiFactory)
 
 
 root = Game()
