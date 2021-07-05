@@ -13,7 +13,7 @@ class CreateCategory(WikiTemplate):
         self.description_entry = tk.Text
 
         self.set_widgets()
-        self.set_buttons()
+        self.set_buttons('Create Category', self.create_category)
 
     def set_widgets(self):
         title_label = ttk.Label(
@@ -64,15 +64,6 @@ class CreateCategory(WikiTemplate):
         self.description_entry['yscrollcommand'] = description_scroll.set
 
         self.description_entry.insert(tk.END, 'None')
-
-    def set_buttons(self):
-        create_button = ttk.Button(
-            self.buttons,
-            text='Create Category',
-            command=self.create_category,
-            cursor='hand2'
-        )
-        create_button.grid(row=0, column=0, sticky='EW')
 
     def create_category(self):
         name = self.name.get()

@@ -1,4 +1,5 @@
 from src.wiki.wiki import Wiki
+from tkinter import ttk, font
 
 
 class WikiTemplate:
@@ -10,3 +11,12 @@ class WikiTemplate:
         self.widgets = kwargs['widgets']
         self.buttons = kwargs['buttons']
         self.bind_label = kwargs['bind_label']
+
+    def set_buttons(self, name: str, method):
+        create_button = ttk.Button(
+            self.buttons,
+            text=name,
+            command=method,
+            cursor='hand2'
+        )
+        create_button.grid(row=0, column=0, sticky='EW')

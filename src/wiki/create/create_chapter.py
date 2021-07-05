@@ -17,7 +17,7 @@ class CreateChapter(WikiTemplate):
         self.description_entry = tk.Text
 
         self.set_widgets()
-        self.set_buttons()
+        self.set_buttons('Create Chapter', self.create_chapter)
 
     def set_widgets(self):
         title_label = ttk.Label(
@@ -83,15 +83,6 @@ class CreateChapter(WikiTemplate):
 
         self.description_entry.insert(tk.END, 'None')
 
-    def set_buttons(self):
-        create_button = ttk.Button(
-            self.buttons,
-            text='Create Chapter',
-            command=self.create_chapter,
-            cursor='hand2'
-        )
-        create_button.grid(row=0, column=0, sticky='EW')
-
     def create_chapter(self):
         name = self.name.get()
         description = get_text_data(self.description_entry)
@@ -100,4 +91,4 @@ class CreateChapter(WikiTemplate):
 
         create = self.wiki.create_chapter(name, description, section_id)
 
-        self.show_wiki(factory='home') if create else popup_showinfo('Error!')
+        self.show_wiki(factory=self.back) if create else popup_showinfo('Error!')

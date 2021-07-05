@@ -1,5 +1,7 @@
 from src.wiki.create.create_category import CreateCategory
+from src.wiki.create.create_chapter import CreateChapter
 from src.wiki.create.create_section import CreateSection
+from src.wiki.create.create_topic import CreateTopic
 from src.wiki.wiki_chapter import WikiChapter
 from src.wiki.wiki_home import WikiHome
 from src.wiki.wiki_section import WikiSection
@@ -22,3 +24,7 @@ class WikiWidget:
             CreateCategory(**kwargs)
         elif factory == 'create_section':
             CreateSection(**kwargs)
+        elif factory == 'create_chapter':
+            CreateChapter(**kwargs)
+        elif factory == 'create_topic':
+            CreateTopic(**kwargs)
