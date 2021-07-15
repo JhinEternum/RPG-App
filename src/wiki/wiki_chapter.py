@@ -8,11 +8,16 @@ from src.wiki.topic import Topic
 class WikiChapter(WikiTemplate):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.chapter = kwargs['chapter']
+
+        self.chapter = kwargs['entity']
         self.topics = self.wiki.get_topics(self.chapter.id)
 
         self.set_chapter()
-        self.set_buttons()
+        self.set_buttons('Add Topic', lambda: self.show_wiki(factory='create_topic',
+                                                             widgets_type=False,
+                                                             preview_entity=self.chapter,
+                                                             back='chapter'
+                                                             ), self.preview_entity)
 
     def set_chapter(self) -> None:
         name = ttk.Label(
@@ -53,8 +58,5 @@ class WikiChapter(WikiTemplate):
             )
             button.grid(column=0, sticky='EW')
 
-    def set_buttons(self) -> None:
-        pass
-
     def select_topic(self, topic: Topic) -> None:
-        self.show_wiki(factory='topic', topic=topic)
+        self.show_wiki(factory='topic', entity=topic)

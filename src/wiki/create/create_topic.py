@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, font
 
 from src.methods import get_text_data, popup_showinfo
+from src.wiki.chapter import Chapter
 from src.wiki.wiki_template import WikiTemplate
 
 
@@ -9,20 +10,27 @@ class CreateTopic(WikiTemplate):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        self.preview_chapter: Chapter = kwargs['preview_entity'] if 'preview_entity' in kwargs else None
+
         self.chapters = [chapter.name for chapter in self.wiki.get_chapters()]
 
+        chapter_index = 0
+
+        if self.preview_chapter:
+            chapter_index = self.chapters.index(self.preview_chapter.name)
+
         self.name = tk.StringVar()
-        self.chapter_name = tk.StringVar(value=self.chapters[0])
+        self.chapter_name = tk.StringVar(value=self.chapters[chapter_index])
 
         self.description_entry = tk.Text
 
         self.set_widgets()
-        self.set_buttons('Create Topic', self.create_topic)
+        self.set_buttons('Create Topic', self.create_topic, self.preview_chapter)
 
     def set_widgets(self):
         title_label = ttk.Label(
             self.widgets,
-            text='Create Section',
+            text='Create Topic',
             font=font.Font(size=13)
         )
         title_label.grid(row=0, column=0, sticky='EW')
@@ -47,7 +55,7 @@ class CreateTopic(WikiTemplate):
 
         chapter_label = ttk.Label(
             self.widgets,
-            text='Category'
+            text='Chapter'
         )
         chapter_label.grid(row=3, column=0, sticky='EW')
 
@@ -87,8 +95,15 @@ class CreateTopic(WikiTemplate):
         name = self.name.get()
         description = get_text_data(self.description_entry)
         chapter = self.chapter_name.get()
-        chapter_id = self.wiki.section_mapping[chapter]
+        chapter_id = self.wiki.chapter_mapping[chapter]
 
         create = self.wiki.create_topic(name, description, chapter_id)
 
-        self.show_wiki(factory=self.back) if create else popup_showinfo('Error!')
+        if create is None:
+            popup_showinfo('Error!')
+            return
+
+        if self.preview_chapter:
+            self.show_wiki(factory=self.back, entity=self.preview_chapter)
+        else:
+            self.show_wiki(factory=self.back)

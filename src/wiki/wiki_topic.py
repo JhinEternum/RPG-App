@@ -8,9 +8,12 @@ class WikiTopic(WikiTemplate):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.topic = kwargs['topic']
+        self.topic = kwargs['entity']
 
         self.set_topic()
+        self.set_buttons('Add Chapter', lambda: self.show_wiki(factory='topic', widgets_type=False,
+                                                               preview_entity=self.topic, back='topic'),
+                         self.preview_entity)
 
     def set_topic(self) -> None:
         name = ttk.Label(
@@ -32,6 +35,3 @@ class WikiTopic(WikiTemplate):
                 description.configure(wraplength=self.widgets.winfo_width() - 25)
 
             self.widgets.bind("<Configure>", reconfigure_labels)
-
-    def set_buttons(self) -> None:
-        pass

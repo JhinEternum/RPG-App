@@ -9,11 +9,12 @@ class WikiSection(WikiTemplate):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.section = kwargs['section']
+        self.section = kwargs['entity']
         self.chapters = self.wiki.get_chapters(self.section.id)
 
         self.set_section()
-        self.set_buttons()
+        self.set_buttons('Add Chapter', lambda: self.show_wiki(factory='create_chapter', widgets_type=False,
+                                                               preview_entity=self.section, back='section'))
 
     def set_section(self) -> None:
         name = ttk.Label(
@@ -53,8 +54,5 @@ class WikiSection(WikiTemplate):
             )
             button.grid(column=0, sticky='EW')
 
-    def set_buttons(self) -> None:
-        pass
-
     def select_chapter(self, chapter: Chapter):
-        self.show_wiki(factory='chapter', chapter=chapter)
+        self.show_wiki(factory='chapter', entity=chapter, back='section', preview_entity=self.section)

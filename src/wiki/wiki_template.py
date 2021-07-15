@@ -1,5 +1,5 @@
 from src.wiki.wiki import Wiki
-from tkinter import ttk, font
+from tkinter import ttk
 
 
 class WikiTemplate:
@@ -12,11 +12,39 @@ class WikiTemplate:
         self.buttons = kwargs['buttons']
         self.bind_label = kwargs['bind_label']
 
-    def set_buttons(self, name: str, method):
-        create_button = ttk.Button(
+        self.preview_entity = kwargs['preview_entity'] if 'preview_entity' in kwargs else None
+
+        self.parent = None
+
+    def set_buttons(self, name: str, method, parent=None):
+        self.parent = parent
+
+        title_separator = ttk.Separator(
+            self.buttons
+        )
+        title_separator.grid(row=0, column=0, sticky='EW')
+
+        generic_button = ttk.Button(
             self.buttons,
             text=name,
             command=method,
             cursor='hand2'
         )
-        create_button.grid(row=0, column=0, sticky='EW')
+        generic_button.grid(row=1, column=0, sticky='EW')
+
+        back_button = ttk.Button(
+            self.buttons,
+            text='← Back',
+            command=self.back_command,
+            cursor='hand2'
+        )
+        back_button.grid(row=2, column=0, sticky='EW')
+
+    def back_command(self):
+        if self.preview_entity is None:
+            self.show_wiki(factory=self.back)
+            return
+
+        print(self.parent)
+
+        self.show_wiki(factory=self.back, entity=self.preview_entity)

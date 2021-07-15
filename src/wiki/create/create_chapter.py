@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, font
 
 from src.methods import get_text_data, popup_showinfo
+from src.wiki.section import Section
 from src.wiki.wiki_template import WikiTemplate
 
 
@@ -9,15 +10,22 @@ class CreateChapter(WikiTemplate):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        self.preview_section: Section = kwargs['preview_entity'] if 'preview_entity' in kwargs else None
+
         self.sections = [section.name for section in self.wiki.get_sections()]
 
+        section_index = 0
+
+        if self.preview_section:
+            section_index = self.sections.index(self.preview_section.name)
+
         self.name = tk.StringVar()
-        self.section_name = tk.StringVar(value=self.sections[0])
+        self.section_name = tk.StringVar(value=self.sections[section_index])
 
         self.description_entry = tk.Text
 
         self.set_widgets()
-        self.set_buttons('Create Chapter', self.create_chapter)
+        self.set_buttons('Create Chapter', self.create_chapter, self.preview_section)
 
     def set_widgets(self):
         title_label = ttk.Label(
@@ -30,7 +38,7 @@ class CreateChapter(WikiTemplate):
         title_separator = ttk.Separator(
             self.widgets
         )
-        title_separator.grid(row=1, column=0, columnspan=1, sticky='EW')
+        title_separator.grid(row=1, column=0, sticky='EW')
 
         name_label = ttk.Label(
             self.widgets,
@@ -91,4 +99,11 @@ class CreateChapter(WikiTemplate):
 
         create = self.wiki.create_chapter(name, description, section_id)
 
-        self.show_wiki(factory=self.back) if create else popup_showinfo('Error!')
+        if create is None:
+            popup_showinfo('Error!')
+            return
+
+        if self.preview_section:
+            self.show_wiki(factory=self.back, entity=self.preview_section)
+        else:
+            self.show_wiki(factory=self.back)

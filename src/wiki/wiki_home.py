@@ -55,9 +55,9 @@ class WikiHome(WikiTemplate):
             button.grid(column=0, sticky='EW')
 
     def select_section(self, section: Section) -> None:
-        self.show_wiki(factory='section', section=section)
+        self.show_wiki(factory='section', entity=section)
 
-    def set_buttons(self) -> None:
+    def set_buttons(self, name=None, method=None, parent=None) -> None:
         wiki_separator = ttk.Separator(
             self.buttons
         )
