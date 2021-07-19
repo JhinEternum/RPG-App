@@ -68,7 +68,7 @@ class HomeWidget:
 
         create_avatar_button = ttk.Button(
             buttons,
-            text='Crate Avatar',
+            text='Create Avatar',
             command=lambda: self.create_entity(container=main.create_avatar, container_class=CreateAvatar,
                                                extra_frame=self.proficiencies_level),
             cursor='hand2'
@@ -77,7 +77,7 @@ class HomeWidget:
 
         create_item_button = ttk.Button(
             buttons,
-            text='Crate Item',
+            text='Create Item',
             command=lambda: self.create_entity(container=main.create_item, container_class=CreateItem),
             cursor='hand2'
         )
@@ -86,7 +86,7 @@ class HomeWidget:
 
         create_ability_button = ttk.Button(
             buttons,
-            text='Crate Ability',
+            text='Create Ability',
             command=lambda: self.create_entity(container=main.create_ability, container_class=CreateAbility),
             cursor='hand2'
         )
@@ -94,7 +94,7 @@ class HomeWidget:
 
         create_title_button = ttk.Button(
             buttons,
-            text='Crate Title',
+            text='Create Title',
             command=lambda: self.create_entity(container=main.create_title, container_class=CreateTitle),
             cursor='hand2'
         )
@@ -102,7 +102,7 @@ class HomeWidget:
 
         create_proficiency_button = ttk.Button(
             buttons,
-            text='Crate Proficiency',
+            text='Create Proficiency',
             command=lambda: self.create_entity(container=main.create_proficiency, container_class=CreateProficiency),
             cursor='hand2'
         )

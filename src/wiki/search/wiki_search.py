@@ -1,10 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
 
+from src.wiki.wiki import Wiki
+
 
 class WikiSearch(ttk.Frame):
     def __init__(self, **kwargs):
         super().__init__(kwargs['container'])
+
+        self.wiki: Wiki = kwargs['wiki']
 
         self.type_values = ('Category', 'Section', 'Chapter', 'Topic')
 
@@ -62,4 +66,13 @@ class WikiSearch(ttk.Frame):
         title_separator.grid(row=3, columnspan=2, sticky='EW')
 
     def search(self) -> None:
-        print(self.name.get())
+        type_ = self.type.get()
+
+        if type_ == 'Category':
+            self.wiki.search_category()
+        elif type_ == 'Section':
+            self.wiki.search_section()
+        elif type_ == 'Chapter':
+            self.wiki.search_chapter()
+        else:
+            self.wiki.search_topic()

@@ -1,4 +1,3 @@
-import tkinter as tk
 from tkinter import ttk, font
 
 from src.wiki.wiki_template import WikiTemplate
@@ -12,12 +11,14 @@ class WikiChapter(WikiTemplate):
         self.chapter = kwargs['entity']
         self.topics = self.wiki.get_topics(self.chapter.id)
 
+        self.config('create_topic', False, self.chapter, 'chapter')
+
+        if self.stored_section:
+            self.back = self.stored_section['back']
+            self.preview_entity = self.stored_section['preview_entity']
+
         self.set_chapter()
-        self.set_buttons('Add Topic', lambda: self.show_wiki(factory='create_topic',
-                                                             widgets_type=False,
-                                                             preview_entity=self.chapter,
-                                                             back='chapter'
-                                                             ), self.preview_entity)
+        self.set_buttons('Add Topic', lambda: self.show_wiki(**self.config_show_wiki), self.preview_entity)
 
     def set_chapter(self) -> None:
         name = ttk.Label(
@@ -59,4 +60,12 @@ class WikiChapter(WikiTemplate):
             button.grid(column=0, sticky='EW')
 
     def select_topic(self, topic: Topic) -> None:
-        self.show_wiki(factory='topic', entity=topic)
+        stored_section = {'back': self.back, 'preview_entity': self.preview_entity}
+        config = {
+            'factory': 'topic',
+            'entity': topic,
+            'back': 'chapter',
+            'preview_entity': self.chapter,
+            'stored_section': stored_section
+        }
+        self.show_wiki(**config)

@@ -12,7 +12,11 @@ class WikiTemplate:
         self.buttons = kwargs['buttons']
         self.bind_label = kwargs['bind_label']
 
+        self.config_show_wiki = None
+
         self.preview_entity = kwargs['preview_entity'] if 'preview_entity' in kwargs else None
+
+        self.stored_section = kwargs['stored_section'] if 'stored_section' in kwargs else None
 
         self.parent = None
 
@@ -47,4 +51,13 @@ class WikiTemplate:
 
         print(self.parent)
 
-        self.show_wiki(factory=self.back, entity=self.preview_entity)
+        self.show_wiki(factory=self.back, entity=self.preview_entity, stored_section=self.stored_section)
+
+    def config(self, factory: str, widget_type: bool, preview_entity, back: str):
+        print(type(preview_entity))
+        self.config_show_wiki = {
+            'factory': factory,
+            'widgets_type': widget_type,
+            'preview_entity': preview_entity,
+            'back': back
+        }

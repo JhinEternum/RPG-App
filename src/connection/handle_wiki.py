@@ -93,6 +93,36 @@ def get_topics(chapter_id: int = 0):
     return sections
 
 
+def search_category(name: str):
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('SELECT * FROM wiki WHERE name LIKE ? ORDER BY name', ('%' + name + '%',))
+
+        categories = get_categories_attributes(cursor)
+
+    return categories
+
+
+def search_section(name: str):
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('SELECT * FROM wiki_sections WHERE name LIKE ? ORDER BY name', ('%' + name + '%',))
+
+        sections = get_categories_attributes(cursor)
+
+    return sections
+
+
+def search_chapter():
+    pass
+
+
+def search_topic():
+    pass
+
+
 def get_categories_attributes(cursor):
     return [{
         'id': row[0],

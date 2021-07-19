@@ -1,4 +1,3 @@
-import tkinter as tk
 from tkinter import ttk, font
 
 from src.wiki.wiki_template import WikiTemplate
@@ -10,10 +9,10 @@ class WikiTopic(WikiTemplate):
 
         self.topic = kwargs['entity']
 
+        self.config('topic', False, self.topic, 'topic')
+
         self.set_topic()
-        self.set_buttons('Add Chapter', lambda: self.show_wiki(factory='topic', widgets_type=False,
-                                                               preview_entity=self.topic, back='topic'),
-                         self.preview_entity)
+        self.set_buttons('Edit', lambda: self.show_wiki(**self.config_show_wiki), self.preview_entity)
 
     def set_topic(self) -> None:
         name = ttk.Label(

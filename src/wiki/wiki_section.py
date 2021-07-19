@@ -1,4 +1,3 @@
-import tkinter as tk
 from tkinter import ttk, font
 
 from src.wiki.chapter import Chapter
@@ -12,9 +11,10 @@ class WikiSection(WikiTemplate):
         self.section = kwargs['entity']
         self.chapters = self.wiki.get_chapters(self.section.id)
 
+        self.config('create_chapter', False, self.section, 'section')
+
         self.set_section()
-        self.set_buttons('Add Chapter', lambda: self.show_wiki(factory='create_chapter', widgets_type=False,
-                                                               preview_entity=self.section, back='section'))
+        self.set_buttons('Add Chapter', lambda: self.show_wiki(**self.config_show_wiki))
 
     def set_section(self) -> None:
         name = ttk.Label(

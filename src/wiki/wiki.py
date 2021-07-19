@@ -59,6 +59,10 @@ class Wiki:
         self.topic_mapping = {topic.name: topic.id for topic in self.topics}
         return self.topics
 
+    def search_category(self, name: str):
+        self.categories = [Category(**category) for category in search_category(name)]
+        return self.categories
+
     def update(self) -> None:
         self.categories = get_categories()
         self.sections = get_sections()

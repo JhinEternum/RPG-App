@@ -4,7 +4,7 @@ from tkinter import ttk, font
 from src.wiki.category import Category
 from src.wiki.section import Section
 from src.wiki.wiki_template import WikiTemplate
-from src.wiki.wiki_search import WikiSearch
+from src.wiki.search.wiki_search import WikiSearch
 
 
 class WikiHome(WikiTemplate):
@@ -15,9 +15,9 @@ class WikiHome(WikiTemplate):
         self.sections = list()
         self.categories_descriptions = list()
 
-        self.search = WikiSearch(container=self.widgets)
-        self.search.grid(row=0, column=0, sticky='EW')
-        self.search.columnconfigure(0, weight=1)
+        # self.search = WikiSearch(container=self.widgets, wiki=self.wiki, show_wiki=self.show_wiki)
+        # self.search.grid(row=0, column=0, sticky='EW')
+        # self.search.columnconfigure(0, weight=1)
 
         self.generate_home()
         self.set_buttons()
