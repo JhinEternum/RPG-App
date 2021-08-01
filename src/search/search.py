@@ -1,4 +1,4 @@
-from src.connection import get_entity
+from src.connection.database import get_entity
 from src.frames.scroll_frame import TemplateScrollFrame
 from src.search.search_widget import SearchWidget
 

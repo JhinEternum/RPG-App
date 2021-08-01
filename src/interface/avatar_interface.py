@@ -1,24 +1,20 @@
 from tkinter import ttk
 
-from src.connection import get_user_classes, get_user_items, get_user_titles, get_user_abilities, \
-    get_user_proficiencies, get_search_entities
+from src.avatar.avatar import Avatar
+from src.connection.database import get_search_entities
+from src.connection.handle_users import get_user_classes, get_user_items, get_user_titles, get_user_abilities, \
+    get_user_proficiencies
 from src.interface.interface_functions import generate_classes
+from src.interface.interface_template import InterfaceTemplate
 
 
-class AvatarInterface:
+class AvatarInterface(InterfaceTemplate):
     def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.item_types = {1: 'Armor', 2: 'Weapon'}
 
-        self.search_name = kwargs['name']
-        self.search_type = kwargs['type_']
-
-        self.entity = kwargs['entity']
-        self.back = kwargs['back']
         widgets = kwargs['widgets']
         buttons = kwargs['buttons']
-        self.bind_label = kwargs['bind_label']
-        self.show_interface = kwargs['show_interface']
-        self.edit = kwargs['edit']
 
         self.name = self.entity['name']
         self.type = self.entity['type']
@@ -99,12 +95,11 @@ class AvatarInterface:
 
         if len(self.items) > 0:
             for item in self.items:
-                item_type = self.item_types[item['type']]
-                item_name = item['name']
+                item_type = self.item_types[item.type]
 
                 btn = ttk.Button(
                     widgets,
-                    text=f'{item_type}  -  {item_name}',
+                    text=f'{item_type}  -  {item.name}',
                     command=lambda current_item=item: self.show_entity(current_item, item_type),
                     cursor='hand2'
                 )
@@ -123,11 +118,9 @@ class AvatarInterface:
 
         if len(self.titles) > 0:
             for title in self.titles:
-                title_name = title['name']
-
                 btn = ttk.Button(
                     widgets,
-                    text=f'{title_name}',
+                    text=f'{title.name}',
                     command=lambda current_title=title: self.show_entity(current_title, 'Title'),
                     cursor='hand2'
                 )
@@ -147,7 +140,6 @@ class AvatarInterface:
         if len(self.abilities) > 0:
             for ability in self.abilities:
                 ability_name = ability['name']
-
                 btn = ttk.Button(
                     widgets,
                     text=f'{ability_name}',
@@ -171,14 +163,12 @@ class AvatarInterface:
 
         if len(self.proficiency) > 0:
             for proficiency in self.proficiency:
-                proficiency_name = proficiency['name']
-                proficiency_level = proficiency['level']
-                proficiency_rank = ranks[int(proficiency['rank'])]
+                proficiency_rank = ranks[int(proficiency.rank)]
 
-                text = f'{proficiency_name} {proficiency_level}'
+                text = f'{proficiency.name} {proficiency.level}'
 
                 if proficiency_rank != 'None':
-                    text = f'{proficiency_rank} - {proficiency_name} {proficiency_level}'
+                    text = f'{proficiency_rank} - {proficiency.name} {proficiency.level}'
 
                 btn = ttk.Button(
                     widgets,

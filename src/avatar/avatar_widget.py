@@ -228,7 +228,7 @@ class AvatarWidget:
         )
         self.weapon_entry.grid(row=9, column=1, sticky='EW')
 
-        self.weapon_entry.select_set(0)
+        # self.weapon_entry.select_set(0)
 
         weapon_scrollbar = ttk.Scrollbar(widgets, orient='vertical')
         weapon_scrollbar.config(command=self.weapon_entry.yview)
@@ -255,7 +255,7 @@ class AvatarWidget:
             height=5
         )
         self.title_entry.grid(row=10, column=1, sticky='EW')
-        self.title_entry.select_set(0)
+        # self.title_entry.select_set(0)
 
         title_scrollbar = ttk.Scrollbar(widgets, orient='vertical')
         title_scrollbar.config(command=self.title_entry.yview)
@@ -283,13 +283,13 @@ class AvatarWidget:
         )
         self.ability_entry.grid(row=11, column=1, sticky='EW')
 
-        self.ability_entry.select_set(0)
+        # self.ability_entry.select_set(0)
 
         ability_scrollbar = ttk.Scrollbar(widgets, orient='vertical')
         ability_scrollbar.config(command=self.ability_entry.yview)
         ability_scrollbar.grid(row=11, column=2, sticky='NS')
 
-        self.ability_entry.config(yscrollcommand=ability_scrollbar.set)
+        # self.ability_entry.config(yscrollcommand=ability_scrollbar.set)
 
         # --- Proficiency ---
         proficiency_label = ttk.Label(
@@ -311,7 +311,7 @@ class AvatarWidget:
         )
         self.proficiency_entry.grid(row=12, column=1, sticky='EW')
 
-        self.proficiency_entry.select_set(0)
+        # self.proficiency_entry.select_set(0)
 
         proficiency_scrollbar = ttk.Scrollbar(widgets, orient='vertical')
         proficiency_scrollbar.config(command=self.proficiency_entry.yview)

@@ -1,57 +1,32 @@
 import tkinter as tk
 from tkinter import ttk, font
 
-from src.connection import get_entity
+from src.connection.database import get_entity
+from src.edit.edit_template import EditTemplate
 from src.item.item import Item
 from src.methods import get_text_data, popup_showinfo
 
 
-class EditItem:
+class EditItem(EditTemplate):
     def __init__(self, **kwargs):
-        self.search_name = kwargs['name']
-        self.search_type = kwargs['type_']
-
-        self.entity = kwargs['entity']
-        self.save = kwargs['save']
-        self.back = kwargs['back']
+        super().__init__(**kwargs)
         widgets = kwargs['widgets']
         buttons = kwargs['buttons']
-        self.bind_label = kwargs['bind_label']
-        self.show_interface = kwargs['show_interface']
-
-        self.search_parent_name = kwargs['search_parent_name'] if 'search_parent_name' in kwargs else None
-        self.parent_name = kwargs['parent_name'] if 'parent_name' in kwargs else None
-        self.parent_type = kwargs['parent_type'] if 'parent_type' in kwargs else None
-        self.go_parent = kwargs['go_parent'] if 'go_parent' in kwargs else False
-
-        self.search_result = None
-
-        print(f'parent_name {self.parent_name}')
 
         self.font = font.Font(size=11)
 
         self.types_ = ('Armor', 'Weapon')
 
-        # --- Item ---
-        self.id = self.entity['id']
-        self.item_name = self.entity['name']
-        self.item_type = self.entity['type']
-        self.item_reduction = self.entity['reduction']
-        self.item_damage = self.entity['damage']
-        self.item_range = self.entity['range']
-        self.item_health = self.entity['health']
-        self.item_area = self.entity['area']
-        self.item_effects = self.entity['effects']
-        self.item_description = self.entity['description']
+        self.entity: Item
 
         # --- Attributes ---
-        self.name = tk.StringVar(value=self.item_name)
-        self.type_ = tk.StringVar(value=self.types_[self.item_type - 1])
-        self.reduction = tk.StringVar(value=self.item_reduction)
-        self.damage = tk.StringVar(value=self.item_damage)
-        self.range_ = tk.StringVar(value=self.item_range)
-        self.health = tk.StringVar(value=self.item_health)
-        self.area = tk.StringVar(value=self.item_area)
+        self.name = tk.StringVar(value=self.entity.name)
+        self.type_ = tk.StringVar(value=self.types_[self.entity.type - 1])
+        self.reduction = tk.StringVar(value=self.entity.reduction)
+        self.damage = tk.StringVar(value=self.entity.damage)
+        self.range_ = tk.StringVar(value=self.entity.range)
+        self.health = tk.StringVar(value=self.entity.health)
+        self.area = tk.StringVar(value=self.entity.area)
 
         # --- Widgets ---
         self.effects_entry = tk.Text()
@@ -178,7 +153,7 @@ class EditItem:
         self.effects_entry = tk.Text(
             widgets,
             width=1,
-            height=10
+            height=15
         )
         self.effects_entry.grid(row=7, column=1, sticky="EW")
 
@@ -191,7 +166,7 @@ class EditItem:
 
         self.effects_entry["yscrollcommand"] = effects_scroll.set
 
-        self.effects_entry.insert(tk.END, self.item_effects)
+        self.effects_entry.insert(tk.END, self.entity.effects)
 
         # --- Description ---
 
@@ -217,10 +192,10 @@ class EditItem:
 
         self.description_entry["yscrollcommand"] = description_scroll.set
 
-        self.description_entry.insert(tk.END, self.item_description)
+        self.description_entry.insert(tk.END, self.entity.description)
 
     def set_buttons(self, buttons) -> None:
-        self.search_result = get_entity(self.item_name, self.search_type)
+        self.search_result = get_entity(self.entity.name, self.search_type)
 
         save_button = ttk.Button(
             buttons,
@@ -272,7 +247,7 @@ class EditItem:
             description=description
         )
 
-        update_item = item.update_item(self.id)
+        update_item = item.update_item(self.entity.id)
 
         self.search_result = get_entity(name, self.search_type)
 

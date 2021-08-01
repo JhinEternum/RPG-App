@@ -1,10 +1,10 @@
 from .database_connection import DatabaseConnection
-from .handle_items import *
-from .handle_users import *
-from .handle_titles import *
-from .handle_abilities import *
-from .handle_proficiencies import *
-from .attributes import get_item_attributes
+
+from src.connection import handle_proficiencies
+from src.connection import handle_titles
+from src.connection import handle_items
+from src.connection import handle_abilities
+from src.connection import handle_users
 
 
 def get_list(cursor):
@@ -39,37 +39,35 @@ search_types = {
     'Monster': 3,
     'Armor': 1,
     'Weapon': 2,
-    'Proficiency':None,
+    'Proficiency': None,
     'Title': None,
     'Ability': None,
     'Wiki': None
 }
 
 
-def get_entity(name, type_):
+def get_entity(name: str, type_):
     db_entity = search_database[type_]
 
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        print('>get_entity method<')
-
         cursor.execute(f'SELECT * FROM {db_entity} WHERE name=?', (name,))
         if db_entity == 'users':
-            entity = get_user_attributes(cursor)
+            entity = handle_users.get_user_attributes(cursor)
         elif db_entity == 'items':
-            entity = get_item_attributes(cursor)
+            entity = handle_items.get_items_attributes(cursor)[0]
         elif db_entity == 'abilities':
-            entity = get_ability_attributes(cursor)
+            entity = handle_abilities.get_abilities_attributes(cursor)[0]
         elif db_entity == 'titles':
-            entity = get_title_attributes(cursor)
+            entity = handle_titles.get_titles_attributes(cursor)[0]
         elif db_entity == 'proficiencies':
-            entity = get_proficiency_attributes(cursor)
+            entity = handle_proficiencies.get_proficiencies_attributes(cursor)[0]
 
     return entity
 
 
-def get_entity_name_by_id(id_, db_entity):
+def get_entity_name_by_id(id_: int, db_entity: str):
     if id_ == 0:
         return 'None'
 
@@ -98,10 +96,10 @@ def get_search_entities(name, type_):
                 cursor.execute(f'SELECT name FROM {db_entity} WHERE type=? ORDER BY name', (db_type,))
                 entity = get_list(cursor)
             elif db_entity == 'abilities':
-                characters_abilities = get_abilities_name_by_type(1)
-                npcs_abilities = get_abilities_name_by_type(2)
-                monsters_abilities = get_abilities_name_by_type(3)
-                items_abilities = get_abilities_name_by_type(4)
+                characters_abilities = handle_abilities.get_abilities_name_by_type(1)
+                npcs_abilities = handle_abilities.get_abilities_name_by_type(2)
+                monsters_abilities = handle_abilities.get_abilities_name_by_type(3)
+                items_abilities = handle_abilities.get_abilities_name_by_type(4)
 
                 entity.append(characters_abilities)
                 entity.append(npcs_abilities)

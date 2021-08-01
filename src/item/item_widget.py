@@ -209,7 +209,7 @@ class ItemWidget:
         self.effects_entry = tk.Text(
             widgets,
             width=1,
-            height=10
+            height=15
         )
         self.effects_entry.grid(row=13, column=1, sticky="EW")
 

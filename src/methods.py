@@ -69,6 +69,8 @@ def handle_selection_change(list_widget, total_list):
     if len(selected_indices) == 0 or (len(selected_indices) == 1 and total_list[selected_indices[0]] == 'None'):
         return []
 
+    print(f'dasd: {total_list[selected_indices[0]]}')
+
     for i in selected_indices:
         result_list.append(total_list[i])
 

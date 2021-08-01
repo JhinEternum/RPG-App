@@ -1,4 +1,4 @@
-from src.connection.handle_titles import add_title, update_title
+from src.connection import handle_titles
 
 
 class Title:
@@ -15,7 +15,7 @@ class Title:
         }
 
     def create_title(self) -> bool:
-        return add_title(self.title, self.users)
+        return handle_titles.add_title(self.title, self.users)
 
     def update_title(self, id_) -> bool:
-        return update_title(self.title, id_)
+        return handle_titles.update_title(self.title, id_)

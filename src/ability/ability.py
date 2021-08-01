@@ -1,4 +1,4 @@
-from src.connection.handle_abilities import add_ability, update_ability
+from src.connection import handle_abilities
 
 
 class Ability:
@@ -10,22 +10,11 @@ class Ability:
         self.conditions = kwargs['conditions']
         self.effects = kwargs['effects']
         self.description = kwargs['description']
-        self.type_ = kwargs['type_'] if 'type_' in kwargs else None
+        self.type = kwargs['type_'] if 'type_' in kwargs else None
         self.user = kwargs['user'] if 'user' in kwargs else None
 
-        self.ability = {
-            'name': self.name,
-            'type': self.type_,
-            'casting': self.casting,
-            'components': self.components,
-            'requirements': self.requirements,
-            'conditions': self.conditions,
-            'effects': self.effects,
-            'description': self.description
-        }
-
     def create_ability(self) -> bool:
-        return add_ability(self.ability, self.user)
+        return handle_abilities.add_ability(self, self.user)
 
     def update_ability(self, id_) -> bool:
-        return update_ability(self.ability, id_)
+        return handle_abilities.update_ability(self, id_)

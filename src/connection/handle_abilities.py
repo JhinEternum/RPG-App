@@ -1,33 +1,25 @@
-from .database import *
-from .database import DatabaseConnection
+from .database_connection import DatabaseConnection
+from src.connection import handle_items
 
 
 def add_ability(ability, user) -> bool:
-    name = ability['name']
-    type_ = ability['type']
-    casting = ability['casting']
-    components = ability['components']
-    requirements = ability['requirements']
-    conditions = ability['conditions']
-    effects = ability['effects']
-    description = ability['description']
-
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
         cursor.execute('INSERT INTO abilities (name, type, casting, components, requirements, conditions, effects, '
                        'description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                       (name, type_, casting, components, requirements, conditions, effects, description))
+                       (ability.name, ability.type, ability.casting, ability.components, ability.requirements,
+                        ability.conditions, ability.effects, ability.description))
 
         ability_id = cursor.lastrowid
 
         user_types = ['Character', 'NPC', 'Monster']
         ability_types = [1, 2, 3]
 
-        if user not in user_types and type_ in ability_types:
+        if user not in user_types and ability.type in ability_types:
             cursor.execute('INSERT INTO users_abilities (ability_id, user_name) VALUES (?, ?)', (ability_id, user))
-        elif user != 'Item' and type_ == 4:
-            item = get_specific_items(user, 0)[0]
+        elif user != 'Item' and ability.type == 4:
+            item = handle_items.get_specific_items(user, 0)[0]
             item_id = item['id']
             cursor.execute('INSERT INTO items_abilities (ability_id, item_id) VALUES (?, ?)', (ability_id, item_id))
 
@@ -35,21 +27,13 @@ def add_ability(ability, user) -> bool:
 
 
 def update_ability(ability, id_) -> bool:
-    name = ability['name']
-    type_ = ability['type']
-    casting = ability['casting']
-    components = ability['components']
-    requirements = ability['requirements']
-    conditions = ability['conditions']
-    effects = ability['effects']
-    description = ability['description']
-
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
         cursor.execute('UPDATE abilities SET name=?, casting=?, components=?, requirements=?, conditions=?,'
                        'effects=?, description=? WHERE id=?',
-                       (name, casting, components, requirements, conditions, effects, description, id_))
+                       (ability.name, ability.casting, ability.components, ability.requirements, ability.conditions,
+                        ability.effects, ability.description, id_))
 
     return True
 
@@ -114,17 +98,3 @@ def get_abilities_attributes(cursor):
         'effects': row[7],
         'description': row[8]
     } for row in cursor.fetchall()]
-
-
-def get_ability_attributes(cursor):
-    return [{
-        'id': row[0],
-        'name': row[1],
-        'type': row[2],
-        'casting': row[3],
-        'components': row[4],
-        'requirements': row[5],
-        'conditions': row[6],
-        'effects': row[7],
-        'description': row[8]
-    } for row in cursor.fetchall()][0]

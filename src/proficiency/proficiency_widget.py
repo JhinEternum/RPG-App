@@ -60,7 +60,7 @@ class ProficiencyWidget:
         self.description_entry = tk.Text(
             widgets,
             width=1,
-            height=10
+            height=15
         )
         self.description_entry.grid(row=3, column=1, sticky="EW")
 

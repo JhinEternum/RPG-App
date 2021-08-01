@@ -1,5 +1,6 @@
 from .database import *
 from .database import DatabaseConnection
+from ..title.title import Title
 
 
 def add_title(title, users_names) -> bool:
@@ -59,18 +60,9 @@ def get_titles_by_id(title_id):
 
 
 def get_titles_attributes(cursor):
-    return [{
+    return [Title(**{
         'id': row[0],
         'name': row[1],
         'description': row[2],
         'requirements': row[3]
-    } for row in cursor.fetchall()]
-
-
-def get_title_attributes(cursor):
-    return [{
-        'id': row[0],
-        'name': row[1],
-        'description': row[2],
-        'requirements': row[3]
-    } for row in cursor.fetchall()][0]
+    }) for row in cursor.fetchall()]

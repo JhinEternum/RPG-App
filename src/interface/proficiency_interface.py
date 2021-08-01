@@ -1,28 +1,14 @@
 from tkinter import ttk
 
-from src.connection import get_search_entities, get_entity
+from src.connection.database import get_search_entities, get_entity
+from src.interface.interface_template import InterfaceTemplate
 
 
-class ProficiencyInterface:
+class ProficiencyInterface(InterfaceTemplate):
     def __init__(self, **kwargs):
-        self.search_name = kwargs['name']
-        self.search_type = kwargs['type_']
-
-        self.entity = kwargs['entity']
-        self.back = kwargs['back']
+        super().__init__(**kwargs)
         widgets = kwargs['widgets']
         buttons = kwargs['buttons']
-        self.bind_label = kwargs['bind_label']
-        self.edit = kwargs['edit']
-
-        self.search_parent_name = kwargs['search_parent_name'] if 'search_parent_name' in kwargs else None
-        self.parent_name = kwargs['parent_name'] if 'parent_name' in kwargs else None
-        self.parent_type = kwargs['parent_type'] if 'parent_type' in kwargs else None
-        self.go_parent = kwargs['go_parent'] if 'go_parent' in kwargs else False
-
-        self.id = self.entity['id']
-        self.name = self.entity['name']
-        self.description = self.entity['description']
 
         self.set_widgets(widgets)
         if buttons is not None:
@@ -31,7 +17,7 @@ class ProficiencyInterface:
     def set_widgets(self, widgets) -> None:
         name = ttk.Label(
             widgets,
-            text=self.name
+            text=self.entity.name
         )
         name.grid(row=0, column=0, sticky="EW")
 
@@ -54,7 +40,7 @@ class ProficiencyInterface:
 
         description_description = ttk.Label(
             widgets,
-            text=self.description
+            text=self.entity.description
         )
         description_description.grid(column=0, sticky='EW')
 

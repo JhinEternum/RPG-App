@@ -1,37 +1,16 @@
 from tkinter import ttk
 
-from src.connection import get_search_entities, get_entity
+from src.connection.database import get_search_entities, get_entity
+from src.interface.interface_template import InterfaceTemplate
 
 
-class ItemInterface:
+class ItemInterface(InterfaceTemplate):
     def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.types_ = {1: 'Armor', 2: 'Weapon'}
 
-        self.search_name = kwargs['name']
-        self.search_type = kwargs['type_']
-
-        self.entity = kwargs['entity']
-        self.back = kwargs['back']
         widgets = kwargs['widgets']
         buttons = kwargs['buttons']
-        self.bind_label = kwargs['bind_label']
-        self.edit = kwargs['edit']
-
-        self.search_parent_name = kwargs['search_parent_name'] if 'search_parent_name' in kwargs else None
-        self.parent_name = kwargs['parent_name'] if 'parent_name' in kwargs else None
-        self.parent_type = kwargs['parent_type'] if 'parent_type' in kwargs else None
-        self.go_parent = kwargs['go_parent'] if 'go_parent' in kwargs else False
-
-        self.id = self.entity['id']
-        self.name = self.entity['name']
-        self.type = self.entity['type']
-        self.reduction = self.entity['reduction']
-        self.damage = self.entity['damage']
-        self.range = self.entity['range']
-        self.health = self.entity['health']
-        self.area = self.entity['area']
-        self.effects = self.entity['effects']
-        self.description = self.entity['description']
 
         self.set_widgets(widgets)
         if buttons is not None:
@@ -42,7 +21,7 @@ class ItemInterface:
 
         name = ttk.Label(
             widgets,
-            text=self.name
+            text=self.entity.name
         )
         name.grid(row=0, column=0, sticky="EW")
 
@@ -55,7 +34,7 @@ class ItemInterface:
 
         type_ = ttk.Label(
             widgets,
-            text='Type:  ' + self.types_[self.type]
+            text='Type:  ' + self.types_[self.entity.type]
         )
         type_.grid(row=2, column=0, sticky="EW")
 
@@ -63,7 +42,7 @@ class ItemInterface:
 
         reduction = ttk.Label(
             widgets,
-            text='Reduction:  ' + self.reduction
+            text='Reduction:  ' + self.entity.reduction
         )
         reduction.grid(row=3, column=0, sticky="EW")
 
@@ -71,7 +50,7 @@ class ItemInterface:
 
         damage = ttk.Label(
             widgets,
-            text='Damage:  ' + self.damage
+            text='Damage:  ' + self.entity.damage
         )
         damage.grid(row=4, column=0, sticky="EW")
 
@@ -79,7 +58,7 @@ class ItemInterface:
 
         range_ = ttk.Label(
             widgets,
-            text='Range:  ' + self.range
+            text='Range:  ' + self.entity.range
         )
         range_.grid(row=5, column=0, sticky="EW")
 
@@ -87,7 +66,7 @@ class ItemInterface:
 
         health = ttk.Label(
             widgets,
-            text='Health:  ' + self.health
+            text='Health:  ' + self.entity.health
         )
         health.grid(row=6, column=0, sticky="EW")
 
@@ -95,7 +74,7 @@ class ItemInterface:
 
         area = ttk.Label(
             widgets,
-            text='Area:  ' + self.area
+            text='Area:  ' + self.entity.area
         )
         area.grid(row=7, column=0, sticky="EW")
 
@@ -114,7 +93,7 @@ class ItemInterface:
 
         effects_description = ttk.Label(
             widgets,
-            text=self.effects
+            text=self.entity.effects
         )
         effects_description.grid(column=0, sticky='EW')
 
@@ -133,7 +112,7 @@ class ItemInterface:
 
         description_description = ttk.Label(
             widgets,
-            text=self.description
+            text=self.entity.description
         )
         description_description.grid(column=0, sticky='EW')
 

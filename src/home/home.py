@@ -1,4 +1,4 @@
-from src.connection import get_search_entities
+from src.connection.database import get_search_entities
 from src.frames.normal_frame import TemplateFrame
 from src.home.home_widget import HomeWidget
 from src.methods import popup_showinfo

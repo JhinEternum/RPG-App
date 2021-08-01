@@ -9,6 +9,7 @@ class WikiScrollFrame(ttk.Frame):
 
         self.kwargs = kwargs
         self.parent = kwargs['parent']
+        self.back = kwargs['back'] if 'back' in kwargs else 'home'
 
         self.home = kwargs['home']
 
@@ -16,7 +17,7 @@ class WikiScrollFrame(ttk.Frame):
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
 
-        self.template_scroll = TemplateScroll(self, **kwargs)
+        self.template_scroll = WikiTemplateScroll(self, **kwargs)
         self.template_scroll.grid(row=0, column=0, padx=10, pady=10, sticky="NSEW")
 
     def set_widgets_conf(self) -> None:
@@ -27,6 +28,11 @@ class WikiScrollFrame(ttk.Frame):
         self.template_scroll.frames.append(Entity)
 
     def set_buttons_conf(self) -> None:
+        title_separator = ttk.Separator(
+            self.template_scroll.buttons
+        )
+        title_separator.grid(column=0, columnspan=1, sticky='EW')
+
         home_button = ttk.Button(
             self.template_scroll.buttons,
             text='Home',
@@ -38,11 +44,8 @@ class WikiScrollFrame(ttk.Frame):
         for child in self.template_scroll.buttons.winfo_children():
             child.grid_configure(padx=5, pady=5, sticky='EW')
 
-    def back(self, **kwargs) -> None:
-        print('back')
 
-
-class TemplateScroll(tk.Canvas):
+class WikiTemplateScroll(tk.Canvas):
     def __init__(self, container, **kwargs):
         super().__init__(container, highlightthickness=0)
 

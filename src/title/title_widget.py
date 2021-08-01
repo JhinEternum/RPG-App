@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, font
 
-from src.connection import get_search_entities
+from src.connection.database import get_search_entities
 
 
 class TitleWidget:
@@ -170,7 +170,7 @@ class TitleWidget:
         self.description_entry = tk.Text(
             widgets,
             width=1,
-            height=10
+            height=15
         )
         self.description_entry.grid(row=7, column=1, sticky="EW")
 
