@@ -1,4 +1,4 @@
-from src.connection.handle_users import add_user, update_user
+from src.connection import handle_users
 
 
 class Avatar:
@@ -17,24 +17,8 @@ class Avatar:
         self.proficiency = kwargs['proficiency']
         self.description = kwargs['description']
 
-        self.avatar = {
-            'name': self.name,
-            'type': self.type,
-            'strength_lv': self.strength_lv,
-            'magic_lv': self.magic_lv,
-            'health': self.health,
-            'adrenaline': self.adrenaline,
-            'class': self.classes,
-            'items': self.items,
-            'physical_ability': self.physical_ability,
-            'titles': self.titles,
-            'abilities': self.abilities,
-            'proficiency': self.proficiency,
-            'description': self.description
-        }
-
     def create_character(self) -> bool:
-        return add_user(self)
+        return handle_users.add_user(self)
 
     def update_user(self, current_name) -> bool:
-        return update_user(self, current_name)
+        return handle_users.update_user(self, current_name)

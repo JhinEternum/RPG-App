@@ -1,22 +1,17 @@
 import tkinter as tk
 from tkinter import ttk, font
 
-from src.connection.database import get_search_entities
+from src.creation.create_template import CreateTemplate
 
 
-class TitleWidget:
+class TitleWidget(CreateTemplate):
     def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.create_title = kwargs['create_title'] if 'create_title' in kwargs else None
         widgets = kwargs['widgets']
         buttons = kwargs['buttons'] if 'buttons' in kwargs else None
-        self.frame_id = kwargs['frame_id'] if 'frame_id' in kwargs else ''
-        self.add_entity_frame = kwargs['add_entity_frame'] if 'add_entity_frame' in kwargs else None
 
         self.font = font.Font(size=11)
-
-        self.characters = ['None'] + get_search_entities('', 'Character')
-        self.npcs = ['None'] + get_search_entities('', 'NPC')
-        self.monsters = ['None'] + get_search_entities('', 'Monster')
 
         # --- Attributes ---
         self.title = 'Title ' + self.frame_id

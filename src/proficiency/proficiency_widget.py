@@ -1,14 +1,15 @@
 import tkinter as tk
 from tkinter import ttk
 
+from src.creation.create_template import CreateTemplate
 
-class ProficiencyWidget:
+
+class ProficiencyWidget(CreateTemplate):
     def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.create_proficiency = kwargs['create_proficiency'] if 'create_proficiency' in kwargs else None
         widgets = kwargs['widgets']
         buttons = kwargs['buttons'] if 'buttons' in kwargs else None
-        self.frame_id = kwargs['frame_id'] if 'frame_id' in kwargs else ''
-        self.add_entity_frame = kwargs['add_entity_frame'] if 'add_entity_frame' in kwargs else None
 
         # --- Attributes ---
         self.proficiency = 'Proficiency ' + self.frame_id

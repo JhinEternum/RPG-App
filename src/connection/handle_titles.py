@@ -1,4 +1,3 @@
-from .database import *
 from .database import DatabaseConnection
 from ..title.title import Title
 

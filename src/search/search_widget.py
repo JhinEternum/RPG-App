@@ -1,4 +1,3 @@
-import tkinter as tk
 from tkinter import ttk
 
 
@@ -9,8 +8,6 @@ class SearchWidget:
         self.entities = kwargs['entities']
         self.type = kwargs['type_']
         buttons = kwargs['buttons'] if 'buttons' in kwargs else None
-        # self.frame_id = kwargs['frame_id'] if 'frame_id' in kwargs else ''
-        # self.add_entity_frame = kwargs['add_entity_frame'] if 'add_entity_frame' in kwargs else None
 
         self.set_widgets_abilities(widgets) if self.type == 'Ability' else self.set_widgets(widgets)
         self.set_buttons(buttons)
@@ -40,9 +37,10 @@ class SearchWidget:
         entities_title = [
             'Characters Abilities',
             'NPCs Abilities',
-            'Monsters Abilities',
-            'Items Abilities'
+            'Monsters Abilities'
+            # 'Items Abilities'
         ]
+
         row = 0
         for entities in self.entities:
             result_entity_type = ttk.Label(

@@ -4,6 +4,7 @@ from src.connection import handle_abilities
 from src.connection import handle_titles
 from src.connection import handle_proficiencies
 from src.connection import handle_items
+from ..avatar.avatar import Avatar
 
 
 def get_list(cursor) -> list:
@@ -33,7 +34,8 @@ def add_user(avatar) -> bool:
 
         if len(avatar.abilities) > 0:
             for ability in avatar.abilities:
-                cursor.execute('INSERT INTO users_abilities (ability_id, user_name) VALUES(?, ?)', (ability, avatar.name))
+                cursor.execute('INSERT INTO users_abilities (ability_id, user_name) VALUES(?, ?)',
+                               (ability, avatar.name))
 
         if len(avatar.proficiency) > 0:
             for proficiency in avatar.proficiency:
@@ -109,7 +111,7 @@ def get_user(name: str):
 
 
 def get_user_attributes(cursor):
-    return [{
+    return [Avatar(**{
         'name': row[0],
         'type': row[1],
         'strength_lv': row[2],
@@ -118,14 +120,15 @@ def get_user_attributes(cursor):
         'adrenaline': row[5],
         'physical_ability': row[6],
         'description': row[7]
-    } for row in cursor.fetchall()][0]
+    }) for row in cursor.fetchall()][0]
 
 
 def get_user_classes(user_name: str):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute('SELECT * FROM classes WHERE id IN (SELECT class_id FROM users_classes WHERE user_name=?)',
+        cursor.execute('SELECT * FROM classes WHERE id IN (SELECT class_id FROM users_classes WHERE user_name=?) '
+                       'ORDER BY name',
                        (user_name,))
         classes = handle_classes.get_classes_attributes(cursor)
 
@@ -136,7 +139,8 @@ def get_user_items(user_name: str):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute('SELECT * FROM items WHERE id IN (SELECT item_id FROM users_items WHERE user_name=?)',
+        cursor.execute('SELECT * FROM items WHERE id IN (SELECT item_id FROM users_items WHERE user_name=?) '
+                       'ORDER BY type, name',
                        (user_name,))
         items = handle_items.get_items_attributes(cursor)
 
@@ -180,7 +184,7 @@ def get_user_proficiencies(user_name: str):
         proficiencies_id = get_user_proficiencies_attributes(cursor)
 
         cursor.execute(f'SELECT * FROM proficiencies WHERE id IN '
-                       f'(SELECT proficiency_id FROM users_proficiencies WHERE user_name=?)',
+                       f'(SELECT proficiency_id FROM users_proficiencies WHERE user_name=?) ORDER BY name',
                        (user_name,))
         proficiencies = handle_proficiencies.get_proficiencies_attributes(cursor)
 

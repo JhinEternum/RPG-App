@@ -2,16 +2,16 @@ import tkinter as tk
 from tkinter import ttk, font
 
 from src.avatar.avatar import Avatar
-from src.avatar.avatar_properties import get_entities_names, get_entities_ids, get_user_types_ids, get_proficiency_ids
+from src.avatar.avatar_properties import get_entities_names, get_entities_ids, get_user_types_ids, get_entity_ids
 from src.connection.database import get_entity, get_search_entities
 from src.connection.handle_abilities import get_abilities_by_type
 from src.connection.handle_classes import get_classes
-from src.connection.handle_items import get_specific_items
+from src.connection.handle_items import get_item_by_type
 from src.connection.handle_proficiencies import get_proficiencies
 from src.connection.handle_titles import get_titles
 from src.connection.handle_users import get_user_classes, get_user_items, get_user_titles, get_user_abilities, \
     get_user_proficiencies
-from src.edit.edit_functions import set_stored_items, set_stored_proficiencies
+from src.edit.edit_functions import set_stored_items, set_stored_entity
 from src.edit.edit_template import EditTemplate
 from src.methods import handle_selection_change, get_text_data, popup_showinfo
 
@@ -31,20 +31,19 @@ class EditAvatar(EditTemplate):
         self.classes_total = get_classes()
         self.classes = ['None'] + get_entities_names(self.classes_total)
 
-        self.armors_total = get_specific_items('', 1)
-        self.armors = ['None'] + get_entities_names(self.armors_total)
+        self.armors_total = get_item_by_type(1)
+        self.armors = ['None'] + get_entities_names(self.armors_total, True)
 
-        self.weapons_total = get_specific_items('', 2)
-        self.weapons = ['None'] + get_entities_names(self.weapons_total)
+        self.weapons_total = get_item_by_type(2)
+        self.weapons = ['None'] + get_entities_names(self.weapons_total, True)
 
         self.titles_total = get_titles()
-        self.titles = ['None'] + get_entities_names(self.titles_total)
+        self.titles = ['None'] + get_entities_names(self.titles_total, True)
 
         self.abilities_total = get_abilities_by_type(1) + get_abilities_by_type(2) + get_abilities_by_type(3)
         self.abilities = ['None'] + get_entities_names(self.abilities_total)
 
         self.proficiencies_total = get_proficiencies()
-        # self.proficiencies = ['None'] + get_entities_names(self.proficiencies_total)
         self.proficiencies = ['None'] + get_entities_names(self.proficiencies_total, True)
 
         # --- User ---
@@ -253,7 +252,7 @@ class EditAvatar(EditTemplate):
         )
         self.weapon_entry.grid(row=9, column=1, sticky="EW")
 
-        set_stored_items(self.weapon_entry, self.get_user_weapons(), self.weapons)
+        set_stored_entity(self.weapon_entry, self.get_user_weapons(), self.weapons)
 
         weapon_scrollbar = ttk.Scrollbar(widgets, orient="vertical")
         weapon_scrollbar.config(command=self.weapon_entry.yview)
@@ -281,7 +280,7 @@ class EditAvatar(EditTemplate):
         )
         self.title_entry.grid(row=10, column=1, sticky="EW")
 
-        set_stored_items(self.title_entry, self.user_titles, self.titles)
+        set_stored_entity(self.title_entry, self.user_titles, self.titles)
 
         title_scrollbar = ttk.Scrollbar(widgets, orient="vertical")
         title_scrollbar.config(command=self.title_entry.yview)
@@ -338,7 +337,7 @@ class EditAvatar(EditTemplate):
         self.proficiency_entry.grid(row=12, column=1, sticky="EW")
 
         # set_stored_items(self.proficiency_entry, self.user_proficiencies, self.proficiencies)
-        set_stored_proficiencies(self.proficiency_entry, self.user_proficiencies, self.proficiencies)
+        set_stored_entity(self.proficiency_entry, self.user_proficiencies, self.proficiencies)
 
         proficiency_scrollbar = ttk.Scrollbar(widgets, orient="vertical")
         proficiency_scrollbar.config(command=self.proficiency_entry.yview)
@@ -397,7 +396,7 @@ class EditAvatar(EditTemplate):
 
     def set_proficiencies(self) -> dict:
         proficiency = handle_selection_change(self.proficiency_entry, self.proficiencies)
-        proficiency_result = get_proficiency_ids(self.proficiencies_total, proficiency)
+        proficiency_result = get_entity_ids(self.proficiencies_total, proficiency)
 
         print(proficiency)
         print(self.user_proficiencies)
@@ -441,7 +440,7 @@ class EditAvatar(EditTemplate):
         physical_ability = self.physical_ability.get()
 
         title = handle_selection_change(self.title_entry, self.titles)
-        title_result = get_entities_ids(self.titles_total, title)
+        title_result = get_entity_ids(self.titles_total, title)
 
         ability = handle_selection_change(self.ability_entry, self.abilities)
         ability_result = get_entities_ids(self.abilities_total, ability)
@@ -452,10 +451,10 @@ class EditAvatar(EditTemplate):
             armor = []
 
         if armor:
-            items += get_entities_ids(self.armors_total, armor)
+            items += get_entity_ids(self.armors_total, armor)
 
         if weapon:
-            items += get_entities_ids(self.weapons_total, weapon)
+            items += get_entity_ids(self.weapons_total, weapon)
 
         avatar = Avatar(
             name=name,
@@ -496,10 +495,8 @@ class EditAvatar(EditTemplate):
 
     def generate_armor(self):
         for item in self.user_items:
-            item_type = item['type']
-
-            if item_type == 1:
-                return item['name']
+            if item.type == 1:
+                return item.name
 
         return 'None'
 
@@ -507,7 +504,7 @@ class EditAvatar(EditTemplate):
         weapons = []
 
         for item in self.user_items:
-            if item['type'] != 1:
+            if item.type != 1:
                 weapons.append(item)
 
         return weapons

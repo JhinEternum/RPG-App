@@ -99,12 +99,12 @@ def get_search_entities(name, type_):
                 characters_abilities = handle_abilities.get_abilities_name_by_type(1)
                 npcs_abilities = handle_abilities.get_abilities_name_by_type(2)
                 monsters_abilities = handle_abilities.get_abilities_name_by_type(3)
-                items_abilities = handle_abilities.get_abilities_name_by_type(4)
+                # items_abilities = handle_abilities.get_abilities_name_by_type(4)
 
                 entity.append(characters_abilities)
                 entity.append(npcs_abilities)
                 entity.append(monsters_abilities)
-                entity.append(items_abilities)
+                # entity.append(items_abilities)
             else:
                 cursor.execute(f'SELECT name FROM {db_entity}')
                 entity = get_list(cursor)

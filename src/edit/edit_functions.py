@@ -30,7 +30,7 @@ def set_stored_items(listbox_widget, stored_entities, total_list):
             listbox_widget.select_set(entity_index)
 
 
-def set_stored_proficiencies(listbox_widget, stored_entities, total_list):
+def set_stored_entity(listbox_widget, stored_entities, total_list):
     if type(stored_entities) != list or len(stored_entities) == 0:
         listbox_widget.select_set(0)
         return

@@ -2,10 +2,6 @@ from .database import DatabaseConnection
 from ..item.item import Item
 
 
-def get_list(cursor):
-    return [row[0] for row in cursor.fetchall()]
-
-
 def add_item(item: Item, user_name) -> bool:
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
@@ -62,14 +58,22 @@ def get_items():
     return entity
 
 
-def get_specific_items(name: str, type_):
+def get_item_by_name(name: str):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        if name == '':
-            cursor.execute('SELECT * FROM items WHERE type=? ORDER BY name', (type_,))
-        else:
-            cursor.execute('SELECT * FROM items WHERE name=? ORDER BY name', (name,))
+        cursor.execute('SELECT * FROM items WHERE name=? ORDER BY name', (name,))
+
+        entity = get_items_attributes(cursor)
+
+    return entity
+
+
+def get_item_by_type(_type: int):
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('SELECT * FROM items WHERE type=? ORDER BY name', (_type,))
 
         entity = get_items_attributes(cursor)
 

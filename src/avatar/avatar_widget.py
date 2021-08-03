@@ -4,7 +4,7 @@ from tkinter import ttk, font
 from src.avatar.avatar_properties import get_entities_names
 from src.connection.handle_abilities import get_abilities_by_type
 from src.connection.handle_classes import get_classes
-from src.connection.handle_items import get_specific_items
+from src.connection.handle_items import get_item_by_type
 from src.connection.handle_proficiencies import get_proficiencies
 from src.connection.handle_titles import get_titles
 
@@ -22,20 +22,20 @@ class AvatarWidget:
         self.classes_total = get_classes()
         self.classes = ['None'] + get_entities_names(self.classes_total)
 
-        self.armors_total = get_specific_items('', 1)
-        self.armors = ['None'] + get_entities_names(self.armors_total)
+        self.armors_total = get_item_by_type(1)
+        self.armors = ['None'] + [armor.name for armor in self.armors_total]
 
-        self.weapons_total = get_specific_items('', 2)
-        self.weapons = ['None'] + get_entities_names(self.weapons_total)
+        self.weapons_total = get_item_by_type(2)
+        self.weapons = ['None'] + [weapon.name for weapon in self.weapons_total]
 
         self.titles_total = get_titles()
-        self.titles = ['None'] + get_entities_names(self.titles_total)
+        self.titles = ['None'] + [title.name for title in self.titles_total]
 
         self.abilities_total = get_abilities_by_type(1) + get_abilities_by_type(2) + get_abilities_by_type(3)
-        self.abilities = ['None'] + get_entities_names(self.abilities_total)
+        self.abilities = ['None'] + [ability['name'] for ability in self.abilities_total]
 
         self.proficiencies_total = get_proficiencies()
-        self.proficiencies = ['None'] + get_entities_names(self.proficiencies_total)
+        self.proficiencies = ['None'] + [proficiency.name for proficiency in self.proficiencies_total]
 
         self.lv_values = ('Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5')
 
@@ -289,7 +289,7 @@ class AvatarWidget:
         ability_scrollbar.config(command=self.ability_entry.yview)
         ability_scrollbar.grid(row=11, column=2, sticky='NS')
 
-        # self.ability_entry.config(yscrollcommand=ability_scrollbar.set)
+        self.ability_entry.config(yscrollcommand=ability_scrollbar.set)
 
         # --- Proficiency ---
         proficiency_label = ttk.Label(

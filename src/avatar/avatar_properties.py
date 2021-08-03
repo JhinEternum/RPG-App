@@ -20,7 +20,7 @@ def get_entities_ids(entities: list, entities_names: list) -> list:
     return result
 
 
-def get_proficiency_ids(entities: list, entities_names: list) -> list:
+def get_entity_ids(entities: list, entities_names: list) -> list:
     result = []
 
     for entity_name in entities_names:

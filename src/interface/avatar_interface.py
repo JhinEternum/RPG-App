@@ -16,6 +16,8 @@ class AvatarInterface(InterfaceTemplate):
         widgets = kwargs['widgets']
         buttons = kwargs['buttons']
 
+        print(self.entity)
+
         self.name = self.entity['name']
         self.type = self.entity['type']
         self.strength_lv = f'Strength Level:  {self.entity["strength_lv"]}'
