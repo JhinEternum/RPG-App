@@ -4,6 +4,7 @@ import tkinter.font as font
 
 from src.ability.create_ability import CreateAbility
 from src.avatar.create_avatar import CreateAvatar
+from src.battle.battle import Battle
 from src.edit.edit import Edit
 from src.home.home import Home
 from src.interface.interface import Interface
@@ -47,6 +48,8 @@ class Game(tk.Tk):
 
         self.wiki = None
 
+        self.battle = None
+
         self.frames = {
             Home: self.home,
             CreateAvatar: self.create_avatar,
@@ -57,7 +60,8 @@ class Game(tk.Tk):
             Search: self.search,
             Interface: self.interface,
             Edit: self.edit,
-            WikiFactory: self.wiki
+            WikiFactory: self.wiki,
+            Battle: self.battle
         }
 
         self.home = Home(
@@ -65,7 +69,8 @@ class Game(tk.Tk):
             create_entity=self.create_entity_frame,
             proficiencies_level=self.show_proficiencies_level,
             show_search=self.show_search,
-            show_wiki=self.show_wiki
+            show_wiki=self.show_wiki,
+            set_battle=self.set_battle
         )
         self.home.grid(row=0, column=0, sticky='NSEW')
 
@@ -175,6 +180,24 @@ class Game(tk.Tk):
 
         self.frames[WikiFactory] = self.wiki
         self.show_frame(WikiFactory)
+
+    def set_battle(self):
+        check_frame_existence(self.battle)
+
+        print('set_battle')
+
+        battle = {
+            'parent': self,
+            'home': lambda: self.show_frame(Home),
+            'scroll': True,
+            'single_widgets': False
+        }
+
+        self.battle = Battle(**battle)
+        self.battle.grid(row=0, column=0, sticky='NSEW')
+
+        self.frames[Battle] = self.battle
+        self.show_frame(Battle)
 
 
 root = Game()

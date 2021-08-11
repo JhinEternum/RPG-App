@@ -22,16 +22,12 @@ def add_title(title, users_names) -> bool:
     return True
 
 
-def update_title(title, id_) -> bool:
-    name = title['name']
-    description = title['description']
-    requirements = title['requirements']
-
+def update_title(title: Title) -> bool:
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
         cursor.execute('UPDATE titles SET name=?, description=?, requirements=? WHERE id=?',
-                       (name, description, requirements, id_))
+                       (title.name, title.description, title.requirements, title.id))
 
     return True
 

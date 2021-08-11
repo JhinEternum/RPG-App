@@ -12,5 +12,5 @@ class Title:
     def create_title(self) -> bool:
         return handle_titles.add_title(self, self.users)
 
-    def update_title(self, id_) -> bool:
-        return handle_titles.update_title(self, id_)
+    def update_title(self) -> bool:
+        return handle_titles.update_title(self)

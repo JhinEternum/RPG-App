@@ -19,7 +19,7 @@ class ProficiencyWidget(CreateTemplate):
         self.description_entry = tk.Text()
 
         self.set_widgets(widgets)
-        if buttons is not None:
+        if buttons:
             self.set_buttons(buttons)
 
     def set_widgets(self, widgets) -> None:

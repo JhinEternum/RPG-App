@@ -108,8 +108,8 @@ class ProficiencyLevel(tk.Toplevel):
             return 1
 
         for proficiency in self.user_proficiencies:
-            if proficiency['name'] == proficiency_name:
-                return int(proficiency['level'])
+            if proficiency.name == proficiency_name:
+                return int(proficiency.level)
 
         return 1
 
@@ -118,8 +118,8 @@ class ProficiencyLevel(tk.Toplevel):
             return 0
 
         for proficiency in self.user_proficiencies:
-            if proficiency['name'] == proficiency_name:
-                return int(proficiency['rank'])
+            if proficiency.name == proficiency_name:
+                return int(proficiency.rank)
 
         return 0
 

@@ -2,8 +2,6 @@ from tkinter import ttk
 
 from src.avatar.avatar import Avatar
 from src.connection.database import get_search_entities
-from src.connection.handle_users import get_user_classes, get_user_items, get_user_titles, get_user_abilities, \
-    get_user_proficiencies
 from src.interface.interface_functions import generate_classes
 from src.interface.interface_template import InterfaceTemplate
 
@@ -18,22 +16,24 @@ class AvatarInterface(InterfaceTemplate):
 
         print(self.entity)
 
-        self.name = self.entity['name']
-        self.type = self.entity['type']
-        self.strength_lv = f'Strength Level:  {self.entity["strength_lv"]}'
-        self.magic_lv = f'Magic Level:  {self.entity["magic_lv"]}'
-        self.health = 'Health:  ' + self.entity['health']
-        self.adrenaline = 'Adrenaline:  ' + self.entity['adrenaline']
-        self.class_ = get_user_classes(self.name)
-        self.physical_ability = 'Physical Ability:  ' + self.entity['physical_ability']
-        self.items = get_user_items(self.name)
-        self.titles = get_user_titles(self.name)
-        self.abilities = get_user_abilities(self.name)
-        self.proficiency = get_user_proficiencies(self.name)
-        self.description = self.entity['description']
+        self.entity: Avatar
+
+        self.name = self.entity.name
+        self.type = self.entity.type
+        self.strength_lv = f'Strength Level:  {self.entity.strength_lv}'
+        self.magic_lv = f'Magic Level:  {self.entity.magic_lv}'
+        self.health = 'Health:  ' + self.entity.health
+        self.adrenaline = 'Adrenaline:  ' + self.entity.adrenaline
+        self._class = self.entity.classes
+        self.physical_ability = 'Physical Ability:  ' + self.entity.physical_ability
+        self.items = self.entity.items
+        self.titles = self.entity.titles
+        self.abilities = self.entity.abilities
+        self.proficiency = self.entity.proficiencies
+        self.description = self.entity.description
 
         self.set_widgets(widgets)
-        if buttons is not None:
+        if buttons:
             self.set_buttons(buttons)
 
     def set_widgets(self, widgets) -> None:
@@ -80,7 +80,7 @@ class AvatarInterface(InterfaceTemplate):
 
         class_ = ttk.Label(
             widgets,
-            text=generate_classes(self.class_)
+            text=generate_classes(self._class)
         )
         class_.grid(column=0, sticky="NSEW")
 

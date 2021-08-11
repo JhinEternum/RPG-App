@@ -4,17 +4,17 @@ from src.connection import handle_users
 class Avatar:
     def __init__(self, **kwargs):
         self.name = kwargs['name']
-        self.type = kwargs['type_'] if 'type_' in kwargs else kwargs['type']
+        self.type = kwargs['type']
         self.strength_lv = kwargs['strength_lv']
         self.magic_lv = kwargs['magic_lv']
         self.health = kwargs['health']
         self.adrenaline = kwargs['adrenaline']
-        self.classes = kwargs['class_'] if 'class_' in kwargs else kwargs['class']
-        self.items = kwargs['items']
+        self.classes = kwargs['classes'] if 'classes' in kwargs else None
+        self.items = kwargs['items'] if 'items' in kwargs else None
         self.physical_ability = kwargs['physical_ability']
-        self.titles = kwargs['titles']
-        self.abilities = kwargs['abilities']
-        self.proficiency = kwargs['proficiency']
+        self.titles = kwargs['titles'] if 'titles' in kwargs else None
+        self.abilities = kwargs['abilities'] if 'abilities' in kwargs else None
+        self.proficiencies = kwargs['proficiencies'] if 'proficiencies' in kwargs else None
         self.description = kwargs['description']
 
     def create_character(self) -> bool:

@@ -23,7 +23,7 @@ class AbilityInterface(InterfaceTemplate):
         self.description = self.entity['description']
 
         self.set_widgets(widgets)
-        if buttons is not None:
+        if buttons:
             self.set_buttons(buttons)
 
     def set_widgets(self, widgets) -> None:

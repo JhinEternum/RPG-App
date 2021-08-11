@@ -7,10 +7,6 @@ from src.connection import handle_items
 from ..avatar.avatar import Avatar
 
 
-def get_list(cursor) -> list:
-    return [row[0] for row in cursor.fetchall()]
-
-
 # --- USERS ---
 def add_user(avatar) -> bool:
     with DatabaseConnection('data.db') as connection:
@@ -37,8 +33,8 @@ def add_user(avatar) -> bool:
                 cursor.execute('INSERT INTO users_abilities (ability_id, user_name) VALUES(?, ?)',
                                (ability, avatar.name))
 
-        if len(avatar.proficiency) > 0:
-            for proficiency in avatar.proficiency:
+        if len(avatar.proficiencies) > 0:
+            for proficiency in avatar.proficiencies:
                 cursor.execute('INSERT INTO users_proficiencies (proficiency_id, level, rank, user_name) '
                                'VALUES (?, ?, ?, ?)',
                                (proficiency[0], proficiency[1], proficiency[2], avatar.name))
@@ -77,8 +73,8 @@ def update_user(avatar, current_name: str) -> bool:
                                (ability, avatar.name))
 
         cursor.execute('DELETE FROM users_proficiencies WHERE user_name=?', (current_name,))
-        if len(avatar.proficiency) > 0:
-            for proficiency in avatar.proficiency:
+        if len(avatar.proficiencies) > 0:
+            for proficiency in avatar.proficiencies:
                 cursor.execute('INSERT INTO users_proficiencies (proficiency_id, level, rank, user_name) '
                                'VALUES (?, ?, ?, ?)',
                                (proficiency[0], proficiency[1], proficiency[2], avatar.name))
@@ -86,28 +82,20 @@ def update_user(avatar, current_name: str) -> bool:
     return True
 
 
-def get_users_name(name: str, type_):
+def get_user(user_name: str):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        if name == '':
-            cursor.execute('SELECT name FROM users WHERE type=?', (type_,))
-        else:
-            cursor.execute('SELECT name FROM users WHERE name=? AND type=?', (name, type_))
+        cursor.execute('SELECT * FROM users WHERE name=?', (user_name,))
+        user = get_user_attributes(cursor)
 
-        result = get_list(cursor)
+        user.classes = get_user_classes(user_name)
+        user.items = get_user_items(user_name)
+        user.titles = get_user_titles(user_name)
+        user.abilities = get_user_abilities(user_name)
+        user.proficiencies = get_user_proficiencies(user_name)
 
-    return result
-
-
-def get_user(name: str):
-    with DatabaseConnection('data.db') as connection:
-        cursor = connection.cursor()
-
-        cursor.execute('SELECT * FROM users WHERE name=?', (name,))
-        characters = get_user_attributes(cursor)
-
-    return characters
+    return user
 
 
 def get_user_attributes(cursor):
@@ -210,7 +198,8 @@ def get_user_titles(user_name: str):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute('SELECT * FROM titles WHERE id IN (SELECT title_id FROM users_titles WHERE user_name=?)',
+        cursor.execute('SELECT * FROM titles WHERE id IN (SELECT title_id FROM users_titles WHERE user_name=?) '
+                       'ORDER BY name',
                        (user_name,))
         titles = handle_titles.get_titles_attributes(cursor)
 

@@ -5,6 +5,7 @@ from src.connection import handle_titles
 from src.connection import handle_items
 from src.connection import handle_abilities
 from src.connection import handle_users
+from .handle_users import get_user
 
 
 def get_list(cursor):
@@ -54,7 +55,7 @@ def get_entity(name: str, type_):
 
         cursor.execute(f'SELECT * FROM {db_entity} WHERE name=?', (name,))
         if db_entity == 'users':
-            entity = handle_users.get_user_attributes(cursor)
+            entity = handle_users.get_user(name)
         elif db_entity == 'items':
             entity = handle_items.get_items_attributes(cursor)[0]
         elif db_entity == 'abilities':

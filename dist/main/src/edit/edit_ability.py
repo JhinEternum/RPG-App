@@ -2,31 +2,16 @@ import tkinter as tk
 from tkinter import ttk, font
 
 from src.ability.ability import Ability
-from src.connection import get_entity
+from src.connection.database import get_entity
+from src.edit.edit_template import EditTemplate
 from src.methods import get_text_data, popup_showinfo
 
 
-class EditAbility:
+class EditAbility(EditTemplate):
     def __init__(self, **kwargs):
-        self.search_name = kwargs['name']
-        self.search_type = kwargs['type_']
-
-        self.entity = kwargs['entity']
-        self.save = kwargs['save']
-        self.back = kwargs['back']
+        super().__init__(**kwargs)
         widgets = kwargs['widgets']
         buttons = kwargs['buttons']
-        self.bind_label = kwargs['bind_label']
-        self.show_interface = kwargs['show_interface']
-
-        self.search_parent_name = kwargs['search_parent_name'] if 'search_parent_name' in kwargs else None
-        self.parent_name = kwargs['parent_name'] if 'parent_name' in kwargs else None
-        self.parent_type = kwargs['parent_type'] if 'parent_type' in kwargs else None
-        self.go_parent = kwargs['go_parent'] if 'go_parent' in kwargs else False
-
-        self.search_result = None
-
-        print(f'parent_name {self.parent_name}')
 
         self.font = font.Font(size=11)
 
@@ -162,7 +147,7 @@ class EditAbility:
         self.effects_entry = tk.Text(
             widgets,
             width=1,
-            height=10
+            height=15
         )
         self.effects_entry.grid(row=5, column=1, sticky="EW")
 

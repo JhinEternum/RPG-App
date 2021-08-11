@@ -1,40 +1,24 @@
-from src.connection.handle_users import add_user, update_user
+from src.connection import handle_users
 
 
 class Avatar:
     def __init__(self, **kwargs):
         self.name = kwargs['name']
-        self.type = kwargs['type_']
+        self.type = kwargs['type']
         self.strength_lv = kwargs['strength_lv']
         self.magic_lv = kwargs['magic_lv']
         self.health = kwargs['health']
         self.adrenaline = kwargs['adrenaline']
-        self.classes = kwargs['class_']
-        self.items = kwargs['items']
+        self.classes = kwargs['_class'] if '_class' in kwargs else None
+        self.items = kwargs['items'] if 'items' in kwargs else None
         self.physical_ability = kwargs['physical_ability']
-        self.titles = kwargs['titles']
-        self.abilities = kwargs['abilities']
-        self.proficiency = kwargs['proficiency']
+        self.titles = kwargs['titles'] if 'titles' in kwargs else None
+        self.abilities = kwargs['abilities'] if 'abilities' in kwargs else None
+        self.proficiencies = kwargs['proficiencies'] if 'proficiencies' in kwargs else None
         self.description = kwargs['description']
 
-        self.avatar = {
-            'name': self.name,
-            'type': self.type,
-            'strength_lv': self.strength_lv,
-            'magic_lv': self.magic_lv,
-            'health': self.health,
-            'adrenaline': self.adrenaline,
-            'class': self.classes,
-            'items': self.items,
-            'physical_ability': self.physical_ability,
-            'titles': self.titles,
-            'abilities': self.abilities,
-            'proficiency': self.proficiency,
-            'description': self.description
-        }
-
     def create_character(self) -> bool:
-        return add_user(self)
+        return handle_users.add_user(self)
 
     def update_user(self, current_name) -> bool:
-        return update_user(self, current_name)
+        return handle_users.update_user(self, current_name)

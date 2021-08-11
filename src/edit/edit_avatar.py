@@ -2,15 +2,13 @@ import tkinter as tk
 from tkinter import ttk, font
 
 from src.avatar.avatar import Avatar
-from src.avatar.avatar_properties import get_entities_names, get_entities_ids, get_user_types_ids, get_entity_ids
+from src.avatar.avatar_properties import get_entities_ids, get_user_types_ids, get_entity_ids
 from src.connection.database import get_entity, get_search_entities
 from src.connection.handle_abilities import get_abilities_by_type
 from src.connection.handle_classes import get_classes
 from src.connection.handle_items import get_item_by_type
 from src.connection.handle_proficiencies import get_proficiencies
 from src.connection.handle_titles import get_titles
-from src.connection.handle_users import get_user_classes, get_user_items, get_user_titles, get_user_abilities, \
-    get_user_proficiencies
 from src.edit.edit_functions import set_stored_items, set_stored_entity
 from src.edit.edit_template import EditTemplate
 from src.methods import handle_selection_change, get_text_data, popup_showinfo
@@ -29,50 +27,36 @@ class EditAvatar(EditTemplate):
         self.lv_values = ('Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5')
 
         self.classes_total = get_classes()
-        self.classes = ['None'] + get_entities_names(self.classes_total)
+        self.classes = ['None'] + [_class['name'] for _class in self.classes_total]
 
         self.armors_total = get_item_by_type(1)
-        self.armors = ['None'] + get_entities_names(self.armors_total, True)
+        self.armors = ['None'] + [armor.name for armor in self.armors_total]
 
         self.weapons_total = get_item_by_type(2)
-        self.weapons = ['None'] + get_entities_names(self.weapons_total, True)
+        self.weapons = ['None'] + [weapon.name for weapon in self.weapons_total]
 
         self.titles_total = get_titles()
-        self.titles = ['None'] + get_entities_names(self.titles_total, True)
+        self.titles = ['None'] + [title.name for title in self.titles_total]
 
         self.abilities_total = get_abilities_by_type(1) + get_abilities_by_type(2) + get_abilities_by_type(3)
-        self.abilities = ['None'] + get_entities_names(self.abilities_total)
+        self.abilities = ['None'] + [ability['name'] for ability in self.abilities_total]
 
         self.proficiencies_total = get_proficiencies()
-        self.proficiencies = ['None'] + get_entities_names(self.proficiencies_total, True)
+        self.proficiencies = ['None'] + [proficiency.name for proficiency in self.proficiencies_total]
 
-        # --- User ---
-        self.user_name = self.entity['name']
-        self.user_type_ = self.entity['type']
-        self.user_strength_lv = self.entity['strength_lv']
-        self.user_magic_lv = self.entity['magic_lv']
-        self.user_health = self.entity['health']
-        self.user_adrenaline = self.entity['adrenaline']
-        self.user_physical_ability = self.entity['physical_ability']
-        self.user_description = self.entity['description']
-
-        self.user_classes = get_user_classes(self.user_name)
-        self.user_items = get_user_items(self.user_name)
-        self.user_titles = get_user_titles(self.user_name)
-        self.user_abilities = get_user_abilities(self.user_name)
-        self.user_proficiencies = get_user_proficiencies(self.user_name)
+        self.entity: Avatar
 
         # --- Attributes ---
-        self.name = tk.StringVar(value=self.user_name)
-        self.type = tk.StringVar(value=self.type_values[self.user_type_ - 1])
-        self.strength_lv = tk.StringVar(value=self.lv_values[self.user_strength_lv - 1])
-        self.magic_lv = tk.StringVar(value=self.lv_values[self.user_magic_lv - 1])
-        self.health = tk.StringVar(value=self.user_health)
-        self.adrenaline = tk.StringVar(value=self.user_adrenaline)
+        self.name = tk.StringVar(value=self.entity.name)
+        self.type = tk.StringVar(value=self.type_values[self.entity.type - 1])
+        self.strength_lv = tk.StringVar(value=self.lv_values[self.entity.strength_lv - 1])
+        self.magic_lv = tk.StringVar(value=self.lv_values[self.entity.magic_lv - 1])
+        self.health = tk.StringVar(value=self.entity.health)
+        self.adrenaline = tk.StringVar(value=self.entity.adrenaline)
         self.class_ = tk.StringVar(value=self.classes)
         self.armor = tk.StringVar(value=self.generate_armor())
         self.weapon = tk.StringVar(value=self.weapons)
-        self.physical_ability = tk.StringVar(value=self.user_physical_ability)
+        self.physical_ability = tk.StringVar(value=self.entity.physical_ability)
         self.title = tk.StringVar(value=self.titles)
         self.ability = tk.StringVar(value=self.abilities)
         self.proficiency = tk.StringVar(value=self.proficiencies)
@@ -209,7 +193,7 @@ class EditAvatar(EditTemplate):
         )
         self.class_entry.grid(row=7, column=1, sticky="EW")
 
-        set_stored_items(self.class_entry, self.user_classes, self.classes)
+        set_stored_items(self.class_entry, self.entity.classes, self.classes)
 
         class_scrollbar = ttk.Scrollbar(widgets, orient="vertical")
         class_scrollbar.config(command=self.class_entry.yview)
@@ -280,7 +264,7 @@ class EditAvatar(EditTemplate):
         )
         self.title_entry.grid(row=10, column=1, sticky="EW")
 
-        set_stored_entity(self.title_entry, self.user_titles, self.titles)
+        set_stored_entity(self.title_entry, self.entity.titles, self.titles)
 
         title_scrollbar = ttk.Scrollbar(widgets, orient="vertical")
         title_scrollbar.config(command=self.title_entry.yview)
@@ -308,7 +292,7 @@ class EditAvatar(EditTemplate):
         )
         self.ability_entry.grid(row=11, column=1, sticky="EW")
 
-        set_stored_items(self.ability_entry, self.user_abilities, self.abilities)
+        set_stored_items(self.ability_entry, self.entity.abilities, self.abilities)
 
         ability_scrollbar = ttk.Scrollbar(widgets, orient="vertical")
         ability_scrollbar.config(command=self.ability_entry.yview)
@@ -337,7 +321,7 @@ class EditAvatar(EditTemplate):
         self.proficiency_entry.grid(row=12, column=1, sticky="EW")
 
         # set_stored_items(self.proficiency_entry, self.user_proficiencies, self.proficiencies)
-        set_stored_entity(self.proficiency_entry, self.user_proficiencies, self.proficiencies)
+        set_stored_entity(self.proficiency_entry, self.entity.proficiencies, self.proficiencies)
 
         proficiency_scrollbar = ttk.Scrollbar(widgets, orient="vertical")
         proficiency_scrollbar.config(command=self.proficiency_entry.yview)
@@ -368,7 +352,7 @@ class EditAvatar(EditTemplate):
 
         self.description_entry["yscrollcommand"] = description_scroll.set
 
-        self.description_entry.insert(tk.END, self.user_description)
+        self.description_entry.insert(tk.END, self.entity.description)
 
     def set_buttons(self, buttons) -> None:
         search_result = get_entity(self.name.get(), self.search_type)
@@ -399,7 +383,7 @@ class EditAvatar(EditTemplate):
         proficiency_result = get_entity_ids(self.proficiencies_total, proficiency)
 
         print(proficiency)
-        print(self.user_proficiencies)
+        print(self.entity.proficiencies)
         print(proficiency_result)
 
         if len(proficiency) > 0:
@@ -407,7 +391,7 @@ class EditAvatar(EditTemplate):
                 'proficiency': proficiency,
                 'proficiency_result': proficiency_result,
                 'edit': self.edit,
-                'user_proficiencies': self.user_proficiencies
+                'user_proficiencies': self.entity.proficiencies
             }
             return result
 
@@ -458,21 +442,21 @@ class EditAvatar(EditTemplate):
 
         avatar = Avatar(
             name=name,
-            type_=type_result,
+            type=type_result,
             strength_lv=strength_lv,
             magic_lv=magic_lv,
             health=health,
             adrenaline=adrenaline,
-            class_=class_result,
+            classes=class_result,
             items=items,
             physical_ability=physical_ability,
             titles=title_result,
             abilities=ability_result,
-            proficiency=proficiencies,
+            proficiencies=proficiencies,
             description=description
         )
 
-        edit_avatar = avatar.update_user(self.user_name)
+        edit_avatar = avatar.update_user(self.entity.name)
 
         search_result = get_search_entities(self.search_name, self.search_type)
         entity = get_entity(name, self.search_type)
@@ -494,17 +478,14 @@ class EditAvatar(EditTemplate):
             popup_showinfo('Something went wrong, try again!')
 
     def generate_armor(self):
-        for item in self.user_items:
+        # [item for item in self.entity.items if item.type != 1]
+
+        for item in self.entity.items:
             if item.type == 1:
                 return item.name
 
         return 'None'
 
-    def get_user_weapons(self):
-        weapons = []
-
-        for item in self.user_items:
-            if item.type != 1:
-                weapons.append(item)
-
+    def get_user_weapons(self) -> list:
+        weapons = [item for item in self.entity.items if item.type != 1]
         return weapons

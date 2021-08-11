@@ -1,4 +1,4 @@
-from src.connection import get_search_entities
+from src.connection.database import get_search_entities
 from src.frames.normal_frame import TemplateFrame
 from src.home.home_widget import HomeWidget
 from src.methods import popup_showinfo
@@ -8,19 +8,15 @@ class Home(TemplateFrame):
     def __init__(self,  **kwargs):
         super().__init__(**kwargs)
 
-        create_entity = kwargs['create_entity']
-        proficiencies_level = kwargs['proficiencies_level']
         self.show_search = kwargs['show_search']
         self.show_wiki = kwargs['show_wiki']
+        self.set_battle = kwargs['set_battle']
 
         self.home_widget = HomeWidget(
-            parent=self,
-            create_entity=create_entity,
             widgets=self.widgets,
             buttons=self.buttons,
-            proficiencies_level=proficiencies_level,
             search=self.search,
-            show_wiki=self.show_wiki
+            **kwargs
         )
         self.set_widgets_conf()
         self.set_buttons_conf()

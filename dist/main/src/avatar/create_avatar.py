@@ -1,5 +1,5 @@
 from src.avatar.avatar import Avatar
-from src.avatar.avatar_properties import get_entities_ids, get_user_types_ids
+from src.avatar.avatar_properties import get_entities_ids, get_user_types_ids, get_entity_ids
 from src.avatar.avatar_widget import AvatarWidget
 from src.frames.scroll_frame import TemplateScrollFrame
 from src.methods import handle_selection_change, get_text_data, popup_showinfo
@@ -22,7 +22,7 @@ class CreateAvatar(TemplateScrollFrame):
 
     def set_proficiencies(self) -> None:
         proficiencies = handle_selection_change(self.avatar_widget.proficiency_entry, self.avatar_widget.proficiencies)
-        proficiency_result = get_entities_ids(self.avatar_widget.proficiencies_total, proficiencies)
+        proficiency_result = get_entity_ids(self.avatar_widget.proficiencies_total, proficiencies)
 
         if len(proficiencies) > 0:
             self.proficiencies_level(
@@ -51,15 +51,15 @@ class CreateAvatar(TemplateScrollFrame):
         health = widgets.health.get()
         adrenaline = widgets.adrenaline.get()
 
-        class_ = handle_selection_change(widgets.class_entry, widgets.classes)
-        class_result = get_entities_ids(widgets.classes_total, class_)
+        _class = handle_selection_change(widgets.class_entry, widgets.classes)
+        class_result = get_entities_ids(widgets.classes_total, _class)
 
         armor = [widgets.armor.get()]
         weapon = handle_selection_change(widgets.weapon_entry, widgets.weapons)
         physical_ability = widgets.physical_ability.get()
 
         title = handle_selection_change(widgets.title_entry, widgets.titles)
-        title_result = get_entities_ids(widgets.titles_total, title)
+        title_result = get_entity_ids(widgets.titles_total, title)
 
         ability = handle_selection_change(widgets.ability_entry, widgets.abilities)
         ability_result = get_entities_ids(widgets.abilities_total, ability)
@@ -70,19 +70,19 @@ class CreateAvatar(TemplateScrollFrame):
             armor = []
 
         if armor:
-            items += get_entities_ids(widgets.armors_total, armor)
+            items += get_entity_ids(widgets.armors_total, armor)
 
         if weapon:
-            items += get_entities_ids(widgets.weapons_total, weapon)
+            items += get_entity_ids(widgets.weapons_total, weapon)
 
         avatar = Avatar(
             name=name,
-            type_=type_result,
+            type=type_result,
             strength_lv=strength_lv,
             magic_lv=magic_lv,
             health=health,
             adrenaline=adrenaline,
-            class_=class_result,
+            _class=class_result,
             items=items,
             physical_ability=physical_ability,
             titles=title_result,
@@ -94,4 +94,3 @@ class CreateAvatar(TemplateScrollFrame):
         create_avatar = avatar.create_character()
 
         self.home() if create_avatar else popup_showinfo(create_avatar)
-

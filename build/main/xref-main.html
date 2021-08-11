@@ -163,6 +163,7 @@ imports:
  &#8226;   <a href="#reprlib">reprlib</a>
  &#8226;   <a href="#src.ability.create_ability">src.ability.create_ability</a>
  &#8226;   <a href="#src.avatar.create_avatar">src.avatar.create_avatar</a>
+ &#8226;   <a href="#src.battle.battle">src.battle.battle</a>
  &#8226;   <a href="#src.edit.edit">src.edit.edit</a>
  &#8226;   <a href="#src.home.home">src.home.home</a>
  &#8226;   <a href="#src.interface.interface">src.interface.interface</a>
@@ -9529,7 +9530,9 @@ imported by:
 imported by:
     <a href="#src.ability">src.ability</a>
  &#8226;   <a href="#src.avatar">src.avatar</a>
+ &#8226;   <a href="#src.battle">src.battle</a>
  &#8226;   <a href="#src.connection">src.connection</a>
+ &#8226;   <a href="#src.creation">src.creation</a>
  &#8226;   <a href="#src.edit">src.edit</a>
  &#8226;   <a href="#src.frames">src.frames</a>
  &#8226;   <a href="#src.home">src.home</a>
@@ -9569,6 +9572,7 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#src.ability">src.ability</a>
+ &#8226;   <a href="#src.connection">src.connection</a>
  &#8226;   <a href="#src.connection.handle_abilities">src.connection.handle_abilities</a>
 
   </div>
@@ -9587,8 +9591,7 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#src.ability">src.ability</a>
- &#8226;   <a href="#src.connection.database">src.connection.database</a>
- &#8226;   <a href="#src.connection.handle_items">src.connection.handle_items</a>
+ &#8226;   <a href="#src.creation.create_template">src.creation.create_template</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.font">tkinter.font</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
@@ -9648,13 +9651,17 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#src.avatar">src.avatar</a>
+ &#8226;   <a href="#src.connection">src.connection</a>
  &#8226;   <a href="#src.connection.handle_users">src.connection.handle_users</a>
 
   </div>
   <div class="import">
 imported by:
     <a href="#src.avatar.create_avatar">src.avatar.create_avatar</a>
+ &#8226;   <a href="#src.battle.battle_system">src.battle.battle_system</a>
+ &#8226;   <a href="#src.connection.handle_users">src.connection.handle_users</a>
  &#8226;   <a href="#src.edit.edit_avatar">src.edit.edit_avatar</a>
+ &#8226;   <a href="#src.interface.avatar_interface">src.interface.avatar_interface</a>
 
   </div>
 
@@ -9727,12 +9734,112 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="src.battle"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/battle/__init__.py" type="text/plain"><tt>src.battle</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#src">src</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#src.battle.battle">src.battle.battle</a>
+ &#8226;   <a href="#src.battle.battle_search">src.battle.battle_search</a>
+ &#8226;   <a href="#src.battle.battle_system">src.battle.battle_system</a>
+ &#8226;   <a href="#src.battle.battle_template">src.battle.battle_template</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="src.battle.battle"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/battle/battle.py" type="text/plain"><tt>src.battle.battle</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#src.battle">src.battle</a>
+ &#8226;   <a href="#src.battle.battle_search">src.battle.battle_search</a>
+ &#8226;   <a href="#src.battle.battle_system">src.battle.battle_system</a>
+ &#8226;   <a href="#src.battle.battle_template">src.battle.battle_template</a>
+ &#8226;   <a href="#src.connection.database">src.connection.database</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#main.py">main.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="src.battle.battle_search"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/battle/battle_search.py" type="text/plain"><tt>src.battle.battle_search</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#src.battle">src.battle</a>
+ &#8226;   <a href="#src.battle.battle_system">src.battle.battle_system</a>
+ &#8226;   <a href="#src.connection.database">src.connection.database</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#src.battle.battle">src.battle.battle</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="src.battle.battle_system"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/battle/battle_system.py" type="text/plain"><tt>src.battle.battle_system</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#src.avatar.avatar">src.avatar.avatar</a>
+ &#8226;   <a href="#src.battle">src.battle</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#src.battle.battle">src.battle.battle</a>
+ &#8226;   <a href="#src.battle.battle_search">src.battle.battle_search</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="src.battle.battle_template"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/battle/battle_template.py" type="text/plain"><tt>src.battle.battle_template</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#src.battle">src.battle</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#src.battle.battle">src.battle.battle</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="src.connection"></a>
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/connection/__init__.py" type="text/plain"><tt>src.connection</tt></a>
 <span class="moduletype">Package</span>  <div class="import">
 imports:
     <a href="#src">src</a>
  &#8226;   <a href="#src.connection.handle_abilities">src.connection.handle_abilities</a>
+ &#8226;   <a href="#src.connection.handle_classes">src.connection.handle_classes</a>
  &#8226;   <a href="#src.connection.handle_items">src.connection.handle_items</a>
  &#8226;   <a href="#src.connection.handle_proficiencies">src.connection.handle_proficiencies</a>
  &#8226;   <a href="#src.connection.handle_titles">src.connection.handle_titles</a>
@@ -9741,7 +9848,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#src.connection.attributes">src.connection.attributes</a>
+    <a href="#src.ability.ability">src.ability.ability</a>
+ &#8226;   <a href="#src.avatar.avatar">src.avatar.avatar</a>
  &#8226;   <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.connection.database_connection">src.connection.database_connection</a>
  &#8226;   <a href="#src.connection.handle_abilities">src.connection.handle_abilities</a>
@@ -9751,36 +9859,9 @@ imported by:
  &#8226;   <a href="#src.connection.handle_titles">src.connection.handle_titles</a>
  &#8226;   <a href="#src.connection.handle_users">src.connection.handle_users</a>
  &#8226;   <a href="#src.connection.handle_wiki">src.connection.handle_wiki</a>
- &#8226;   <a href="#src.edit.edit_ability">src.edit.edit_ability</a>
- &#8226;   <a href="#src.edit.edit_avatar">src.edit.edit_avatar</a>
- &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>
- &#8226;   <a href="#src.edit.edit_proficiency">src.edit.edit_proficiency</a>
- &#8226;   <a href="#src.edit.edit_title">src.edit.edit_title</a>
- &#8226;   <a href="#src.home.home">src.home.home</a>
- &#8226;   <a href="#src.interface.ability_interface">src.interface.ability_interface</a>
- &#8226;   <a href="#src.interface.avatar_interface">src.interface.avatar_interface</a>
- &#8226;   <a href="#src.interface.item_interface">src.interface.item_interface</a>
- &#8226;   <a href="#src.interface.proficiency_interface">src.interface.proficiency_interface</a>
- &#8226;   <a href="#src.interface.title_interface">src.interface.title_interface</a>
- &#8226;   <a href="#src.search.search">src.search.search</a>
- &#8226;   <a href="#src.title.title_widget">src.title.title_widget</a>
-
-  </div>
-
-</div>
-
-<div class="node">
-  <a name="src.connection.attributes"></a>
-  <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/connection/attributes.py" type="text/plain"><tt>src.connection.attributes</tt></a>
-<span class="moduletype">SourceModule</span>  <div class="import">
-imports:
-    <a href="#src.connection">src.connection</a>
-
-  </div>
-  <div class="import">
-imported by:
-    <a href="#src.connection.database">src.connection.database</a>
- &#8226;   <a href="#src.connection.handle_users">src.connection.handle_users</a>
+ &#8226;   <a href="#src.item.item">src.item.item</a>
+ &#8226;   <a href="#src.proficiency.proficiency">src.proficiency.proficiency</a>
+ &#8226;   <a href="#src.title.title">src.title.title</a>
 
   </div>
 
@@ -9792,7 +9873,6 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#src.connection">src.connection</a>
- &#8226;   <a href="#src.connection.attributes">src.connection.attributes</a>
  &#8226;   <a href="#src.connection.database_connection">src.connection.database_connection</a>
  &#8226;   <a href="#src.connection.handle_abilities">src.connection.handle_abilities</a>
  &#8226;   <a href="#src.connection.handle_items">src.connection.handle_items</a>
@@ -9803,17 +9883,29 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#src.ability.ability_widget">src.ability.ability_widget</a>
- &#8226;   <a href="#src.connection.handle_abilities">src.connection.handle_abilities</a>
+    <a href="#src.battle.battle">src.battle.battle</a>
+ &#8226;   <a href="#src.battle.battle_search">src.battle.battle_search</a>
  &#8226;   <a href="#src.connection.handle_classes">src.connection.handle_classes</a>
  &#8226;   <a href="#src.connection.handle_items">src.connection.handle_items</a>
  &#8226;   <a href="#src.connection.handle_proficiencies">src.connection.handle_proficiencies</a>
  &#8226;   <a href="#src.connection.handle_titles">src.connection.handle_titles</a>
  &#8226;   <a href="#src.connection.handle_users">src.connection.handle_users</a>
  &#8226;   <a href="#src.connection.handle_wiki">src.connection.handle_wiki</a>
+ &#8226;   <a href="#src.creation.create_template">src.creation.create_template</a>
+ &#8226;   <a href="#src.edit.edit_ability">src.edit.edit_ability</a>
+ &#8226;   <a href="#src.edit.edit_avatar">src.edit.edit_avatar</a>
  &#8226;   <a href="#src.edit.edit_functions">src.edit.edit_functions</a>
+ &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>
+ &#8226;   <a href="#src.edit.edit_proficiency">src.edit.edit_proficiency</a>
+ &#8226;   <a href="#src.edit.edit_title">src.edit.edit_title</a>
+ &#8226;   <a href="#src.home.home">src.home.home</a>
+ &#8226;   <a href="#src.interface.ability_interface">src.interface.ability_interface</a>
+ &#8226;   <a href="#src.interface.avatar_interface">src.interface.avatar_interface</a>
  &#8226;   <a href="#src.interface.interface_functions">src.interface.interface_functions</a>
- &#8226;   <a href="#src.item.item_widget">src.item.item_widget</a>
+ &#8226;   <a href="#src.interface.item_interface">src.interface.item_interface</a>
+ &#8226;   <a href="#src.interface.proficiency_interface">src.interface.proficiency_interface</a>
+ &#8226;   <a href="#src.interface.title_interface">src.interface.title_interface</a>
+ &#8226;   <a href="#src.search.search">src.search.search</a>
 
   </div>
 
@@ -9831,6 +9923,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#src.connection.database">src.connection.database</a>
+ &#8226;   <a href="#src.connection.handle_abilities">src.connection.handle_abilities</a>
 
   </div>
 
@@ -9842,7 +9935,8 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#src.connection">src.connection</a>
- &#8226;   <a href="#src.connection.database">src.connection.database</a>
+ &#8226;   <a href="#src.connection.database_connection">src.connection.database_connection</a>
+ &#8226;   <a href="#src.connection.handle_items">src.connection.handle_items</a>
 
   </div>
   <div class="import">
@@ -9851,8 +9945,8 @@ imported by:
  &#8226;   <a href="#src.avatar.avatar_widget">src.avatar.avatar_widget</a>
  &#8226;   <a href="#src.connection">src.connection</a>
  &#8226;   <a href="#src.connection.database">src.connection.database</a>
- &#8226;   <a href="#src.connection.handle_items">src.connection.handle_items</a>
  &#8226;   <a href="#src.connection.handle_users">src.connection.handle_users</a>
+ &#8226;   <a href="#src.edit.edit_avatar">src.edit.edit_avatar</a>
  &#8226;   <a href="#src.methods">src.methods</a>
 
   </div>
@@ -9871,6 +9965,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#src.avatar.avatar_widget">src.avatar.avatar_widget</a>
+ &#8226;   <a href="#src.connection">src.connection</a>
  &#8226;   <a href="#src.connection.handle_users">src.connection.handle_users</a>
  &#8226;   <a href="#src.edit.edit_avatar">src.edit.edit_avatar</a>
 
@@ -9885,15 +9980,18 @@ imported by:
 imports:
     <a href="#src.connection">src.connection</a>
  &#8226;   <a href="#src.connection.database">src.connection.database</a>
- &#8226;   <a href="#src.connection.handle_abilities">src.connection.handle_abilities</a>
+ &#8226;   <a href="#src.item.item">src.item.item</a>
 
   </div>
   <div class="import">
 imported by:
-    <a href="#src.ability.ability_widget">src.ability.ability_widget</a>
- &#8226;   <a href="#src.avatar.avatar_widget">src.avatar.avatar_widget</a>
+    <a href="#src.avatar.avatar_widget">src.avatar.avatar_widget</a>
  &#8226;   <a href="#src.connection">src.connection</a>
  &#8226;   <a href="#src.connection.database">src.connection.database</a>
+ &#8226;   <a href="#src.connection.handle_abilities">src.connection.handle_abilities</a>
+ &#8226;   <a href="#src.connection.handle_users">src.connection.handle_users</a>
+ &#8226;   <a href="#src.creation.create_template">src.creation.create_template</a>
+ &#8226;   <a href="#src.edit.edit_avatar">src.edit.edit_avatar</a>
  &#8226;   <a href="#src.item.item">src.item.item</a>
 
   </div>
@@ -9907,6 +10005,7 @@ imported by:
 imports:
     <a href="#src.connection">src.connection</a>
  &#8226;   <a href="#src.connection.database">src.connection.database</a>
+ &#8226;   <a href="#src.proficiency.proficiency">src.proficiency.proficiency</a>
 
   </div>
   <div class="import">
@@ -9915,6 +10014,7 @@ imported by:
  &#8226;   <a href="#src.connection">src.connection</a>
  &#8226;   <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.connection.handle_users">src.connection.handle_users</a>
+ &#8226;   <a href="#src.edit.edit_avatar">src.edit.edit_avatar</a>
  &#8226;   <a href="#src.proficiency.proficiency">src.proficiency.proficiency</a>
 
   </div>
@@ -9928,6 +10028,7 @@ imported by:
 imports:
     <a href="#src.connection">src.connection</a>
  &#8226;   <a href="#src.connection.database">src.connection.database</a>
+ &#8226;   <a href="#src.title.title">src.title.title</a>
 
   </div>
   <div class="import">
@@ -9936,6 +10037,7 @@ imported by:
  &#8226;   <a href="#src.connection">src.connection</a>
  &#8226;   <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.connection.handle_users">src.connection.handle_users</a>
+ &#8226;   <a href="#src.edit.edit_avatar">src.edit.edit_avatar</a>
  &#8226;   <a href="#src.title.title">src.title.title</a>
 
   </div>
@@ -9947,14 +10049,14 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/connection/handle_users.py" type="text/plain"><tt>src.connection.handle_users</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection">src.connection</a>
- &#8226;   <a href="#src.connection.attributes">src.connection.attributes</a>
+    <a href="#src.avatar.avatar">src.avatar.avatar</a>
+ &#8226;   <a href="#src.connection">src.connection</a>
  &#8226;   <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.connection.handle_abilities">src.connection.handle_abilities</a>
  &#8226;   <a href="#src.connection.handle_classes">src.connection.handle_classes</a>
+ &#8226;   <a href="#src.connection.handle_items">src.connection.handle_items</a>
  &#8226;   <a href="#src.connection.handle_proficiencies">src.connection.handle_proficiencies</a>
  &#8226;   <a href="#src.connection.handle_titles">src.connection.handle_titles</a>
- &#8226;   <a href="#src.title.title">src.title.title</a>
 
   </div>
   <div class="import">
@@ -9986,6 +10088,43 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="src.creation"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/creation/__init__.py" type="text/plain"><tt>src.creation</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#src">src</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#src.creation.create_template">src.creation.create_template</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="src.creation.create_template"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/creation/create_template.py" type="text/plain"><tt>src.creation.create_template</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#src.connection.database">src.connection.database</a>
+ &#8226;   <a href="#src.connection.handle_items">src.connection.handle_items</a>
+ &#8226;   <a href="#src.creation">src.creation</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#src.ability.ability_widget">src.ability.ability_widget</a>
+ &#8226;   <a href="#src.item.item_widget">src.item.item_widget</a>
+ &#8226;   <a href="#src.proficiency.proficiency_widget">src.proficiency.proficiency_widget</a>
+ &#8226;   <a href="#src.title.title_widget">src.title.title_widget</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="src.edit"></a>
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/edit/__init__.py" type="text/plain"><tt>src.edit</tt></a>
 <span class="moduletype">Package</span>  <div class="import">
@@ -10001,6 +10140,7 @@ imported by:
  &#8226;   <a href="#src.edit.edit_functions">src.edit.edit_functions</a>
  &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>
  &#8226;   <a href="#src.edit.edit_proficiency">src.edit.edit_proficiency</a>
+ &#8226;   <a href="#src.edit.edit_template">src.edit.edit_template</a>
  &#8226;   <a href="#src.edit.edit_title">src.edit.edit_title</a>
  &#8226;   <a href="#src.edit.edit_widget">src.edit.edit_widget</a>
 
@@ -10032,8 +10172,9 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#src.ability.ability">src.ability.ability</a>
- &#8226;   <a href="#src.connection">src.connection</a>
+ &#8226;   <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.edit">src.edit</a>
+ &#8226;   <a href="#src.edit.edit_template">src.edit.edit_template</a>
  &#8226;   <a href="#src.methods">src.methods</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.font">tkinter.font</a>
@@ -10055,10 +10196,15 @@ imported by:
 imports:
     <a href="#src.avatar.avatar">src.avatar.avatar</a>
  &#8226;   <a href="#src.avatar.avatar_properties">src.avatar.avatar_properties</a>
- &#8226;   <a href="#src.connection">src.connection</a>
+ &#8226;   <a href="#src.connection.database">src.connection.database</a>
+ &#8226;   <a href="#src.connection.handle_abilities">src.connection.handle_abilities</a>
  &#8226;   <a href="#src.connection.handle_classes">src.connection.handle_classes</a>
+ &#8226;   <a href="#src.connection.handle_items">src.connection.handle_items</a>
+ &#8226;   <a href="#src.connection.handle_proficiencies">src.connection.handle_proficiencies</a>
+ &#8226;   <a href="#src.connection.handle_titles">src.connection.handle_titles</a>
  &#8226;   <a href="#src.edit">src.edit</a>
  &#8226;   <a href="#src.edit.edit_functions">src.edit.edit_functions</a>
+ &#8226;   <a href="#src.edit.edit_template">src.edit.edit_template</a>
  &#8226;   <a href="#src.methods">src.methods</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.font">tkinter.font</a>
@@ -10095,8 +10241,9 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/edit/edit_item.py" type="text/plain"><tt>src.edit.edit_item</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection">src.connection</a>
+    <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.edit">src.edit</a>
+ &#8226;   <a href="#src.edit.edit_template">src.edit.edit_template</a>
  &#8226;   <a href="#src.item.item">src.item.item</a>
  &#8226;   <a href="#src.methods">src.methods</a>
  &#8226;   <a href="#tkinter">tkinter</a>
@@ -10117,8 +10264,9 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/edit/edit_proficiency.py" type="text/plain"><tt>src.edit.edit_proficiency</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection">src.connection</a>
+    <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.edit">src.edit</a>
+ &#8226;   <a href="#src.edit.edit_template">src.edit.edit_template</a>
  &#8226;   <a href="#src.methods">src.methods</a>
  &#8226;   <a href="#src.proficiency.proficiency">src.proficiency.proficiency</a>
  &#8226;   <a href="#tkinter">tkinter</a>
@@ -10135,12 +10283,33 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="src.edit.edit_template"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/edit/edit_template.py" type="text/plain"><tt>src.edit.edit_template</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#src.edit">src.edit</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#src.edit.edit_ability">src.edit.edit_ability</a>
+ &#8226;   <a href="#src.edit.edit_avatar">src.edit.edit_avatar</a>
+ &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>
+ &#8226;   <a href="#src.edit.edit_proficiency">src.edit.edit_proficiency</a>
+ &#8226;   <a href="#src.edit.edit_title">src.edit.edit_title</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="src.edit.edit_title"></a>
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/edit/edit_title.py" type="text/plain"><tt>src.edit.edit_title</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection">src.connection</a>
+    <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.edit">src.edit</a>
+ &#8226;   <a href="#src.edit.edit_template">src.edit.edit_template</a>
  &#8226;   <a href="#src.methods">src.methods</a>
  &#8226;   <a href="#src.title.title">src.title.title</a>
  &#8226;   <a href="#tkinter">tkinter</a>
@@ -10259,7 +10428,7 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/home/home.py" type="text/plain"><tt>src.home.home</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection">src.connection</a>
+    <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.frames.normal_frame">src.frames.normal_frame</a>
  &#8226;   <a href="#src.home">src.home</a>
  &#8226;   <a href="#src.home.home_widget">src.home.home_widget</a>
@@ -10311,6 +10480,7 @@ imported by:
  &#8226;   <a href="#src.interface.avatar_interface">src.interface.avatar_interface</a>
  &#8226;   <a href="#src.interface.interface">src.interface.interface</a>
  &#8226;   <a href="#src.interface.interface_functions">src.interface.interface_functions</a>
+ &#8226;   <a href="#src.interface.interface_template">src.interface.interface_template</a>
  &#8226;   <a href="#src.interface.interface_widget">src.interface.interface_widget</a>
  &#8226;   <a href="#src.interface.item_interface">src.interface.item_interface</a>
  &#8226;   <a href="#src.interface.proficiency_interface">src.interface.proficiency_interface</a>
@@ -10325,8 +10495,9 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/interface/ability_interface.py" type="text/plain"><tt>src.interface.ability_interface</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection">src.connection</a>
+    <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.interface">src.interface</a>
+ &#8226;   <a href="#src.interface.interface_template">src.interface.interface_template</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
 
@@ -10344,9 +10515,11 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/interface/avatar_interface.py" type="text/plain"><tt>src.interface.avatar_interface</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection">src.connection</a>
+    <a href="#src.avatar.avatar">src.avatar.avatar</a>
+ &#8226;   <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.interface">src.interface</a>
  &#8226;   <a href="#src.interface.interface_functions">src.interface.interface_functions</a>
+ &#8226;   <a href="#src.interface.interface_template">src.interface.interface_template</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
 
@@ -10395,6 +10568,26 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="src.interface.interface_template"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/interface/interface_template.py" type="text/plain"><tt>src.interface.interface_template</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#src.interface">src.interface</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#src.interface.ability_interface">src.interface.ability_interface</a>
+ &#8226;   <a href="#src.interface.avatar_interface">src.interface.avatar_interface</a>
+ &#8226;   <a href="#src.interface.item_interface">src.interface.item_interface</a>
+ &#8226;   <a href="#src.interface.proficiency_interface">src.interface.proficiency_interface</a>
+ &#8226;   <a href="#src.interface.title_interface">src.interface.title_interface</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="src.interface.interface_widget"></a>
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/interface/interface_widget.py" type="text/plain"><tt>src.interface.interface_widget</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -10420,8 +10613,9 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/interface/item_interface.py" type="text/plain"><tt>src.interface.item_interface</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection">src.connection</a>
+    <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.interface">src.interface</a>
+ &#8226;   <a href="#src.interface.interface_template">src.interface.interface_template</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
 
@@ -10439,8 +10633,9 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/interface/proficiency_interface.py" type="text/plain"><tt>src.interface.proficiency_interface</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection">src.connection</a>
+    <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.interface">src.interface</a>
+ &#8226;   <a href="#src.interface.interface_template">src.interface.interface_template</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
 
@@ -10458,8 +10653,10 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/interface/title_interface.py" type="text/plain"><tt>src.interface.title_interface</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection">src.connection</a>
+    <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.interface">src.interface</a>
+ &#8226;   <a href="#src.interface.interface_template">src.interface.interface_template</a>
+ &#8226;   <a href="#src.title.title">src.title.title</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
 
@@ -10516,13 +10713,15 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/item/item.py" type="text/plain"><tt>src.item.item</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection.handle_items">src.connection.handle_items</a>
+    <a href="#src.connection">src.connection</a>
+ &#8226;   <a href="#src.connection.handle_items">src.connection.handle_items</a>
  &#8226;   <a href="#src.item">src.item</a>
 
   </div>
   <div class="import">
 imported by:
-    <a href="#src.edit.edit_item">src.edit.edit_item</a>
+    <a href="#src.connection.handle_items">src.connection.handle_items</a>
+ &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>
  &#8226;   <a href="#src.item.create_item">src.item.create_item</a>
 
   </div>
@@ -10534,7 +10733,7 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/item/item_widget.py" type="text/plain"><tt>src.item.item_widget</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection.database">src.connection.database</a>
+    <a href="#src.creation.create_template">src.creation.create_template</a>
  &#8226;   <a href="#src.item">src.item</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.font">tkinter.font</a>
@@ -10626,13 +10825,15 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/proficiency/proficiency.py" type="text/plain"><tt>src.proficiency.proficiency</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection.handle_proficiencies">src.connection.handle_proficiencies</a>
+    <a href="#src.connection">src.connection</a>
+ &#8226;   <a href="#src.connection.handle_proficiencies">src.connection.handle_proficiencies</a>
  &#8226;   <a href="#src.proficiency">src.proficiency</a>
 
   </div>
   <div class="import">
 imported by:
-    <a href="#src.edit.edit_proficiency">src.edit.edit_proficiency</a>
+    <a href="#src.connection.handle_proficiencies">src.connection.handle_proficiencies</a>
+ &#8226;   <a href="#src.edit.edit_proficiency">src.edit.edit_proficiency</a>
  &#8226;   <a href="#src.proficiency.create_proficiency">src.proficiency.create_proficiency</a>
 
   </div>
@@ -10662,7 +10863,8 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/proficiency/proficiency_widget.py" type="text/plain"><tt>src.proficiency.proficiency_widget</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.proficiency">src.proficiency</a>
+    <a href="#src.creation.create_template">src.creation.create_template</a>
+ &#8226;   <a href="#src.proficiency">src.proficiency</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
 
@@ -10697,7 +10899,7 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/search/search.py" type="text/plain"><tt>src.search.search</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection">src.connection</a>
+    <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.frames.scroll_frame">src.frames.scroll_frame</a>
  &#8226;   <a href="#src.search">src.search</a>
  &#8226;   <a href="#src.search.search_widget">src.search.search_widget</a>
@@ -10773,14 +10975,16 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/title/title.py" type="text/plain"><tt>src.title.title</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection.handle_titles">src.connection.handle_titles</a>
+    <a href="#src.connection">src.connection</a>
+ &#8226;   <a href="#src.connection.handle_titles">src.connection.handle_titles</a>
  &#8226;   <a href="#src.title">src.title</a>
 
   </div>
   <div class="import">
 imported by:
-    <a href="#src.connection.handle_users">src.connection.handle_users</a>
+    <a href="#src.connection.handle_titles">src.connection.handle_titles</a>
  &#8226;   <a href="#src.edit.edit_title">src.edit.edit_title</a>
+ &#8226;   <a href="#src.interface.title_interface">src.interface.title_interface</a>
  &#8226;   <a href="#src.title.create_title">src.title.create_title</a>
 
   </div>
@@ -10792,7 +10996,7 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPG-Final/src/title/title_widget.py" type="text/plain"><tt>src.title.title_widget</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.connection">src.connection</a>
+    <a href="#src.creation.create_template">src.creation.create_template</a>
  &#8226;   <a href="#src.title">src.title</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.font">tkinter.font</a>
@@ -11926,6 +12130,10 @@ imported by:
     <a href="#main.py">main.py</a>
  &#8226;   <a href="#src.ability.ability_widget">src.ability.ability_widget</a>
  &#8226;   <a href="#src.avatar.avatar_widget">src.avatar.avatar_widget</a>
+ &#8226;   <a href="#src.battle.battle">src.battle.battle</a>
+ &#8226;   <a href="#src.battle.battle_search">src.battle.battle_search</a>
+ &#8226;   <a href="#src.battle.battle_system">src.battle.battle_system</a>
+ &#8226;   <a href="#src.battle.battle_template">src.battle.battle_template</a>
  &#8226;   <a href="#src.edit.edit_ability">src.edit.edit_ability</a>
  &#8226;   <a href="#src.edit.edit_avatar">src.edit.edit_avatar</a>
  &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>
@@ -12063,6 +12271,10 @@ imported by:
     <a href="#main.py">main.py</a>
  &#8226;   <a href="#src.ability.ability_widget">src.ability.ability_widget</a>
  &#8226;   <a href="#src.avatar.avatar_widget">src.avatar.avatar_widget</a>
+ &#8226;   <a href="#src.battle.battle">src.battle.battle</a>
+ &#8226;   <a href="#src.battle.battle_search">src.battle.battle_search</a>
+ &#8226;   <a href="#src.battle.battle_system">src.battle.battle_system</a>
+ &#8226;   <a href="#src.battle.battle_template">src.battle.battle_template</a>
  &#8226;   <a href="#src.edit.edit_ability">src.edit.edit_ability</a>
  &#8226;   <a href="#src.edit.edit_avatar">src.edit.edit_avatar</a>
  &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>

@@ -30,6 +30,18 @@ def set_stored_items(listbox_widget, stored_entities, total_list):
             listbox_widget.select_set(entity_index)
 
 
+def set_stored_entity(listbox_widget, stored_entities, total_list):
+    if type(stored_entities) != list or len(stored_entities) == 0:
+        listbox_widget.select_set(0)
+        return
+
+    for entity in stored_entities:
+        if entity in stored_entities:
+            entity_name = entity.name
+            entity_index = total_list.index(entity_name)
+            listbox_widget.select_set(entity_index)
+
+
 def interface(name, type_, show_interface, search_name, search_type):
     new_entity = get_entity(name, type_)
     show_interface(new_entity, type_, search_name, search_type)

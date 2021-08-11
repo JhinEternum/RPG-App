@@ -1,5 +1,5 @@
-from .database import *
 from .database import DatabaseConnection
+from ..title.title import Title
 
 
 def add_title(title, users_names) -> bool:
@@ -22,16 +22,12 @@ def add_title(title, users_names) -> bool:
     return True
 
 
-def update_title(title, id_) -> bool:
-    name = title['name']
-    description = title['description']
-    requirements = title['requirements']
-
+def update_title(title: Title) -> bool:
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
         cursor.execute('UPDATE titles SET name=?, description=?, requirements=? WHERE id=?',
-                       (name, description, requirements, id_))
+                       (title.name, title.description, title.requirements, title.id))
 
     return True
 
@@ -59,18 +55,9 @@ def get_titles_by_id(title_id):
 
 
 def get_titles_attributes(cursor):
-    return [{
+    return [Title(**{
         'id': row[0],
         'name': row[1],
         'description': row[2],
         'requirements': row[3]
-    } for row in cursor.fetchall()]
-
-
-def get_title_attributes(cursor):
-    return [{
-        'id': row[0],
-        'name': row[1],
-        'description': row[2],
-        'requirements': row[3]
-    } for row in cursor.fetchall()][0]
+    }) for row in cursor.fetchall()]

@@ -18,14 +18,8 @@ class EditTitle(EditTemplate):
 
         self.font = font.Font(size=11)
 
-        # --- Title ---
-        self.id = self.entity['id']
-        self.title_name = self.entity['name']
-        self.title_requirements = self.entity['requirements']
-        self.title_description = self.entity['description']
-
         # --- Attributes ---
-        self.name = tk.StringVar(value=self.title_name)
+        self.name = tk.StringVar(value=self.entity.name)
 
         # --- Widgets ---
         self.requirements_entry = tk.Text()
@@ -73,7 +67,7 @@ class EditTitle(EditTemplate):
 
         self.requirements_entry["yscrollcommand"] = requirements_scroll.set
 
-        self.requirements_entry.insert(tk.END, self.title_requirements)
+        self.requirements_entry.insert(tk.END, self.entity.requirements)
 
         # --- Description ---
 
@@ -99,10 +93,10 @@ class EditTitle(EditTemplate):
 
         self.description_entry["yscrollcommand"] = description_scroll.set
 
-        self.description_entry.insert(tk.END, self.title_description)
+        self.description_entry.insert(tk.END, self.entity.description)
 
     def set_buttons(self, buttons) -> None:
-        self.search_result = get_entity(self.title_name, self.search_type)
+        self.search_result = get_entity(self.entity.name, self.search_type)
 
         save_button = ttk.Button(
             buttons,
@@ -135,12 +129,13 @@ class EditTitle(EditTemplate):
         description = get_text_data(self.description_entry)
 
         title = Title(
+            id=self.entity.id,
             name=name,
             requirements=requirements,
             description=description
         )
 
-        edit_title = title.update_title(self.id)
+        edit_title = title.update_title()
 
         self.search_result = get_entity(name, self.search_type)
 

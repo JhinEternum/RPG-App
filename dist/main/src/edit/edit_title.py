@@ -1,43 +1,25 @@
 import tkinter as tk
 from tkinter import ttk, font
 
-from src.connection import get_entity
+from src.connection.database import get_entity
+from src.edit.edit_template import EditTemplate
 from src.methods import get_text_data, popup_showinfo
 from src.title.title import Title
 
 
-class EditTitle:
+class EditTitle(EditTemplate):
     def __init__(self, **kwargs):
-        self.search_name = kwargs['name']
-        self.search_type = kwargs['type_']
+        super().__init__(**kwargs)
 
-        self.entity = kwargs['entity']
-        self.save = kwargs['save']
-        self.back = kwargs['back']
         widgets = kwargs['widgets']
         buttons = kwargs['buttons']
-        self.bind_label = kwargs['bind_label']
-        self.show_interface = kwargs['show_interface']
-
-        self.search_parent_name = kwargs['search_parent_name'] if 'search_parent_name' in kwargs else None
-        self.parent_name = kwargs['parent_name'] if 'parent_name' in kwargs else None
-        self.parent_type = kwargs['parent_type'] if 'parent_type' in kwargs else None
-        self.go_parent = kwargs['go_parent'] if 'go_parent' in kwargs else False
-
-        self.search_result = None
 
         print(f'parent_name {self.parent_name}')
 
         self.font = font.Font(size=11)
 
-        # --- Title ---
-        self.id = self.entity['id']
-        self.title_name = self.entity['name']
-        self.title_requirements = self.entity['requirements']
-        self.title_description = self.entity['description']
-
         # --- Attributes ---
-        self.name = tk.StringVar(value=self.title_name)
+        self.name = tk.StringVar(value=self.entity.name)
 
         # --- Widgets ---
         self.requirements_entry = tk.Text()
@@ -85,7 +67,7 @@ class EditTitle:
 
         self.requirements_entry["yscrollcommand"] = requirements_scroll.set
 
-        self.requirements_entry.insert(tk.END, self.title_requirements)
+        self.requirements_entry.insert(tk.END, self.entity.requirements)
 
         # --- Description ---
 
@@ -98,7 +80,7 @@ class EditTitle:
         self.description_entry = tk.Text(
             widgets,
             width=1,
-            height=10
+            height=15
         )
         self.description_entry.grid(row=2, column=1, sticky="EW")
 
@@ -111,10 +93,10 @@ class EditTitle:
 
         self.description_entry["yscrollcommand"] = description_scroll.set
 
-        self.description_entry.insert(tk.END, self.title_description)
+        self.description_entry.insert(tk.END, self.entity.description)
 
     def set_buttons(self, buttons) -> None:
-        self.search_result = get_entity(self.title_name, self.search_type)
+        self.search_result = get_entity(self.entity.name, self.search_type)
 
         save_button = ttk.Button(
             buttons,
@@ -147,12 +129,13 @@ class EditTitle:
         description = get_text_data(self.description_entry)
 
         title = Title(
+            id=self.entity.id,
             name=name,
             requirements=requirements,
             description=description
         )
 
-        edit_title = title.update_title(self.id)
+        edit_title = title.update_title()
 
         self.search_result = get_entity(name, self.search_type)
 

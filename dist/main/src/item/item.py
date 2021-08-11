@@ -1,33 +1,22 @@
-from src.connection.handle_items import add_item, update_item
+from src.connection import handle_items
 
 
 class Item:
     def __init__(self, **kwargs):
         self.name = kwargs['name']
-        self.type_ = kwargs['type_']
+        self.type = kwargs['type_'] if 'type_' in kwargs else kwargs['type']
         self.reduction = kwargs['reduction']
         self.damage = kwargs['damage']
-        self.range_ = kwargs['range_']
+        self.range = kwargs['range_'] if 'range_' in kwargs else kwargs['range']
         self.health = kwargs['health']
         self.area = kwargs['area']
         self.effects = kwargs['effects']
         self.description = kwargs['description']
+        self.id = kwargs['id'] if 'id' in kwargs else None
         self.user = kwargs['user'] if 'user' in kwargs else None
 
-        self.item = {
-            'name': self.name,
-            'type': self.type_,
-            'reduction': self.reduction,
-            'damage': self.damage,
-            'range': self.range_,
-            'health': self.health,
-            'area': self.area,
-            'effects': self.effects,
-            'description': self.description
-        }
-
     def create_item(self) -> bool:
-        return add_item(self.item, self.user)
+        return handle_items.add_item(self, self.user)
 
     def update_item(self, id_) -> bool:
-        return update_item(self.item, id_)
+        return handle_items.update_item(self, id_)

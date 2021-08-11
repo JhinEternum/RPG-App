@@ -1,4 +1,4 @@
-from src.connection.handle_titles import add_title, update_title
+from src.connection import handle_titles
 
 
 class Title:
@@ -6,16 +6,11 @@ class Title:
         self.name = kwargs['name']
         self.requirements = kwargs['requirements']
         self.description = kwargs['description']
+        self.id = kwargs['id'] if 'id' in kwargs else None
         self.users = kwargs['users'] if 'users' in kwargs else None
 
-        self.title = {
-            'name': self.name,
-            'requirements': self.requirements,
-            'description': self.description
-        }
-
     def create_title(self) -> bool:
-        return add_title(self.title, self.users)
+        return handle_titles.add_title(self, self.users)
 
-    def update_title(self, id_) -> bool:
-        return update_title(self.title, id_)
+    def update_title(self) -> bool:
+        return handle_titles.update_title(self)

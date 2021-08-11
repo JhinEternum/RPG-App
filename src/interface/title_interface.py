@@ -2,6 +2,7 @@ from tkinter import ttk
 
 from src.connection.database import get_search_entities, get_entity
 from src.interface.interface_template import InterfaceTemplate
+from src.title.title import Title
 
 
 class TitleInterface(InterfaceTemplate):
@@ -10,19 +11,16 @@ class TitleInterface(InterfaceTemplate):
         widgets = kwargs['widgets']
         buttons = kwargs['buttons']
 
-        self.id = self.entity['id']
-        self.name = self.entity['name']
-        self.requirements = self.entity['requirements']
-        self.description = self.entity['description']
-
         self.set_widgets(widgets)
         if buttons is not None:
             self.set_buttons(buttons)
 
     def set_widgets(self, widgets) -> None:
+        self.entity: Title
+
         name = ttk.Label(
             widgets,
-            text=self.name
+            text=self.entity.name
         )
         name.grid(row=0, column=0, sticky="EW")
 
@@ -46,7 +44,7 @@ class TitleInterface(InterfaceTemplate):
 
         requirements_description = ttk.Label(
             widgets,
-            text=self.requirements
+            text=self.entity.requirements
         )
         requirements_description.grid(column=0, sticky="EW")
 
@@ -65,7 +63,7 @@ class TitleInterface(InterfaceTemplate):
 
         description_description = ttk.Label(
             widgets,
-            text=self.description
+            text=self.entity.description
         )
         description_description.grid(column=0, sticky='EW')
 
@@ -111,4 +109,3 @@ class TitleInterface(InterfaceTemplate):
             cursor='hand2'
         )
         back_button.grid(row=2)
-

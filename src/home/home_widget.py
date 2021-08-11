@@ -16,6 +16,7 @@ class HomeWidget:
         buttons = kwargs['buttons']
         self.proficiencies_level = kwargs['proficiencies_level'] if 'proficiencies_level' in kwargs else None
         self.search = kwargs['search']
+        self.set_battle = kwargs['set_battle']
         self.show_wiki = kwargs['show_wiki']
 
         self.type_values = ('Character', 'NPC', 'Monster', 'Proficiency', 'Armor', 'Weapon', 'Title', 'Ability', 'Wiki')
@@ -57,7 +58,7 @@ class HomeWidget:
         type_entry.grid(row=1, column=1)
 
     def set_buttons(self, buttons) -> None:
-        main = self.parent.parent
+        main = self.parent
         search_button = ttk.Button(
             buttons,
             text='Search',
@@ -108,10 +109,18 @@ class HomeWidget:
         )
         create_proficiency_button.grid(row=5)
 
+        battle_button = ttk.Button(
+            buttons,
+            text='Battle System',
+            command=self.set_battle,
+            cursor='hand2'
+        )
+        battle_button.grid(row=6)
+
         wiki_button = ttk.Button(
             buttons,
             text='Wiki',
             command=lambda: self.show_wiki(factory='home'),
             cursor='hand2'
         )
-        wiki_button.grid(row=6)
+        wiki_button.grid(row=7)

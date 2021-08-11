@@ -13,7 +13,7 @@ class ItemInterface(InterfaceTemplate):
         buttons = kwargs['buttons']
 
         self.set_widgets(widgets)
-        if buttons is not None:
+        if buttons:
             self.set_buttons(buttons)
 
     def set_widgets(self, widgets) -> None:

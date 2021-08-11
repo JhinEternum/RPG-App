@@ -1,26 +1,17 @@
 import tkinter as tk
 from tkinter import ttk, font
 
-from src.connection.database import get_search_entities
-from src.connection.handle_items import get_items
+from src.creation.create_template import CreateTemplate
 
 
-class AbilityWidget:
+class AbilityWidget(CreateTemplate):
     def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.create_ability = kwargs['create_ability'] if 'create_ability' in kwargs else None
         widgets = kwargs['widgets']
         buttons = kwargs['buttons'] if 'buttons' in kwargs else None
-        self.frame_id = kwargs['frame_id'] if 'frame_id' in kwargs else ''
-        self.add_entity_frame = kwargs['add_entity_frame'] if 'add_entity_frame' in kwargs else None
 
         self.font = font.Font(size=11)
-
-        self.types_ = ('None', 'Character', 'NPC', 'Monster')
-
-        self.characters = ['None', 'Character'] + get_search_entities('', 'Character')
-        self.npcs = ['None', 'NPC'] + get_search_entities('', 'NPC')
-        self.monsters = ['None', 'Monster'] + get_search_entities('', 'Monster')
-        self.items = ['None', 'Item'] + [items['name'] for items in get_items()]
 
         # --- Attributes ---
         self.ability = 'Ability ' + self.frame_id
@@ -45,7 +36,7 @@ class AbilityWidget:
         self.description_entry = tk.Text()
 
         self.set_widgets(widgets)
-        if buttons is not None:
+        if buttons:
             self.set_buttons(buttons)
 
     def set_widgets(self, widgets):
@@ -214,7 +205,7 @@ class AbilityWidget:
         self.effects_entry = tk.Text(
             widgets,
             width=1,
-            height=10
+            height=15
         )
         self.effects_entry.grid(row=11, column=1, sticky="EW")
 
