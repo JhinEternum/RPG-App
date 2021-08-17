@@ -1,6 +1,7 @@
 from tkinter import Toplevel
 import tkinter as tk
 from tkinter import ttk
+from tkinter import Menu
 
 from src.avatar.avatar import Avatar
 from src.methods import get_text_data
@@ -18,15 +19,19 @@ class BattleSystem(Toplevel):
         self.title('Battle System')
         self.focus()
 
+        menu_bar = Menu(self)
+        menu = Menu(menu_bar, tearoff=0)
+        menu.add_command(label="New", command=self.attack)
+        menu_bar.add_cascade(label="File", menu=menu)
+        self.config(menu=menu_bar)
+
         self.entity: Avatar = kwargs['entity']
 
         self.hp = self.entity.health
         self.adrenaline = self.entity.adrenaline
-        self.reduction = tk.StringVar(value='0')
 
         self.current_hp = int(self.generate_total_health())
         self.current_adr = int(self.adrenaline)
-        self.damage = tk.StringVar()
         self.health_entry = ttk.Label()
         self.adrenaline_reduction = ttk.Entry()
         self.damage_entry = ttk.Entry()
@@ -89,22 +94,17 @@ class BattleSystem(Toplevel):
         )
         self.health_entry.grid(row=2, column=1)
 
-        self.damage_entry = ttk.Entry(
-            self.frame,
-            textvariable=self.damage
-        )
+        self.damage_entry = ttk.Entry(self.frame)
         self.damage_entry.grid(row=2, column=2)
         self.damage_entry.bind('<Return>', self.attack)
 
-        self.reduction_entry = ttk.Entry(
-            self.frame,
-            textvariable=self.reduction
-        )
+        self.reduction_entry = ttk.Entry(self.frame)
         self.reduction_entry.grid(row=2, column=3)
+        self.reduction_entry.insert(0, '0')
 
         damage_button = ttk.Button(
             self.frame,
-            text='Calculate',
+            text='⚔ Attack',
             command=self.attack,
             cursor='hand2'
         )
@@ -122,16 +122,13 @@ class BattleSystem(Toplevel):
         )
         self.adrenaline_entry.grid(row=4, column=1)
 
-        self.adrenaline_reduction = ttk.Entry(
-            self.frame,
-            textvariable=self.adrenaline
-        )
+        self.adrenaline_reduction = ttk.Entry(self.frame)
         self.adrenaline_reduction.grid(row=4, column=2)
         self.adrenaline_reduction.bind('<Return>', self.reduce_adrenaline)
 
         adrenaline_button = ttk.Button(
             self.frame,
-            text='Reduce',
+            text='⏳ Reduce',
             command=self.reduce_adrenaline,
             cursor='hand2'
         )
@@ -197,8 +194,8 @@ class BattleSystem(Toplevel):
         self.damage_entry.delete(0, 'end')
 
     def attack(self, event=None):
-        damage = int(self.damage.get())
-        reduction = int(self.reduction.get())
+        damage = int(self.damage_entry.get())
+        reduction = int(self.reduction_entry.get()) if self.reduction_entry.get() != '' else 0
 
         if damage < 0:
             print(damage)
@@ -211,6 +208,7 @@ class BattleSystem(Toplevel):
             self.current_hp -= calculate if calculate > 0 else 0
 
         self.health_entry['text'] = str(self.current_hp)
+        self.damage_entry.delete(0, tk.END)
 
         self.config_log('d', damage)
 
@@ -225,6 +223,7 @@ class BattleSystem(Toplevel):
             self.current_adr -= a_damage
 
         self.adrenaline_entry['text'] = str(self.current_adr)
+        self.adrenaline_reduction.delete(0, tk.END)
 
         self.config_log('a', a_damage)
 

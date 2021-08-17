@@ -59,7 +59,7 @@ class Battle(BattleTemplateFrame):
 
         search_button = ttk.Button(
             self.template_scroll.widgets,
-            text='Search',
+            text='🔎 Search',
             command=self.search,
             cursor='hand2'
         )

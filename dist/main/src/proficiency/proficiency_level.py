@@ -59,6 +59,8 @@ class ProficiencyLevel(tk.Toplevel):
             proficiency_variable = tk.StringVar(value=self.levels[self.set_level(proficiency) - 1])
             rank_variable = tk.StringVar(value=self.ranks[self.set_rank(proficiency)])
 
+            print('asdasdasdasdasd'+proficiency_variable.get())
+
             proficiency_label = ttk.Label(
                 proficiency_frame,
                 text=proficiency

@@ -1,7 +1,10 @@
+import tkinter as tk
 from tkinter import ttk
 
 from src.avatar.avatar import Avatar
 from src.connection.database import get_search_entities
+from src.images.image import get_hp, get_strength, get_magic, get_adrenaline, get_physical, get_armors, get_weapons, \
+    get_avatar
 from src.interface.interface_functions import generate_classes
 from src.interface.interface_template import InterfaceTemplate
 
@@ -16,16 +19,27 @@ class AvatarInterface(InterfaceTemplate):
 
         print(self.entity)
 
+        self.avatar_icon = get_avatar()
+        self.hp_icon = get_hp()
+        self.strength_icon = get_strength()
+        self.magic_icon = get_magic()
+        self.adrenaline_icon = get_adrenaline()
+        self.physical_icon = get_physical()
+        self.armors_icon = get_armors()
+        self.weapons_icon = get_weapons()
+
+        self.item_icons = {1: self.armors_icon, 2: self.weapons_icon}
+
         self.entity: Avatar
 
-        self.name = self.entity.name
+        self.name = '  ' + self.entity.name
         self.type = self.entity.type
-        self.strength_lv = f'Strength Level:  {self.entity.strength_lv}'
-        self.magic_lv = f'Magic Level:  {self.entity.magic_lv}'
-        self.health = 'Health:  ' + self.entity.health
-        self.adrenaline = 'Adrenaline:  ' + self.entity.adrenaline
+        self.strength_lv = f'  Strength  {self.entity.strength_lv}'
+        self.magic_lv = f'  Magic  {self.entity.magic_lv}'
+        self.health = '  HP  ' + self.entity.health
+        self.adrenaline = '  Adrenaline  ' + self.entity.adrenaline
         self._class = self.entity.classes
-        self.physical_ability = 'Physical Ability:  ' + self.entity.physical_ability
+        self.physical_ability = '  Physical Ab  ' + self.entity.physical_ability
         self.items = self.entity.items
         self.titles = self.entity.titles
         self.abilities = self.entity.abilities
@@ -39,7 +53,9 @@ class AvatarInterface(InterfaceTemplate):
     def set_widgets(self, widgets) -> None:
         name = ttk.Label(
             widgets,
-            text=self.name
+            text=self.name,
+            image=self.avatar_icon,
+            compound=tk.LEFT
         )
         name.grid(row=0, column=0, sticky="EW")
 
@@ -50,31 +66,41 @@ class AvatarInterface(InterfaceTemplate):
 
         strength_lv = ttk.Label(
             widgets,
-            text=self.strength_lv
+            text=self.strength_lv,
+            image=self.strength_icon,
+            compound=tk.LEFT
         )
         strength_lv.grid(row=2, column=0, sticky='EW')
 
         magic_lv = ttk.Label(
             widgets,
-            text=self.magic_lv
+            text=self.magic_lv,
+            image=self.magic_icon,
+            compound=tk.LEFT
         )
         magic_lv.grid(row=3, column=0, sticky='EW')
 
         health = ttk.Label(
             widgets,
-            text=self.health
+            text=self.health,
+            image=self.hp_icon,
+            compound=tk.LEFT
         )
         health.grid(column=0, sticky="EW")
 
         adrenaline = ttk.Label(
             widgets,
-            text=self.adrenaline
+            text=self.adrenaline,
+            image=self.adrenaline_icon,
+            compound=tk.LEFT
         )
         adrenaline.grid(column=0, sticky="NSEW")
 
         physical_ability = ttk.Label(
             widgets,
-            text=self.physical_ability
+            text=self.physical_ability,
+            image=self.physical_icon,
+            compound=tk.LEFT
         )
         physical_ability.grid(column=0, sticky="NSEW")
 
@@ -101,8 +127,11 @@ class AvatarInterface(InterfaceTemplate):
 
                 btn = ttk.Button(
                     widgets,
-                    text=f'{item_type}  -  {item.name}',
+                    text=f'  {item.name}',
                     command=lambda current_item=item: self.show_entity(current_item, item_type),
+                    style='DarkButton.TButton',
+                    image=self.item_icons[item.type],
+                    compound=tk.LEFT,
                     cursor='hand2'
                 )
                 btn.grid(column=0, sticky="NSEW")
@@ -124,6 +153,7 @@ class AvatarInterface(InterfaceTemplate):
                     widgets,
                     text=f'{title.name}',
                     command=lambda current_title=title: self.show_entity(current_title, 'Title'),
+                    style='DarkButton.TButton',
                     cursor='hand2'
                 )
                 btn.grid(column=0, sticky="NSEW")
@@ -146,6 +176,7 @@ class AvatarInterface(InterfaceTemplate):
                     widgets,
                     text=f'{ability_name}',
                     command=lambda current_ability=ability: self.show_entity(current_ability, 'Ability'),
+                    style='DarkButton.TButton',
                     cursor='hand2'
                 )
                 btn.grid(column=0, sticky="NSEW")
@@ -212,25 +243,31 @@ class AvatarInterface(InterfaceTemplate):
 
         edit_button = ttk.Button(
             buttons,
-            text='Edit',
+            text='  Edit',
             command=lambda: self.edit(
                 name=self.search_name,
                 entity=self.entity,
                 type_=self.search_type
             ),
+            style='DarkButton.TButton',
+            image=self.edit_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         edit_button.grid(row=1)
 
         back_button = ttk.Button(
             buttons,
-            text='← Back',
+            text='  Back',
             command=lambda: self.back(
                 False,
                 name=self.search_name,
                 entities=search_result,
                 type_=self.search_type
             ),
+            style='DarkButton.TButton',
+            image=self.back_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         back_button.grid(row=2)

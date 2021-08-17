@@ -82,12 +82,12 @@ class CreateAvatar(TemplateScrollFrame):
             magic_lv=magic_lv,
             health=health,
             adrenaline=adrenaline,
-            _class=class_result,
+            classes=class_result,
             items=items,
             physical_ability=physical_ability,
             titles=title_result,
             abilities=ability_result,
-            proficiency=proficiencies,
+            proficiencies=proficiencies,
             description=description
         )
 

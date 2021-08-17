@@ -41,14 +41,6 @@ def get_proficiencies_attributes(cursor):
     }) for row in cursor.fetchall()]
 
 
-def get_proficiency_attributes(cursor):
-    return [{
-        'id': row[0],
-        'name': row[1],
-        'description': row[2]
-    } for row in cursor.fetchall()][0]
-
-
 def get_proficiencies_by_id(proficiency_id):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()

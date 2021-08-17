@@ -29,6 +29,7 @@ class SearchWidget:
                 widgets,
                 text=entity,
                 command=lambda current_entity=entity: self.interface_result(current_entity),
+                style='DarkButton.TButton',
                 cursor="hand2"
             )
             entity_button.grid(column=0, padx=5, pady=5, sticky='EW')
@@ -61,6 +62,7 @@ class SearchWidget:
                     widgets,
                     text=entity,
                     command=lambda current_entity=entity: self.interface_result(current_entity),
+                    style='DarkButton.TButton',
                     cursor="hand2"
                 )
                 entity_button.grid(column=0, padx=5, pady=5, sticky="EW")

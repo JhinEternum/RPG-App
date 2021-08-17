@@ -9,7 +9,7 @@ class Avatar:
         self.magic_lv = kwargs['magic_lv']
         self.health = kwargs['health']
         self.adrenaline = kwargs['adrenaline']
-        self.classes = kwargs['_class'] if '_class' in kwargs else None
+        self.classes = kwargs['classes'] if 'classes' in kwargs else None
         self.items = kwargs['items'] if 'items' in kwargs else None
         self.physical_ability = kwargs['physical_ability']
         self.titles = kwargs['titles'] if 'titles' in kwargs else None

@@ -321,7 +321,7 @@ class EditAvatar(EditTemplate):
         self.proficiency_entry.grid(row=12, column=1, sticky="EW")
 
         # set_stored_items(self.proficiency_entry, self.user_proficiencies, self.proficiencies)
-        set_stored_entity(self.proficiency_entry, self.entity.proficiency, self.proficiencies)
+        set_stored_entity(self.proficiency_entry, self.entity.proficiencies, self.proficiencies)
 
         proficiency_scrollbar = ttk.Scrollbar(widgets, orient="vertical")
         proficiency_scrollbar.config(command=self.proficiency_entry.yview)
@@ -442,17 +442,17 @@ class EditAvatar(EditTemplate):
 
         avatar = Avatar(
             name=name,
-            type_=type_result,
+            type=type_result,
             strength_lv=strength_lv,
             magic_lv=magic_lv,
             health=health,
             adrenaline=adrenaline,
-            class_=class_result,
+            classes=class_result,
             items=items,
             physical_ability=physical_ability,
             titles=title_result,
             abilities=ability_result,
-            proficiency=proficiencies,
+            proficiencies=proficiencies,
             description=description
         )
 

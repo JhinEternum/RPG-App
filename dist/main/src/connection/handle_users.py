@@ -33,8 +33,8 @@ def add_user(avatar) -> bool:
                 cursor.execute('INSERT INTO users_abilities (ability_id, user_name) VALUES(?, ?)',
                                (ability, avatar.name))
 
-        if len(avatar.proficiency) > 0:
-            for proficiency in avatar.proficiency:
+        if len(avatar.proficiencies) > 0:
+            for proficiency in avatar.proficiencies:
                 cursor.execute('INSERT INTO users_proficiencies (proficiency_id, level, rank, user_name) '
                                'VALUES (?, ?, ?, ?)',
                                (proficiency[0], proficiency[1], proficiency[2], avatar.name))
@@ -73,8 +73,8 @@ def update_user(avatar, current_name: str) -> bool:
                                (ability, avatar.name))
 
         cursor.execute('DELETE FROM users_proficiencies WHERE user_name=?', (current_name,))
-        if len(avatar.proficiency) > 0:
-            for proficiency in avatar.proficiency:
+        if len(avatar.proficiencies) > 0:
+            for proficiency in avatar.proficiencies:
                 cursor.execute('INSERT INTO users_proficiencies (proficiency_id, level, rank, user_name) '
                                'VALUES (?, ?, ?, ?)',
                                (proficiency[0], proficiency[1], proficiency[2], avatar.name))
@@ -93,7 +93,7 @@ def get_user(user_name: str):
         user.items = get_user_items(user_name)
         user.titles = get_user_titles(user_name)
         user.abilities = get_user_abilities(user_name)
-        user.proficiency = get_user_proficiencies(user_name)
+        user.proficiencies = get_user_proficiencies(user_name)
 
     return user
 

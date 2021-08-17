@@ -15,6 +15,7 @@ from src.search.search import Search
 from src.title.create_title import CreateTitle
 from src.wiki.wiki import Wiki
 from src.wiki.wiki_factory import WikiFactory
+from styles import *
 
 
 def check_frame_existence(frame) -> None:
@@ -203,6 +204,51 @@ class Game(tk.Tk):
 root = Game()
 
 style = ttk.Style(root)
+style.theme_use('clam')
+
+style.configure(
+    'DarkTheme.TFrame',
+    background=FRAME_BACKGROUND_COLOR
+)
+
+style.configure(
+    'TSeparator',
+    background=BUTTON_BACKGROUND_COLOR2
+)
+
+style.configure(
+    'DarkTheme.TLabel',
+    background=FRAME_BACKGROUND_COLOR,
+    foreground=WHITE_COLOR
+)
+style.configure(
+    'TLabel',
+    background=FRAME_BACKGROUND_COLOR,
+    foreground=WHITE_COLOR
+)
+
+style.configure(
+    'DarkButton.TButton',
+    background=FRAME_BACKGROUND_COLOR,
+    foreground=WHITE_COLOR,
+    relief='flat'
+)
+style.map(
+    'DarkButton.TButton',
+    background=[('active', BUTTON_BACKGROUND_COLOR2)]
+)
+
+style.configure(
+    'DarkCombobox.TCombobox',
+    background=FRAME_BACKGROUND_COLOR,
+    foreground=WHITE_COLOR
+)
+style.map('DarkCombobox.TCombobox', fieldbackground=[('readonly', FRAME_BACKGROUND_COLOR)])
+
+style.configure(
+    'DarkEntry.TEntry',
+    background=FRAME_BACKGROUND_COLOR
+)
 
 font.nametofont('TkDefaultFont').configure(size=12)
 

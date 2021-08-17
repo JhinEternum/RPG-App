@@ -12,11 +12,13 @@ class TemplateFrame(ttk.Frame):
         # --- Create Widget Frame ---
         self.columnconfigure(0, weight=1)
 
-        self.widgets = ttk.Frame(self)
+        self.configure(style='DarkTheme.TFrame')
+
+        self.widgets = ttk.Frame(self, style='DarkTheme.TFrame')
         self.widgets.grid(row=0, column=0, sticky='NSEW')
         self.widgets.columnconfigure(1, weight=1)
 
-        self.buttons = ttk.Frame(self)
+        self.buttons = ttk.Frame(self, style='DarkTheme.TFrame')
         self.buttons.grid(row=1, column=0, pady=10, sticky='NSEW')
         self.buttons.columnconfigure(0, weight=1)
 
