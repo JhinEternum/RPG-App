@@ -76,7 +76,9 @@ class TemplateScroll(tk.Canvas):
         scroll = kwargs['scroll'] if 'scroll' in kwargs else False
         single_widgets = kwargs['single_widgets'] if 'single_widgets' in kwargs else False
 
-        self.screen = tk.Frame(container)
+        self['background'] = '#303030'
+
+        self.screen = tk.Frame(container, background='#303030')
         self.screen.columnconfigure(0, weight=1)
 
         self.frames = []

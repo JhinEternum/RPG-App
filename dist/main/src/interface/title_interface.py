@@ -1,6 +1,8 @@
+import tkinter as tk
 from tkinter import ttk
 
 from src.connection.database import get_search_entities, get_entity
+from src.images.image import get_title
 from src.interface.interface_template import InterfaceTemplate
 from src.title.title import Title
 
@@ -11,6 +13,8 @@ class TitleInterface(InterfaceTemplate):
         widgets = kwargs['widgets']
         buttons = kwargs['buttons']
 
+        self.title_icon = get_title()
+
         self.set_widgets(widgets)
         if buttons is not None:
             self.set_buttons(buttons)
@@ -20,7 +24,9 @@ class TitleInterface(InterfaceTemplate):
 
         name = ttk.Label(
             widgets,
-            text=self.entity.name
+            text='  ' + self.entity.name,
+            image=self.title_icon,
+            compound=tk.LEFT
         )
         name.grid(row=0, column=0, sticky="EW")
 
@@ -82,7 +88,7 @@ class TitleInterface(InterfaceTemplate):
 
         edit_button = ttk.Button(
             buttons,
-            text='Edit',
+            text='  Edit',
             command=lambda: self.edit(
                 name=self.search_name,
                 entity=self.entity,
@@ -92,13 +98,16 @@ class TitleInterface(InterfaceTemplate):
                 parent_type=self.parent_type,
                 go_parent=self.go_parent
             ),
+            style='DarkButton.TButton',
+            image=self.edit_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         edit_button.grid(row=1)
 
         back_button = ttk.Button(
             buttons,
-            text='← Back',
+            text='  Back',
             command=lambda: self.back(
                 self.go_parent,
                 name=self.search_name if self.search_parent_name is None else self.search_parent_name,
@@ -106,6 +115,9 @@ class TitleInterface(InterfaceTemplate):
                 entity=search_result,
                 type_=self.search_type if self.parent_type is None else self.parent_type
             ),
+            style='DarkButton.TButton',
+            image=self.back_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         back_button.grid(row=2)

@@ -5,6 +5,7 @@ from src.ability.ability import Ability
 from src.connection.database import get_entity
 from src.edit.edit_template import EditTemplate
 from src.methods import get_text_data, popup_showinfo
+from styles import BUTTON_BACKGROUND_COLOR2, WHITE_COLOR
 
 
 class EditAbility(EditTemplate):
@@ -15,20 +16,12 @@ class EditAbility(EditTemplate):
 
         self.font = font.Font(size=11)
 
-        # --- Ability ---
-        self.id = self.entity['id']
-        self.ability_name = self.entity['name']
-        self.ability_casting = self.entity['casting']
-        self.ability_components = self.entity['components']
-        self.ability_requirements = self.entity['requirements']
-        self.ability_conditions = self.entity['conditions']
-        self.ability_effects = self.entity['effects']
-        self.ability_description = self.entity['description']
+        self.entity: Ability
 
         # --- Attributes ---
-        self.name = tk.StringVar(value=self.ability_name)
-        self.casting = tk.StringVar(value=self.ability_casting)
-        self.components = tk.StringVar(value=self.ability_components)
+        self.name = tk.StringVar(value=self.entity.name)
+        self.casting = tk.StringVar(value=self.entity.casting)
+        self.components = tk.StringVar(value=self.entity.components)
 
         # --- Widgets ---
         self.requirements_entry = tk.Text()
@@ -95,7 +88,9 @@ class EditAbility(EditTemplate):
         self.requirements_entry = tk.Text(
             widgets,
             width=1,
-            height=3
+            height=3,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.requirements_entry.grid(row=3, column=1, sticky="EW")
 
@@ -108,7 +103,7 @@ class EditAbility(EditTemplate):
 
         self.requirements_entry["yscrollcommand"] = requirements_scroll.set
 
-        self.requirements_entry.insert(tk.END, self.ability_requirements)
+        self.requirements_entry.insert(tk.END, self.entity.requirements)
 
         # --- Conditions ---
 
@@ -121,7 +116,9 @@ class EditAbility(EditTemplate):
         self.conditions_entry = tk.Text(
             widgets,
             width=1,
-            height=3
+            height=3,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.conditions_entry.grid(row=4, column=1, sticky="EW")
 
@@ -134,7 +131,7 @@ class EditAbility(EditTemplate):
 
         self.conditions_entry["yscrollcommand"] = conditions_scroll.set
 
-        self.conditions_entry.insert(tk.END, self.ability_conditions)
+        self.conditions_entry.insert(tk.END, self.entity.conditions)
 
         # --- Effects ---
 
@@ -147,7 +144,9 @@ class EditAbility(EditTemplate):
         self.effects_entry = tk.Text(
             widgets,
             width=1,
-            height=15
+            height=15,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.effects_entry.grid(row=5, column=1, sticky="EW")
 
@@ -160,7 +159,7 @@ class EditAbility(EditTemplate):
 
         self.effects_entry["yscrollcommand"] = effects_scroll.set
 
-        self.effects_entry.insert(tk.END, self.ability_effects)
+        self.effects_entry.insert(tk.END, self.entity.effects)
 
         # --- Description ---
 
@@ -173,7 +172,9 @@ class EditAbility(EditTemplate):
         self.description_entry = tk.Text(
             widgets,
             width=1,
-            height=5
+            height=5,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.description_entry.grid(row=6, column=1, sticky="EW")
 
@@ -186,22 +187,30 @@ class EditAbility(EditTemplate):
 
         self.description_entry["yscrollcommand"] = description_scroll.set
 
-        self.description_entry.insert(tk.END, self.ability_description)
+        self.description_entry.insert(tk.END, self.entity.description)
 
     def set_buttons(self, buttons) -> None:
-        self.search_result = get_entity(self.ability_name, self.search_type)
+        self.search_result = get_entity(self.entity.name, self.search_type)
+
+        separator = ttk.Separator(
+            buttons
+        )
+        separator.grid(row=0, columnspan=1)
 
         save_button = ttk.Button(
             buttons,
-            text='Save',
+            text='  Save',
             command=lambda: self.save(edit=self.edit),
+            style='DarkButton.TButton',
+            image=self.save_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
-        save_button.grid(row=0)
+        save_button.grid(row=1)
 
         back_button = ttk.Button(
             buttons,
-            text='← Back',
+            text='  Back',
             command=lambda: self.back(
                 self.go_parent,
                 name=self.search_name,
@@ -212,9 +221,12 @@ class EditAbility(EditTemplate):
                 parent_type=self.parent_type,
                 is_edit=True
             ),
+            style='DarkButton.TButton',
+            image=self.back_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
-        back_button.grid(row=1)
+        back_button.grid(row=2)
 
     def edit(self) -> None:
         name = self.name.get()
@@ -226,6 +238,7 @@ class EditAbility(EditTemplate):
         description = get_text_data(self.description_entry)
 
         ability = Ability(
+            id=self.entity.id,
             name=name,
             casting=casting,
             components=components,
@@ -235,7 +248,7 @@ class EditAbility(EditTemplate):
             description=description
         )
 
-        update_ability = ability.update_ability(self.id)
+        update_ability = ability.update_ability()
 
         self.search_result = get_entity(name, self.search_type)
 

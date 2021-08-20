@@ -1,4 +1,6 @@
+from src.images.image import get_back
 from src.wiki.wiki import Wiki
+import tkinter as tk
 from tkinter import ttk
 
 
@@ -14,6 +16,8 @@ class WikiTemplate:
 
         self.config_show_wiki = None
 
+        self.back_icon = get_back()
+
         self.preview_entity = kwargs['preview_entity'] if 'preview_entity' in kwargs else None
 
         self.stored_section = kwargs['stored_section'] if 'stored_section' in kwargs else None
@@ -26,20 +30,24 @@ class WikiTemplate:
         title_separator = ttk.Separator(
             self.buttons
         )
-        title_separator.grid(row=0, column=0, sticky='EW')
+        title_separator.grid(row=0, column=0, columnspan=2, sticky='EW')
 
         generic_button = ttk.Button(
             self.buttons,
             text=name,
             command=method,
+            style='DarkButton.TButton',
             cursor='hand2'
         )
         generic_button.grid(row=1, column=0, sticky='EW')
 
         back_button = ttk.Button(
             self.buttons,
-            text='← Back',
+            text='  Back',
             command=self.back_command,
+            style='DarkButton.TButton',
+            image=self.back_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         back_button.grid(row=2, column=0, sticky='EW')

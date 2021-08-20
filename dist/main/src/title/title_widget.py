@@ -2,6 +2,9 @@ import tkinter as tk
 from tkinter import ttk, font
 
 from src.creation.create_template import CreateTemplate
+from src.images.image import get_title
+
+from styles import BUTTON_BACKGROUND_COLOR2, WHITE_COLOR
 
 
 class TitleWidget(CreateTemplate):
@@ -12,6 +15,8 @@ class TitleWidget(CreateTemplate):
         buttons = kwargs['buttons'] if 'buttons' in kwargs else None
 
         self.font = font.Font(size=11)
+
+        self.title_icon = get_title()
 
         # --- Attributes ---
         self.title = 'Title ' + self.frame_id
@@ -72,6 +77,9 @@ class TitleWidget(CreateTemplate):
             exportselection=False,
             selectbackground="#2CCC5B",
             highlightcolor="#1DE557",
+            background=BUTTON_BACKGROUND_COLOR2,
+            borderwidth=0,
+            fg=WHITE_COLOR,
             font=self.font,
             width=1,
             height=4
@@ -94,6 +102,9 @@ class TitleWidget(CreateTemplate):
             exportselection=False,
             selectbackground="#2CCC5B",
             highlightcolor="#1DE557",
+            background=BUTTON_BACKGROUND_COLOR2,
+            borderwidth=0,
+            fg=WHITE_COLOR,
             font=self.font,
             width=1,
             height=4
@@ -116,6 +127,9 @@ class TitleWidget(CreateTemplate):
             exportselection=False,
             selectbackground="#2CCC5B",
             highlightcolor="#1DE557",
+            background=BUTTON_BACKGROUND_COLOR2,
+            borderwidth=0,
+            fg=WHITE_COLOR,
             font=self.font,
             width=1,
             height=4
@@ -140,7 +154,9 @@ class TitleWidget(CreateTemplate):
         self.requirements_entry = tk.Text(
             widgets,
             width=1,
-            height=5
+            height=5,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.requirements_entry.grid(row=6, column=1, sticky="EW")
 
@@ -165,7 +181,9 @@ class TitleWidget(CreateTemplate):
         self.description_entry = tk.Text(
             widgets,
             width=1,
-            height=15
+            height=15,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.description_entry.grid(row=7, column=1, sticky="EW")
 
@@ -190,6 +208,7 @@ class TitleWidget(CreateTemplate):
             buttons,
             text='Create Title',
             command=self.create_title,
+            style='DarkButton.TButton',
             cursor='hand2'
         )
         create_button.grid(row=1)
@@ -198,6 +217,9 @@ class TitleWidget(CreateTemplate):
             buttons,
             text='Add Title',
             command=self.add_entity_frame,
+            style='DarkButton.TButton',
+            image=self.title_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         add_button.grid(row=2)

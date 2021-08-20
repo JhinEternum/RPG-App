@@ -1,4 +1,8 @@
+import tkinter as tk
 from tkinter import ttk
+
+from src.images.image import get_avatar, get_monster, get_npc, get_proficiency, get_armors, get_weapons, get_title, \
+    get_ability
 
 
 class SearchWidget:
@@ -9,13 +13,36 @@ class SearchWidget:
         self.type = kwargs['type_']
         buttons = kwargs['buttons'] if 'buttons' in kwargs else None
 
+        self.char_icon_types = {
+            'Character': get_avatar(),
+            'Monster': get_monster(),
+            'NPC': get_npc()
+        }
+        self.item_icon_types = {
+            'Armor': get_armors(),
+            'Weapon': get_weapons()
+        }
+        print(self.type)
+        if self.type in self.char_icon_types:
+            self.icon = self.char_icon_types[self.type]
+        elif self.type == 'Proficiency':
+            self.icon = get_proficiency()
+        elif self.type in self.item_icon_types:
+            self.icon = self.item_icon_types[self.type]
+        elif self.type == 'Title':
+            self.icon = get_title()
+        elif self.type == 'Ability':
+            self.icon = get_ability()
+
         self.set_widgets_abilities(widgets) if self.type == 'Ability' else self.set_widgets(widgets)
         self.set_buttons(buttons)
 
     def set_widgets(self, widgets):
         result_entity_type = ttk.Label(
             widgets,
-            text=self.type + 's'
+            text='  ' + self.type + 's',
+            image=self.icon,
+            compound=tk.LEFT
         )
         result_entity_type.grid(column=0, padx=5, pady=5, sticky='EW')
 
@@ -27,11 +54,15 @@ class SearchWidget:
         for entity in self.entities:
             entity_button = ttk.Button(
                 widgets,
-                text=entity,
+                text=entity.name,
                 command=lambda current_entity=entity: self.interface_result(current_entity),
                 style='DarkButton.TButton',
                 cursor="hand2"
             )
+            if self.type == 'Proficiency' and entity.icon != 'none':
+                entity_button['text'] = '  ' + entity.name
+                entity_button['image'] = entity.icon
+                entity_button['compound'] = tk.LEFT
             entity_button.grid(column=0, padx=5, pady=5, sticky='EW')
 
     def set_widgets_abilities(self, widgets):
@@ -46,7 +77,9 @@ class SearchWidget:
         for entities in self.entities:
             result_entity_type = ttk.Label(
                 widgets,
-                text=entities_title[row]
+                text='  ' + entities_title[row],
+                image=self.icon,
+                compound=tk.LEFT
             )
             result_entity_type.grid(column=0, padx=5, pady=5, sticky="EW")
 
@@ -60,7 +93,7 @@ class SearchWidget:
             for entity in entities:
                 entity_button = ttk.Button(
                     widgets,
-                    text=entity,
+                    text=entity.name,
                     command=lambda current_entity=entity: self.interface_result(current_entity),
                     style='DarkButton.TButton',
                     cursor="hand2"

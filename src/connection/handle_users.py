@@ -86,6 +86,8 @@ def get_user(user_name: str):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
+        print(user_name)
+
         cursor.execute('SELECT * FROM users WHERE name=?', (user_name,))
         user = get_user_attributes(cursor)
 
@@ -96,6 +98,54 @@ def get_user(user_name: str):
         user.proficiencies = get_user_proficiencies(user_name)
 
     return user
+
+
+def get_users(db_type: int):
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('SELECT * FROM users WHERE type=? ORDER BY name', (db_type,))
+        users = get_users_attributes(cursor)
+
+        for user in users:
+            user.classes = get_user_classes(user.name)
+            user.items = get_user_items(user.name)
+            user.titles = get_user_titles(user.name)
+            user.abilities = get_user_abilities(user.name)
+            user.proficiencies = get_user_proficiencies(user.name)
+
+    return users
+
+
+def get_search_user(user_name: str, _type: int):
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute(f'SELECT * FROM users WHERE name LIKE ? AND type=? ORDER BY name',
+                       ('%' + user_name + '%', _type))
+
+        users = get_users_attributes(cursor)
+
+        for user in users:
+            user.classes = get_user_classes(user.name)
+            user.items = get_user_items(user.name)
+            user.titles = get_user_titles(user.name)
+            user.abilities = get_user_abilities(user.name)
+            user.proficiencies = get_user_proficiencies(user.name)
+
+    return users
+
+
+def get_users_attributes(cursor):
+    return [Avatar(**{
+        'name': row[0],
+        'type': row[1],
+        'strength_lv': row[2],
+        'magic_lv': row[3],
+        'health': row[4],
+        'adrenaline': row[5],
+        'physical_ability': row[6],
+        'description': row[7]
+    }) for row in cursor.fetchall()]
 
 
 def get_user_attributes(cursor):

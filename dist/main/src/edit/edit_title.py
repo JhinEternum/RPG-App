@@ -5,6 +5,7 @@ from src.connection.database import get_entity
 from src.edit.edit_template import EditTemplate
 from src.methods import get_text_data, popup_showinfo
 from src.title.title import Title
+from styles import BUTTON_BACKGROUND_COLOR2, WHITE_COLOR
 
 
 class EditTitle(EditTemplate):
@@ -54,7 +55,9 @@ class EditTitle(EditTemplate):
         self.requirements_entry = tk.Text(
             widgets,
             width=1,
-            height=5
+            height=5,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.requirements_entry.grid(row=1, column=1, sticky="EW")
 
@@ -80,7 +83,9 @@ class EditTitle(EditTemplate):
         self.description_entry = tk.Text(
             widgets,
             width=1,
-            height=15
+            height=15,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.description_entry.grid(row=2, column=1, sticky="EW")
 
@@ -98,17 +103,25 @@ class EditTitle(EditTemplate):
     def set_buttons(self, buttons) -> None:
         self.search_result = get_entity(self.entity.name, self.search_type)
 
+        separator = ttk.Separator(
+            buttons
+        )
+        separator.grid(row=0, columnspan=1)
+
         save_button = ttk.Button(
             buttons,
-            text='Save',
+            text='  Save',
             command=lambda: self.save(edit=self.edit),
+            style='DarkButton.TButton',
+            image=self.save_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
-        save_button.grid(row=0)
+        save_button.grid(row=1)
 
         back_button = ttk.Button(
             buttons,
-            text='← Back',
+            text='  Back',
             command=lambda: self.back(
                 self.go_parent,
                 name=self.search_name,
@@ -119,9 +132,12 @@ class EditTitle(EditTemplate):
                 parent_type=self.parent_type,
                 is_edit=True
             ),
+            style='DarkButton.TButton',
+            image=self.back_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
-        back_button.grid(row=1)
+        back_button.grid(row=2)
 
     def edit(self) -> None:
         name = self.name.get()

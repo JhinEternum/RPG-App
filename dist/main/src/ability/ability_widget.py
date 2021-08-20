@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk, font
 
 from src.creation.create_template import CreateTemplate
+from src.images.image import get_ability
+from styles import BUTTON_BACKGROUND_COLOR2, WHITE_COLOR
 
 
 class AbilityWidget(CreateTemplate):
@@ -12,6 +14,8 @@ class AbilityWidget(CreateTemplate):
         buttons = kwargs['buttons'] if 'buttons' in kwargs else None
 
         self.font = font.Font(size=11)
+
+        self.ability_icon = get_ability()
 
         # --- Attributes ---
         self.ability = 'Ability ' + self.frame_id
@@ -155,7 +159,9 @@ class AbilityWidget(CreateTemplate):
         self.requirements_entry = tk.Text(
             widgets,
             width=1,
-            height=3
+            height=3,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.requirements_entry.grid(row=9, column=1, sticky="EW")
 
@@ -180,7 +186,9 @@ class AbilityWidget(CreateTemplate):
         self.conditions_entry = tk.Text(
             widgets,
             width=1,
-            height=3
+            height=3,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.conditions_entry.grid(row=10, column=1, sticky="EW")
 
@@ -205,7 +213,9 @@ class AbilityWidget(CreateTemplate):
         self.effects_entry = tk.Text(
             widgets,
             width=1,
-            height=15
+            height=15,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.effects_entry.grid(row=11, column=1, sticky="EW")
 
@@ -230,7 +240,9 @@ class AbilityWidget(CreateTemplate):
         self.description_entry = tk.Text(
             widgets,
             width=1,
-            height=5
+            height=5,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.description_entry.grid(row=12, column=1, sticky="EW")
 
@@ -255,6 +267,7 @@ class AbilityWidget(CreateTemplate):
             buttons,
             text='Create Ability',
             command=self.create_ability,
+            style='DarkButton.TButton',
             cursor='hand2'
         )
         create_button.grid(row=1)
@@ -263,6 +276,9 @@ class AbilityWidget(CreateTemplate):
             buttons,
             text='Add Ability',
             command=self.add_entity_frame,
+            style='DarkButton.TButton',
+            image=self.ability_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         add_button.grid(row=2)

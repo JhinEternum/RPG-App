@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter import PhotoImage
 
 from src.ability.create_ability import CreateAbility
 from src.avatar.create_avatar import CreateAvatar
@@ -23,7 +22,7 @@ class HomeWidget:
 
         self.ability_icon = get_ability()
         self.battle_icon = get_battle()
-        self.sword_icon = get_sword()
+        self.item_icon = get_item()
         self.title_icon = get_title()
         self.proficiency_icon = get_proficiency()
         self.avatar_icon = get_avatar()
@@ -103,11 +102,10 @@ class HomeWidget:
             text='  Create Item',
             command=lambda: self.create_entity(container=main.create_item, container_class=CreateItem),
             style='DarkButton.TButton',
-            image=self.sword_icon,
+            image=self.item_icon,
             compound=tk.LEFT,
             cursor='hand2'
         )
-
         create_item_button.grid(row=2)
 
         create_ability_button = ttk.Button(

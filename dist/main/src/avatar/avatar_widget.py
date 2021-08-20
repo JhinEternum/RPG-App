@@ -7,6 +7,7 @@ from src.connection.handle_classes import get_classes
 from src.connection.handle_items import get_item_by_type
 from src.connection.handle_proficiencies import get_proficiencies
 from src.connection.handle_titles import get_titles
+from styles import BUTTON_BACKGROUND_COLOR2, WHITE_COLOR
 
 
 class AvatarWidget:
@@ -179,6 +180,9 @@ class AvatarWidget:
             exportselection=False,
             selectbackground='#2CCC5B',
             highlightcolor='#1DE557',
+            background=BUTTON_BACKGROUND_COLOR2,
+            borderwidth=0,
+            fg=WHITE_COLOR,
             font=self.font,
             width=1,
             height=5
@@ -222,6 +226,9 @@ class AvatarWidget:
             exportselection=False,
             selectbackground='#2CCC5B',
             highlightcolor='#1DE557',
+            background=BUTTON_BACKGROUND_COLOR2,
+            borderwidth=0,
+            fg=WHITE_COLOR,
             font=self.font,
             width=1,
             height=5
@@ -250,6 +257,9 @@ class AvatarWidget:
             exportselection=False,
             selectbackground='#2CCC5B',
             highlightcolor='#1DE557',
+            background=BUTTON_BACKGROUND_COLOR2,
+            borderwidth=0,
+            fg=WHITE_COLOR,
             font=self.font,
             width=1,
             height=5
@@ -277,6 +287,9 @@ class AvatarWidget:
             exportselection=False,
             selectbackground='#2CCC5B',
             highlightcolor='#1DE557',
+            background=BUTTON_BACKGROUND_COLOR2,
+            borderwidth=0,
+            fg=WHITE_COLOR,
             font=self.font,
             width=1,
             height=5
@@ -305,6 +318,9 @@ class AvatarWidget:
             exportselection=False,
             selectbackground='#2CCC5B',
             highlightcolor='#1DE557',
+            background=BUTTON_BACKGROUND_COLOR2,
+            borderwidth=0,
+            fg=WHITE_COLOR,
             font=self.font,
             width=1,
             height=5
@@ -329,7 +345,9 @@ class AvatarWidget:
         self.description_entry = tk.Text(
             widgets,
             width=1,
-            height=5
+            height=5,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.description_entry.grid(row=13, column=1, sticky='EW')
 
@@ -354,6 +372,7 @@ class AvatarWidget:
             buttons,
             text='Create Avatar',
             command=self.set_proficiencies,
+            style='DarkButton.TButton',
             cursor='hand2'
         )
         create_button.grid(row=1)

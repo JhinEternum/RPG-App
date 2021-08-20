@@ -40,7 +40,7 @@
  [],
  False,
  False,
- 1629160524,
+ 1629429635,
  [('run.exe',
    'c:\\users\\user\\pycharmprojects\\rpg-final\\venv\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit\\run.exe',
    'EXECUTABLE')])

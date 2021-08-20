@@ -24,6 +24,7 @@ class CreateItem(TemplateScrollFrame):
 
     def create_item(self) -> None:
         type_dict = {'Armor': 1, 'Weapon': 2}
+        create_item = None
 
         for item_frame in self.template_scroll.frames:
             character = item_frame.character_menu.get()
@@ -60,4 +61,4 @@ class CreateItem(TemplateScrollFrame):
             print(f'create_item: {create_item}')
             print(f'type: {type(create_item)}')
 
-            self.home() if create_item else popup_showinfo('Something went wrong, please, try again!')
+        self.home() if create_item else popup_showinfo('Something went wrong, please, try again!')

@@ -3,6 +3,7 @@ from tkinter import ttk, font
 
 from src.methods import get_text_data, popup_showinfo
 from src.wiki.wiki_template import WikiTemplate
+from styles import BUTTON_BACKGROUND_COLOR2, WHITE_COLOR
 
 
 class CreateSection(WikiTemplate):
@@ -30,7 +31,7 @@ class CreateSection(WikiTemplate):
         title_separator = ttk.Separator(
             self.widgets
         )
-        title_separator.grid(row=1, column=0, columnspan=1, sticky='EW')
+        title_separator.grid(row=1, column=0, columnspan=3, sticky='EW')
 
         name_label = ttk.Label(
             self.widgets,
@@ -68,7 +69,9 @@ class CreateSection(WikiTemplate):
         self.description_entry = tk.Text(
             self.widgets,
             width=50,
-            height=10
+            height=10,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.description_entry.grid(row=4, column=1, sticky='EW')
 

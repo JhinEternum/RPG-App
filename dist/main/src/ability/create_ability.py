@@ -48,7 +48,7 @@ class CreateAbility(TemplateScrollFrame):
                 conditions=conditions,
                 effects=effects,
                 description=description,
-                type_=type_,
+                type=type_,
                 user=user
             )
 

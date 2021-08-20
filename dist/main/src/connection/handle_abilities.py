@@ -1,5 +1,5 @@
 from .database_connection import DatabaseConnection
-from src.connection import handle_items
+from src.ability.ability import Ability
 
 
 def add_ability(ability, user) -> bool:
@@ -18,22 +18,22 @@ def add_ability(ability, user) -> bool:
 
         if user not in user_types and ability.type in ability_types:
             cursor.execute('INSERT INTO users_abilities (ability_id, user_name) VALUES (?, ?)', (ability_id, user))
-        elif user != 'Item' and ability.type == 4:
-            item = handle_items.get_specific_items(user, 0)[0]
-            item_id = item['id']
-            cursor.execute('INSERT INTO items_abilities (ability_id, item_id) VALUES (?, ?)', (ability_id, item_id))
+        # elif user != 'Item' and ability.type == 4:
+        #     item = handle_items.get_specific_items(user, 0)[0]
+        #     item_id = item['id']
+        #     cursor.execute('INSERT INTO items_abilities (ability_id, item_id) VALUES (?, ?)', (ability_id, item_id))
 
     return True
 
 
-def update_ability(ability, id_) -> bool:
+def update_ability(ability) -> bool:
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
         cursor.execute('UPDATE abilities SET name=?, casting=?, components=?, requirements=?, conditions=?,'
                        'effects=?, description=? WHERE id=?',
                        (ability.name, ability.casting, ability.components, ability.requirements, ability.conditions,
-                        ability.effects, ability.description, id_))
+                        ability.effects, ability.description, ability.id))
 
     return True
 
@@ -82,12 +82,23 @@ def get_abilities_by_type(ability_type):
     return entity
 
 
+def get_search_ability(name: str):
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute(f'SELECT * FROM abilities WHERE name LIKE ? ORDER BY name',
+                       ('%' + name + '%',))
+
+        abilities = get_abilities_attributes(cursor)
+
+    return abilities
+
+
 def get_list(cursor):
     return [row[0] for row in cursor.fetchall()]
 
 
 def get_abilities_attributes(cursor):
-    return [{
+    return [Ability(**{
         'id': row[0],
         'name': row[1],
         'type': row[2],
@@ -97,4 +108,4 @@ def get_abilities_attributes(cursor):
         'conditions': row[6],
         'effects': row[7],
         'description': row[8]
-    } for row in cursor.fetchall()]
+    }) for row in cursor.fetchall()]

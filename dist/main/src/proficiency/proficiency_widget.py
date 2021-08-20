@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 
 from src.creation.create_template import CreateTemplate
+from src.images.image import get_proficiency
+from styles import BUTTON_BACKGROUND_COLOR2, WHITE_COLOR
 
 
 class ProficiencyWidget(CreateTemplate):
@@ -10,6 +12,8 @@ class ProficiencyWidget(CreateTemplate):
         self.create_proficiency = kwargs['create_proficiency'] if 'create_proficiency' in kwargs else None
         widgets = kwargs['widgets']
         buttons = kwargs['buttons'] if 'buttons' in kwargs else None
+
+        self.proficiency_icon = get_proficiency()
 
         # --- Attributes ---
         self.proficiency = 'Proficiency ' + self.frame_id
@@ -61,7 +65,9 @@ class ProficiencyWidget(CreateTemplate):
         self.description_entry = tk.Text(
             widgets,
             width=1,
-            height=15
+            height=15,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.description_entry.grid(row=3, column=1, sticky="EW")
 
@@ -86,6 +92,7 @@ class ProficiencyWidget(CreateTemplate):
             buttons,
             text='Create Proficiency',
             command=self.create_proficiency,
+            style='DarkButton.TButton',
             cursor='hand2'
         )
         create_button.grid(row=1)
@@ -94,6 +101,9 @@ class ProficiencyWidget(CreateTemplate):
             buttons,
             text='Add Proficiency',
             command=self.add_entity_frame,
+            style='DarkButton.TButton',
+            image=self.proficiency_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         add_button.grid(row=2)

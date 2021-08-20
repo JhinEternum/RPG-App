@@ -12,6 +12,7 @@ from src.connection.handle_titles import get_titles
 from src.edit.edit_functions import set_stored_items, set_stored_entity
 from src.edit.edit_template import EditTemplate
 from src.methods import handle_selection_change, get_text_data, popup_showinfo
+from styles import BUTTON_BACKGROUND_COLOR2, WHITE_COLOR
 
 
 class EditAvatar(EditTemplate):
@@ -187,6 +188,9 @@ class EditAvatar(EditTemplate):
             exportselection=False,
             selectbackground="#2CCC5B",
             highlightcolor="#1DE557",
+            background=BUTTON_BACKGROUND_COLOR2,
+            borderwidth=0,
+            fg=WHITE_COLOR,
             font=self.font,
             width=1,
             height=5
@@ -230,6 +234,9 @@ class EditAvatar(EditTemplate):
             exportselection=False,
             selectbackground="#2CCC5B",
             highlightcolor="#1DE557",
+            background=BUTTON_BACKGROUND_COLOR2,
+            borderwidth=0,
+            fg=WHITE_COLOR,
             font=self.font,
             width=1,
             height=5
@@ -258,6 +265,9 @@ class EditAvatar(EditTemplate):
             exportselection=False,
             selectbackground="#2CCC5B",
             highlightcolor="#1DE557",
+            background=BUTTON_BACKGROUND_COLOR2,
+            borderwidth=0,
+            fg=WHITE_COLOR,
             font=self.font,
             width=1,
             height=5
@@ -286,6 +296,9 @@ class EditAvatar(EditTemplate):
             exportselection=False,
             selectbackground="#2CCC5B",
             highlightcolor="#1DE557",
+            background=BUTTON_BACKGROUND_COLOR2,
+            borderwidth=0,
+            fg=WHITE_COLOR,
             font=self.font,
             width=1,
             height=5
@@ -314,6 +327,9 @@ class EditAvatar(EditTemplate):
             exportselection=False,
             selectbackground="#2CCC5B",
             highlightcolor="#1DE557",
+            background=BUTTON_BACKGROUND_COLOR2,
+            borderwidth=0,
+            fg=WHITE_COLOR,
             font=self.font,
             width=1,
             height=5
@@ -339,7 +355,9 @@ class EditAvatar(EditTemplate):
         self.description_entry = tk.Text(
             widgets,
             width=1,
-            height=5
+            height=5,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.description_entry.grid(row=13, column=1, sticky="EW")
 
@@ -357,26 +375,37 @@ class EditAvatar(EditTemplate):
     def set_buttons(self, buttons) -> None:
         search_result = get_entity(self.name.get(), self.search_type)
 
+        separator = ttk.Separator(
+            buttons
+        )
+        separator.grid(row=0, columnspan=1)
+
         save_button = ttk.Button(
             buttons,
-            text='Save',
+            text='  Save',
             command=lambda: self.save(set_proficiencies=self.set_proficiencies, edit=self.edit),
+            style='DarkButton.TButton',
+            image=self.save_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
-        save_button.grid(row=0)
+        save_button.grid(row=1)
 
         back_button = ttk.Button(
             buttons,
-            text='← Back',
+            text='  Back',
             command=lambda: self.back(
                 True,
                 name=self.search_name,
                 entity=search_result,
                 type_=self.search_type
             ),
+            style='DarkButton.TButton',
+            image=self.back_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
-        back_button.grid(row=1)
+        back_button.grid(row=2)
 
     def set_proficiencies(self) -> dict:
         proficiency = handle_selection_change(self.proficiency_entry, self.proficiencies)

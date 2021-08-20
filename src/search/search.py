@@ -23,10 +23,9 @@ class Search(TemplateScrollFrame):
         self.set_widgets_conf()
         self.set_buttons_conf()
 
-    def interface_result(self, entity: str) -> None:
-        print(entity)
+    def interface_result(self, entity) -> None:
+        # entity = get_entity(entity, self.type)
 
-        entity = get_entity(entity, self.type)
         self.show_interface(
             name=self.name,
             entity=entity,

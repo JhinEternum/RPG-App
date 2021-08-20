@@ -9,7 +9,7 @@ class CreateTemplate:
 
         self.types_ = ('None', 'Character', 'NPC', 'Monster')
 
-        self.characters = ['None', 'Character'] + get_search_entities('', 'Character')
-        self.npcs = ['None', 'NPC'] + get_search_entities('', 'NPC')
-        self.monsters = ['None', 'Monster'] + get_search_entities('', 'Monster')
+        self.characters = ['None', 'Character'] + [char.name for char in get_search_entities('', 'Character')]
+        self.npcs = ['None', 'NPC'] + [npc.name for npc in get_search_entities('', 'NPC')]
+        self.monsters = ['None', 'Monster'] + [monster.name for monster in get_search_entities('', 'Monster')]
         self.items = ['None', 'Item'] + [item.name for item in get_items()]

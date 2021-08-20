@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from src.battle.battle_system import BattleSystem
-from src.connection.database import get_entity
+from src.images.image import get_avatar, get_monster, get_npc
 
 
 class BattleSearch:
@@ -15,12 +15,21 @@ class BattleSearch:
         self.entities = kwargs['entities']
         self.type = kwargs['type']
 
+        self.icon_types = {
+            'Character': get_avatar(),
+            'Monster': get_monster(),
+            'NPC': get_npc()
+        }
+        self.icon = self.icon_types[self.type]
+
         self.set_widgets()
 
     def set_widgets(self):
         result_entity_type = ttk.Label(
             self.widgets,
-            text=self.type + 's'
+            text=self.type + 's',
+            image=self.icon,
+            compound=tk.LEFT
         )
         result_entity_type.grid(column=0, padx=5, pady=5, sticky='EW')
 
@@ -32,15 +41,14 @@ class BattleSearch:
         for entity in self.entities:
             entity_button = ttk.Button(
                 self.widgets,
-                text=entity,
-                command=lambda current_entity=entity: self.battleSystem(current_entity),
+                text=entity.name,
+                command=lambda current_entity=entity: self.battle_system(current_entity),
+                style='DarkButton.TButton',
                 cursor="hand2"
             )
             entity_button.grid(column=0, padx=5, pady=5, sticky='EW')
 
-    def battleSystem(self, entity: str):
-        entity = get_entity(entity, self.type)
-
+    def battle_system(self, entity):
         config = {
             'master': self.master,
             'entity': entity

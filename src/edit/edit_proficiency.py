@@ -5,6 +5,7 @@ from src.connection.database import get_entity
 from src.edit.edit_template import EditTemplate
 from src.methods import popup_showinfo, get_text_data
 from src.proficiency.proficiency import Proficiency
+from styles import BUTTON_BACKGROUND_COLOR2, WHITE_COLOR
 
 
 class EditProficiency(EditTemplate):
@@ -49,7 +50,9 @@ class EditProficiency(EditTemplate):
         self.description_entry = tk.Text(
             widgets,
             width=1,
-            height=15
+            height=15,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.description_entry.grid(row=3, column=1, sticky="EW")
 
@@ -67,17 +70,25 @@ class EditProficiency(EditTemplate):
     def set_buttons(self, buttons) -> None:
         self.search_result = get_entity(self.entity.name, self.search_type)
 
+        separator = ttk.Separator(
+            buttons
+        )
+        separator.grid(row=0, columnspan=1)
+
         save_button = ttk.Button(
             buttons,
-            text='Save',
+            text='  Save',
             command=lambda: self.save(edit=self.edit),
+            style='DarkButton.TButton',
+            image=self.save_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
-        save_button.grid(row=0)
+        save_button.grid(row=1)
 
         back_button = ttk.Button(
             buttons,
-            text='← Back',
+            text='  Back',
             command=lambda: self.back(
                 self.go_parent,
                 name=self.search_name,
@@ -88,20 +99,24 @@ class EditProficiency(EditTemplate):
                 parent_type=self.parent_type,
                 is_edit=True
             ),
+            style='DarkButton.TButton',
+            image=self.back_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
-        back_button.grid(row=1)
+        back_button.grid(row=2)
 
     def edit(self) -> None:
         name = self.name.get()
         description = get_text_data(self.description_entry)
 
         proficiency = Proficiency(
+            id=self.entity.id,
             name=name,
             description=description
         )
 
-        edit_proficiency = proficiency.update_proficiency(self.entity.id)
+        edit_proficiency = proficiency.update_proficiency()
 
         self.search_result = get_entity(name, self.search_type)
 

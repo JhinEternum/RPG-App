@@ -18,5 +18,5 @@ class Item:
     def create_item(self) -> bool:
         return handle_items.add_item(self, self.user)
 
-    def update_item(self, id_) -> bool:
-        return handle_items.update_item(self, id_)
+    def update_item(self) -> bool:
+        return handle_items.update_item(self)

@@ -5,11 +5,6 @@ from src.connection import handle_titles
 from src.connection import handle_items
 from src.connection import handle_abilities
 from src.connection import handle_users
-from .handle_users import get_user
-
-
-def get_list(cursor):
-    return [row[0] for row in cursor.fetchall()]
 
 
 search_database = {
@@ -68,55 +63,36 @@ def get_entity(name: str, type_):
     return entity
 
 
-def get_entity_name_by_id(id_: int, db_entity: str):
-    if id_ == 0:
-        return 'None'
-
-    with DatabaseConnection('data.db') as connection:
-        cursor = connection.cursor()
-
-        cursor.execute(f'SELECT name FROM {db_entity} WHERE id=?', (id_,))
-        entity = get_list(cursor)
-
-    return entity
-
-
-# --- OTHERS ---
-def get_search_entities(name, type_):
+def get_search_entities(name: str, type_):
     entity_name = name.lower()
     db_entity = search_database[type_]
     db_type = search_types[type_]
 
     entity = []
 
-    with DatabaseConnection('data.db') as connection:
-        cursor = connection.cursor()
-
-        if entity_name == '' or entity_name == '*':
-            if db_entity == 'users' or db_entity == 'items':
-                cursor.execute(f'SELECT name FROM {db_entity} WHERE type=? ORDER BY name', (db_type,))
-                entity = get_list(cursor)
-            elif db_entity == 'abilities':
-                characters_abilities = handle_abilities.get_abilities_name_by_type(1)
-                npcs_abilities = handle_abilities.get_abilities_name_by_type(2)
-                monsters_abilities = handle_abilities.get_abilities_name_by_type(3)
-                # items_abilities = handle_abilities.get_abilities_name_by_type(4)
-
-                entity.append(characters_abilities)
-                entity.append(npcs_abilities)
-                entity.append(monsters_abilities)
-                # entity.append(items_abilities)
-            else:
-                cursor.execute(f'SELECT name FROM {db_entity}')
-                entity = get_list(cursor)
-        else:
-            if db_entity == 'users' or db_entity == 'items':
-                cursor.execute(f'SELECT name FROM {db_entity} WHERE name LIKE ? AND type=? ORDER BY name',
-                               ('%' + entity_name + '%', db_type))
-                entity = get_list(cursor)
-            else:
-                cursor.execute(f'SELECT name FROM {db_entity} WHERE name LIKE ? ORDER BY name',
-                               ('%' + entity_name + '%',))
-                entity = get_list(cursor)
+    if entity_name == '' or entity_name == '*':
+        if db_entity == 'users':
+            entity = handle_users.get_users(db_type)
+        elif db_entity == 'items':
+            entity = handle_items.get_items()
+        elif db_entity == 'abilities':
+            entity.append(handle_abilities.get_abilities_by_type(1))  # character
+            entity.append(handle_abilities.get_abilities_by_type(2))  # npc
+            entity.append(handle_abilities.get_abilities_by_type(3))  # monster
+        elif db_entity == 'titles':
+            entity = handle_titles.get_titles()
+        elif db_entity == 'proficiencies':
+            entity = handle_proficiencies.get_proficiencies()
+    else:
+        if db_entity == 'users':
+            entity = handle_users.get_search_user(entity_name, db_type)
+        elif db_entity == 'items':
+            entity = handle_items.get_search_item(entity_name, db_type)
+        elif db_entity == 'abilities':
+            entity.append(handle_abilities.get_search_ability(entity_name))
+        elif db_entity == 'titles':
+            entity = handle_titles.get_search_title(entity_name)
+        elif db_entity == 'proficiencies':
+            entity = handle_proficiencies.get_search_proficiency(entity_name)
 
     return entity

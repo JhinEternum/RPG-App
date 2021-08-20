@@ -2,16 +2,12 @@ from .database import DatabaseConnection
 from ..title.title import Title
 
 
-def add_title(title, users_names) -> bool:
-    name = title['name']
-    description = title['description']
-    requirements = title['requirements']
-
+def add_title(title: Title, users_names) -> bool:
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
         cursor.execute('INSERT INTO titles (name, description, requirements) VALUES (?, ?, ?)',
-                       (name, description, requirements))
+                       (title.name, title.description, title.requirements))
 
         title_id = cursor.lastrowid
 
@@ -52,6 +48,17 @@ def get_titles_by_id(title_id):
         entity = get_titles_attributes(cursor)
 
     return entity
+
+
+def get_search_title(name: str):
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute(f'SELECT * FROM titles WHERE name LIKE ? ORDER BY name',
+                       ('%' + name + '%',))
+
+        titles = get_titles_attributes(cursor)
+
+    return titles
 
 
 def get_titles_attributes(cursor):

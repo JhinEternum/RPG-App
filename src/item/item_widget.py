@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk, font
 
 from src.creation.create_template import CreateTemplate
+from src.images.image import get_item
+from styles import BUTTON_BACKGROUND_COLOR2, WHITE_COLOR
 
 
 class ItemWidget(CreateTemplate):
@@ -12,6 +14,8 @@ class ItemWidget(CreateTemplate):
         buttons = kwargs['buttons'] if 'buttons' in kwargs else None
 
         self.font = font.Font(size=11)
+
+        self.item_icon = get_item()
 
         self.types_ = ('Armor', 'Weapon')
 
@@ -204,7 +208,9 @@ class ItemWidget(CreateTemplate):
         self.effects_entry = tk.Text(
             widgets,
             width=1,
-            height=15
+            height=15,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.effects_entry.grid(row=13, column=1, sticky="EW")
 
@@ -229,7 +235,9 @@ class ItemWidget(CreateTemplate):
         self.description_entry = tk.Text(
             widgets,
             width=1,
-            height=5
+            height=5,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
         self.description_entry.grid(row=14, column=1, sticky="EW")
 
@@ -267,6 +275,7 @@ class ItemWidget(CreateTemplate):
             buttons,
             text='Create Item',
             command=self.create_item,
+            style='DarkButton.TButton',
             cursor='hand2'
         )
         create_button.grid(row=1)
@@ -275,6 +284,9 @@ class ItemWidget(CreateTemplate):
             buttons,
             text='Add Item',
             command=self.add_entity_frame,
+            style='DarkButton.TButton',
+            image=self.item_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         add_button.grid(row=2)

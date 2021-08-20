@@ -2,9 +2,9 @@ import tkinter as tk
 from tkinter import ttk
 
 from src.battle.battle_search import BattleSearch
-from src.battle.battle_system import BattleSystem
 from src.battle.battle_template import BattleTemplateFrame
 from src.connection.database import get_search_entities
+from src.images.image import get_search
 
 
 class Battle(BattleTemplateFrame):
@@ -16,6 +16,8 @@ class Battle(BattleTemplateFrame):
 
         self.type_values = ('Character', 'NPC', 'Monster')
 
+        self.search_icon = get_search()
+
         self.name = tk.StringVar()
         self.type = tk.StringVar(value=self.type_values[0])
 
@@ -24,8 +26,6 @@ class Battle(BattleTemplateFrame):
 
         self.set_widgets_conf()
         self.set_buttons_conf()
-
-        # self.set_buttons_conf()
 
     def set_search(self):
         # --- Name ---
@@ -59,8 +59,11 @@ class Battle(BattleTemplateFrame):
 
         search_button = ttk.Button(
             self.template_scroll.widgets,
-            text='🔎 Search',
+            text='  Search',
             command=self.search,
+            style='DarkButton.TButton',
+            image=self.search_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         search_button.grid(row=2, column=0, columnspan=2, sticky='EW')

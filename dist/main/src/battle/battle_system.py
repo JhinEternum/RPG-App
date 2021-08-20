@@ -4,6 +4,7 @@ from tkinter import ttk
 from tkinter import Menu
 
 from src.avatar.avatar import Avatar
+from src.images.image import get_attack, get_adrenaline, get_reset
 from src.methods import get_text_data
 
 
@@ -13,11 +14,16 @@ class BattleSystem(Toplevel):
         super().__init__(kwargs['master'])
 
         master.eval(f'tk::PlaceWindow {str(self)} center')
+        self.resizable(False, False)
 
         # self.resizable(False, False)
         self.columnconfigure(1, weight=1)
         self.title('Battle System')
         self.focus()
+
+        self.attack_icon = get_attack()
+        self.adrenaline_icon = get_adrenaline()
+        self.reset_icon = get_reset()
 
         menu_bar = Menu(self)
         menu = Menu(menu_bar, tearoff=0)
@@ -39,11 +45,11 @@ class BattleSystem(Toplevel):
         self.adrenaline_entry = ttk.Label()
         self.log_text = tk.Text()
 
-        self.frame = ttk.Frame(self)
+        self.frame = ttk.Frame(self, style='DarkTheme.TFrame')
         self.frame.grid(row=0, column=0, sticky='NSEW')
         self.frame.columnconfigure(0, weight=1)
 
-        self.log_frame = ttk.Frame(self)
+        self.log_frame = ttk.Frame(self, style='DarkTheme.TFrame')
         self.log_frame.grid(row=0, column=4, sticky='NSEW')
         self.log_frame.columnconfigure(0, weight=1)
 
@@ -104,8 +110,11 @@ class BattleSystem(Toplevel):
 
         damage_button = ttk.Button(
             self.frame,
-            text='⚔ Attack',
+            text='  Attack',
             command=self.attack,
+            style='DarkButton.TButton',
+            image=self.attack_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         damage_button.grid(row=3, column=0, columnspan=4)
@@ -128,16 +137,22 @@ class BattleSystem(Toplevel):
 
         adrenaline_button = ttk.Button(
             self.frame,
-            text='⏳ Reduce',
+            text='  Reduce',
             command=self.reduce_adrenaline,
+            style='DarkButton.TButton',
+            image=self.adrenaline_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         adrenaline_button.grid(row=4, column=3)
 
         reset_button = ttk.Button(
             self.frame,
-            text='Reset',
+            text='  Reset',
             command=self.reset,
+            style='DarkButton.TButton',
+            image=self.reset_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         reset_button.grid(row=5, column=0, columnspan=4)
@@ -237,7 +252,8 @@ class BattleSystem(Toplevel):
 
                 self.adrenaline = str(int(self.entity.adrenaline) + int(health))
             else:
-                total_health += int(item.health)
+                if item.health != '?':
+                    total_health += int(item.health)
 
         if '(' in self.entity.health and ')' in self.entity.health:
             start = self.entity.health.find("(")

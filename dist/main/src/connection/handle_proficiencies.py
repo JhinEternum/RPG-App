@@ -12,12 +12,12 @@ def add_proficiency(proficiency) -> bool:
     return True
 
 
-def update_proficiency(proficiency, id_) -> bool:
+def update_proficiency(proficiency) -> bool:
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
         cursor.execute('UPDATE proficiencies SET name=?, description=? WHERE id=?',
-                       (proficiency.name, proficiency.description, id_))
+                       (proficiency.name, proficiency.description, proficiency.id))
 
     return True
 
@@ -33,11 +33,23 @@ def get_proficiencies():
     return entity
 
 
+def get_search_proficiency(name: str):
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute(f'SELECT * FROM proficiencies WHERE name LIKE ? ORDER BY name',
+                       ('%' + name + '%',))
+
+        proficiencies = get_proficiencies_attributes(cursor)
+
+    return proficiencies
+
+
 def get_proficiencies_attributes(cursor):
     return [Proficiency(**{
         'id': row[0],
         'name': row[1],
-        'description': row[2]
+        'description': row[2],
+        'icon': row[3]
     }) for row in cursor.fetchall()]
 
 

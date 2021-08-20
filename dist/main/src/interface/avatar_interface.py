@@ -3,10 +3,10 @@ from tkinter import ttk
 
 from src.avatar.avatar import Avatar
 from src.connection.database import get_search_entities
-from src.images.image import get_hp, get_strength, get_magic, get_adrenaline, get_physical, get_armors, get_weapons, \
-    get_avatar
+from src.images.image import *
 from src.interface.interface_functions import generate_classes
 from src.interface.interface_template import InterfaceTemplate
+from src.proficiency.proficiency import Proficiency
 
 
 class AvatarInterface(InterfaceTemplate):
@@ -17,6 +17,8 @@ class AvatarInterface(InterfaceTemplate):
         widgets = kwargs['widgets']
         buttons = kwargs['buttons']
 
+        self.widgets = widgets
+
         print(self.entity)
 
         self.avatar_icon = get_avatar()
@@ -25,10 +27,11 @@ class AvatarInterface(InterfaceTemplate):
         self.magic_icon = get_magic()
         self.adrenaline_icon = get_adrenaline()
         self.physical_icon = get_physical()
-        self.armors_icon = get_armors()
-        self.weapons_icon = get_weapons()
 
-        self.item_icons = {1: self.armors_icon, 2: self.weapons_icon}
+        self.armor_icon = get_armors()
+        self.sword_icon = get_sword()
+
+        self.item_icons = {1: self.armor_icon, 2: self.sword_icon}
 
         self.entity: Avatar
 
@@ -43,7 +46,7 @@ class AvatarInterface(InterfaceTemplate):
         self.items = self.entity.items
         self.titles = self.entity.titles
         self.abilities = self.entity.abilities
-        self.proficiency = self.entity.proficiencies
+        self.proficiencies = self.entity.proficiencies
         self.description = self.entity.description
 
         self.set_widgets(widgets)
@@ -121,20 +124,8 @@ class AvatarInterface(InterfaceTemplate):
         )
         separator.grid(columnspan=1, sticky='EW')
 
-        if len(self.items) > 0:
-            for item in self.items:
-                item_type = self.item_types[item.type]
-
-                btn = ttk.Button(
-                    widgets,
-                    text=f'  {item.name}',
-                    command=lambda current_item=item: self.show_entity(current_item, item_type),
-                    style='DarkButton.TButton',
-                    image=self.item_icons[item.type],
-                    compound=tk.LEFT,
-                    cursor='hand2'
-                )
-                btn.grid(column=0, sticky="NSEW")
+        # ITEM
+        self.set_items(widgets)
 
         titles = ttk.Label(
             widgets,
@@ -147,16 +138,8 @@ class AvatarInterface(InterfaceTemplate):
         )
         separator.grid(columnspan=1, sticky='EW')
 
-        if len(self.titles) > 0:
-            for title in self.titles:
-                btn = ttk.Button(
-                    widgets,
-                    text=f'{title.name}',
-                    command=lambda current_title=title: self.show_entity(current_title, 'Title'),
-                    style='DarkButton.TButton',
-                    cursor='hand2'
-                )
-                btn.grid(column=0, sticky="NSEW")
+        # TITLE
+        self.set_title(widgets)
 
         abilities = ttk.Label(
             widgets,
@@ -169,50 +152,22 @@ class AvatarInterface(InterfaceTemplate):
         )
         separator.grid(columnspan=1, sticky='EW')
 
-        if len(self.abilities) > 0:
-            for ability in self.abilities:
-                ability_name = ability['name']
-                btn = ttk.Button(
-                    widgets,
-                    text=f'{ability_name}',
-                    command=lambda current_ability=ability: self.show_entity(current_ability, 'Ability'),
-                    style='DarkButton.TButton',
-                    cursor='hand2'
-                )
-                btn.grid(column=0, sticky="NSEW")
+        # ABILITY
+        self.set_ability(widgets)
 
-        proficiency = ttk.Label(
+        proficiencies = ttk.Label(
             widgets,
             text='Proficiencies'
         )
-        proficiency.grid(column=0, sticky="NSEW")
+        proficiencies.grid(column=0, sticky="NSEW")
 
         separator = ttk.Separator(
             widgets
         )
         separator.grid(columnspan=1, sticky='EW')
 
-        ranks = ('None', 'S', 'A', 'B')
-
-        if len(self.proficiency) > 0:
-            for proficiency in self.proficiency:
-                proficiency_rank = ranks[int(proficiency.rank)]
-
-                text = f'{proficiency.name} {proficiency.level}'
-
-                if proficiency_rank != 'None':
-                    text = f'{proficiency_rank} - {proficiency.name} {proficiency.level}'
-
-                btn = ttk.Button(
-                    widgets,
-                    text=text,
-                    command=lambda current_proficiency=proficiency: self.show_entity(
-                        current_proficiency,
-                        'Proficiency'
-                    ),
-                    cursor='hand2'
-                )
-                btn.grid(column=0, sticky="NSEW")
+        # PROFICIENCY
+        self.set_proficiencies(widgets)
 
         description = ttk.Label(
             widgets,
@@ -232,6 +187,73 @@ class AvatarInterface(InterfaceTemplate):
         description_description.grid(column=0, sticky='EW')
 
         self.bind_label([physical_ability, description_description])
+
+    def set_items(self, widgets):
+        if len(self.items) > 0:
+            for item in self.items:
+                item_type = self.item_types[item.type]
+
+                btn = ttk.Button(
+                    widgets,
+                    text=f'  {item.name}',
+                    command=lambda current_item=item: self.show_entity(current_item, item_type),
+                    style='DarkButton.TButton',
+                    image=self.item_icons[item.type],
+                    compound=tk.LEFT,
+                    cursor='hand2'
+                )
+                btn.grid(column=0, sticky="NSEW")
+
+    def set_title(self, widgets):
+        if len(self.titles) > 0:
+            for title in self.titles:
+                btn = ttk.Button(
+                    widgets,
+                    text=f'{title.name}',
+                    command=lambda current_title=title: self.show_entity(current_title, 'Title'),
+                    style='DarkButton.TButton',
+                    cursor='hand2'
+                )
+                btn.grid(column=0, sticky="NSEW")
+
+    def set_ability(self, widgets):
+        if len(self.abilities) > 0:
+            for ability in self.abilities:
+                ability_name = ability.name
+                btn = ttk.Button(
+                    widgets,
+                    text=f'{ability_name}',
+                    command=lambda current_ability=ability: self.show_entity(current_ability, 'Ability'),
+                    style='DarkButton.TButton',
+                    cursor='hand2'
+                )
+                btn.grid(column=0, sticky="NSEW")
+
+    def set_proficiencies(self, widgets):
+        ranks = ('None', 'S', 'A', 'B')
+        if len(self.proficiencies) > 0:
+            for proficiency in self.proficiencies:
+                proficiency: Proficiency
+                proficiency_rank = ranks[int(proficiency.rank)]
+
+                text = f'  {proficiency.name} {proficiency.level}'
+
+                if proficiency_rank != 'None':
+                    text = f'  {proficiency_rank}  •  {proficiency.name} {proficiency.level}'
+
+                btn = ttk.Button(
+                    widgets,
+                    text=text,
+                    command=lambda current_proficiency=proficiency: self.show_entity(
+                        current_proficiency,
+                        'Proficiency'
+                    ),
+                    style='DarkButton.TButton',
+                    image=proficiency.icon if proficiency.icon != 'none' else None,
+                    compound=tk.LEFT,
+                    cursor='hand2'
+                )
+                btn.grid(column=0, sticky="NSEW")
 
     def set_buttons(self, buttons) -> None:
         separator = ttk.Separator(
@@ -273,7 +295,7 @@ class AvatarInterface(InterfaceTemplate):
         back_button.grid(row=2)
 
     def show_entity(self, entity, entity_type) -> None:
-        parent_name = self.name
+        parent_name = self.entity.name
         parent_type = self.search_type
 
         self.show_interface(

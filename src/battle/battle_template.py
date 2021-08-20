@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 
+from src.images.image import get_home
+
 
 class BattleTemplateFrame(ttk.Frame):
     def __init__(self, **kwargs):
@@ -10,6 +12,10 @@ class BattleTemplateFrame(ttk.Frame):
         self.kwargs = kwargs
 
         self.home = kwargs['home']
+
+        self.configure(style='DarkTheme.TFrame')
+
+        self.home_icon = get_home()
 
         # --- Create Widget Frame ---
         self.rowconfigure(0, weight=1)
@@ -28,8 +34,11 @@ class BattleTemplateFrame(ttk.Frame):
     def set_buttons_conf(self) -> None:
         home_button = ttk.Button(
             self.template_scroll.buttons,
-            text='Home',
+            text='  Home',
             command=self.home,
+            style='DarkButton.TButton',
+            image=self.home_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         home_button.grid()
@@ -48,6 +57,8 @@ class TemplateScroll(tk.Canvas):
         self.kwargs = kwargs
         scroll = kwargs['scroll'] if 'scroll' in kwargs else False
         single_widgets = kwargs['single_widgets'] if 'single_widgets' in kwargs else False
+
+        self['background'] = '#303030'
 
         self.screen = tk.Frame(container)
         self.screen.columnconfigure(0, weight=1)
@@ -76,14 +87,14 @@ class TemplateScroll(tk.Canvas):
         self.configure(yscrollcommand=scrollbar.set)
         self.yview_moveto(1.0)
 
-        self.widgets = ttk.Frame(self.screen)
+        self.widgets = ttk.Frame(self.screen, style='DarkTheme.TFrame')
         self.widgets.grid(row=0, column=0, sticky='NSEW')
         if single_widgets:
             self.widgets.columnconfigure(0, weight=1)
         else:
             self.widgets.columnconfigure((0, 1), weight=1)
 
-        self.buttons = ttk.Frame(self.screen)
+        self.buttons = ttk.Frame(self.screen, style='DarkTheme.TFrame')
         self.buttons.grid(row=1, column=0, sticky='EW')
         self.buttons.columnconfigure(0, weight=1)
 
@@ -97,7 +108,7 @@ class TemplateScroll(tk.Canvas):
 
         kwargs = kwargs
 
-        self.widgets = ttk.Frame(self.screen)
+        self.widgets = ttk.Frame(self.screen, style='DarkTheme.TFrame')
         new_entity_frame = entity(
             widgets=self.widgets,
             **kwargs

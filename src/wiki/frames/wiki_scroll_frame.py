@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 
+from src.images.image import get_home
+
 
 class WikiScrollFrame(ttk.Frame):
     def __init__(self, **kwargs):
@@ -12,6 +14,10 @@ class WikiScrollFrame(ttk.Frame):
         self.back = kwargs['back'] if 'back' in kwargs else 'home'
 
         self.home = kwargs['home']
+
+        self.home_icon = get_home()
+
+        self.configure(style='DarkTheme.TFrame')
 
         # --- Create Widget Frame ---
         self.rowconfigure(0, weight=1)
@@ -37,6 +43,9 @@ class WikiScrollFrame(ttk.Frame):
             self.template_scroll.buttons,
             text='Home',
             command=self.home,
+            style='DarkButton.TButton',
+            image=self.home_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         home_button.grid()
@@ -56,7 +65,9 @@ class WikiTemplateScroll(tk.Canvas):
         scroll = kwargs['scroll'] if 'scroll' in kwargs else False
         single_widgets = kwargs['single_widgets'] if 'single_widgets' in kwargs else False
 
-        self.screen = tk.Frame(container)
+        self['background'] = '#303030'
+
+        self.screen = tk.Frame(container, background='#303030')
         self.screen.columnconfigure(0, weight=1)
 
         self.frames = []
@@ -83,7 +94,7 @@ class WikiTemplateScroll(tk.Canvas):
         self.configure(yscrollcommand=scrollbar.set)
         self.yview_moveto(1.0)
 
-        self.widgets = ttk.Frame(self.screen)
+        self.widgets = ttk.Frame(self.screen, style='DarkTheme.TFrame')
         self.widgets.grid(row=0, column=0, sticky='NSEW')
 
         if single_widgets:
@@ -91,7 +102,7 @@ class WikiTemplateScroll(tk.Canvas):
         else:
             self.widgets.columnconfigure((0, 1), weight=1)
 
-        self.buttons = ttk.Frame(self.screen)
+        self.buttons = ttk.Frame(self.screen, style='DarkTheme.TFrame')
         self.buttons.grid(row=1, column=0, sticky='EW')
         self.buttons.columnconfigure(0, weight=1)
 
@@ -102,7 +113,7 @@ class WikiTemplateScroll(tk.Canvas):
         current_rows = self.screen.grid_size()[1]
         frame_number = str(len(self.frames) + 1)
 
-        self.widgets = ttk.Frame(self.screen)
+        self.widgets = ttk.Frame(self.screen, style='DarkTheme.TFrame')
         new_entity_frame = Entity(
             widgets=self.widgets,
             frame_id=frame_number

@@ -1,3 +1,6 @@
+from src.images.image import get_edit, get_back, get_save
+
+
 class EditTemplate:
     def __init__(self, **kwargs):
         self.search_name = kwargs['name']
@@ -16,3 +19,7 @@ class EditTemplate:
         self.go_parent = kwargs['go_parent'] if 'go_parent' in kwargs else False
 
         self.search_result = None
+
+        self.edit_icon = get_edit()
+        self.back_icon = get_back()
+        self.save_icon = get_save()

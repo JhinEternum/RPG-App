@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import tkinter.font as font
 
+import src.connection.handle_abilities
 from src.ability.create_ability import CreateAbility
 from src.avatar.create_avatar import CreateAvatar
 from src.battle.battle import Battle
@@ -246,7 +247,19 @@ style.configure(
 style.map('DarkCombobox.TCombobox', fieldbackground=[('readonly', FRAME_BACKGROUND_COLOR)])
 
 style.configure(
+    'TCombobox',
+    background=FRAME_BACKGROUND_COLOR,
+    foreground=WHITE_COLOR
+)
+style.map('TCombobox', fieldbackground=[('readonly', FRAME_BACKGROUND_COLOR)])
+
+style.configure(
     'DarkEntry.TEntry',
+    background=FRAME_BACKGROUND_COLOR
+)
+
+style.configure(
+    'TEntry',
     background=FRAME_BACKGROUND_COLOR
 )
 

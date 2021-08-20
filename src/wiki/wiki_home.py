@@ -50,6 +50,7 @@ class WikiHome(WikiTemplate):
                 self.widgets,
                 text=section.name,
                 command=lambda current_section=section: self.select_section(current_section),
+                style='DarkButton.TButton',
                 cursor='hand2'
             )
             button.grid(column=0, sticky='EW')
@@ -67,6 +68,7 @@ class WikiHome(WikiTemplate):
             self.buttons,
             text='Create Category',
             command=lambda: self.show_wiki(factory='create_category', widgets_type=False),
+            style='DarkButton.TButton',
             cursor='hand2'
         )
         create_category_button.grid(column=0, sticky='EW')
@@ -75,6 +77,7 @@ class WikiHome(WikiTemplate):
             self.buttons,
             text='Create Section',
             command=lambda: self.show_wiki(factory='create_section', widgets_type=False),
+            style='DarkButton.TButton',
             state=tk.DISABLED if len(self.wiki.categories) == 0 else tk.NORMAL,
             cursor='hand2'
         )
@@ -84,6 +87,7 @@ class WikiHome(WikiTemplate):
             self.buttons,
             text='Create Chapter',
             command=lambda: self.show_wiki(factory='create_chapter', widgets_type=False),
+            style='DarkButton.TButton',
             state=tk.DISABLED if len(self.wiki.get_sections()) == 0 else tk.NORMAL,
             cursor='hand2'
         )
@@ -93,6 +97,7 @@ class WikiHome(WikiTemplate):
             self.buttons,
             text='Create Topic',
             command=lambda: self.show_wiki(factory='create_topic', widgets_type=False),
+            style='DarkButton.TButton',
             state=tk.DISABLED if len(self.wiki.get_chapters()) == 0 else tk.NORMAL,
             cursor='hand2'
         )

@@ -55,6 +55,7 @@ class WikiChapter(WikiTemplate):
                 self.widgets,
                 text=topic.name,
                 command=lambda current_topic=topic: self.select_topic(current_topic),
+                style='DarkButton.TButton',
                 cursor='hand2'
             )
             button.grid(column=0, sticky='EW')

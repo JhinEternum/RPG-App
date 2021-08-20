@@ -3,6 +3,7 @@ from tkinter import ttk, font
 
 from src.methods import get_text_data, popup_showinfo
 from src.wiki.wiki_template import WikiTemplate
+from styles import BUTTON_BACKGROUND_COLOR2, WHITE_COLOR
 
 
 class CreateCategory(WikiTemplate):
@@ -26,40 +27,42 @@ class CreateCategory(WikiTemplate):
         title_separator = ttk.Separator(
             self.widgets
         )
-        title_separator.grid(row=1, column=0, columnspan=1, sticky='EW')
+        title_separator.grid(row=1, column=0, columnspan=3, sticky='EW')
 
         name_label = ttk.Label(
             self.widgets,
             text='Name'
         )
-        name_label.grid(row=1, column=0, sticky='EW')
+        name_label.grid(row=2, column=0, sticky='EW')
 
         name_entry = ttk.Entry(
             self.widgets,
             textvariable=self.name,
             width=70
         )
-        name_entry.grid(row=1, column=1, sticky='EW')
+        name_entry.grid(row=2, column=1, sticky='EW')
 
         description_label = ttk.Label(
             self.widgets,
             text='Description'
         )
-        description_label.grid(row=2, column=0, sticky='EW')
+        description_label.grid(row=3, column=0, sticky='EW')
 
         self.description_entry = tk.Text(
             self.widgets,
             width=50,
-            height=10
+            height=10,
+            background=BUTTON_BACKGROUND_COLOR2,
+            foreground=WHITE_COLOR
         )
-        self.description_entry.grid(row=2, column=1, sticky='EW')
+        self.description_entry.grid(row=3, column=1, sticky='EW')
 
         description_scroll = ttk.Scrollbar(
             self.widgets,
             orient='vertical',
             command=self.description_entry.yview
         )
-        description_scroll.grid(row=2, column=2, sticky='ns')
+        description_scroll.grid(row=3, column=2, sticky='ns')
 
         self.description_entry['yscrollcommand'] = description_scroll.set
 

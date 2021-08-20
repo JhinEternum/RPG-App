@@ -50,6 +50,7 @@ class WikiSection(WikiTemplate):
                 self.widgets,
                 text=chapter.name,
                 command=lambda current_chapter=chapter: self.select_chapter(current_chapter),
+                style='DarkButton.TButton',
                 cursor='hand2'
             )
             button.grid(column=0, sticky='EW')

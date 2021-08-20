@@ -22,6 +22,7 @@ class CreateAbility(TemplateScrollFrame):
         self.append_to_frames(self.ability_widget)
 
     def create_ability(self) -> None:
+        create_ability = None
         for ability_frame in self.template_scroll.frames:
             character = ability_frame.character.get()
             npc = ability_frame.npc.get()
@@ -48,10 +49,10 @@ class CreateAbility(TemplateScrollFrame):
                 conditions=conditions,
                 effects=effects,
                 description=description,
-                type_=type_,
+                type=type_,
                 user=user
             )
 
             create_ability = ability.create_ability()
 
-            self.home() if create_ability else popup_showinfo('Something went wrong, please, try again!')
+        self.home() if create_ability else popup_showinfo('Something went wrong, please, try again!')

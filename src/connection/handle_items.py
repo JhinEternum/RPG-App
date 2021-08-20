@@ -20,14 +20,14 @@ def add_item(item: Item, user_name) -> bool:
     return True
 
 
-def update_item(item: Item, id_) -> bool:
+def update_item(item: Item) -> bool:
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
         cursor.execute('UPDATE items SET name=?, type=?, reduction=?,'
                        'damage=?, range=?, health=?, area=?, effects=?, description=? WHERE id=?',
                        (item.name, item.type, item.reduction, item.damage, item.range, item.health, item.area,
-                        item.effects, item.description, id_))
+                        item.effects, item.description, item.id))
 
     return True
 
@@ -51,7 +51,7 @@ def get_items():
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute('SELECT * FROM items')
+        cursor.execute('SELECT * FROM items ORDER BY name')
 
         entity = get_items_attributes(cursor)
 
@@ -78,3 +78,14 @@ def get_item_by_type(_type: int):
         entity = get_items_attributes(cursor)
 
     return entity
+
+
+def get_search_item(name: str, _type: int):
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute(f'SELECT * FROM items WHERE name LIKE ? AND type=? ORDER BY name',
+                       ('%' + name + '%', _type))
+
+        items = get_items_attributes(cursor)
+
+    return items
