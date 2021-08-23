@@ -265,9 +265,11 @@ class AbilityWidget(CreateTemplate):
 
         create_button = ttk.Button(
             buttons,
-            text='Create Ability',
+            text='  Create Ability',
             command=self.create_ability,
             style='DarkButton.TButton',
+            image=self.confirm_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         create_button.grid(row=1)

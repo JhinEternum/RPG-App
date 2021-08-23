@@ -1,6 +1,7 @@
 from src.avatar.avatar import Avatar
-from src.avatar.avatar_properties import get_entities_ids, get_user_types_ids, get_entity_ids
+from src.avatar.avatar_properties import get_entities_ids, get_entity_ids
 from src.avatar.avatar_widget import AvatarWidget
+from src.connection.handle_users import get_user_type_by_name
 from src.frames.scroll_frame import TemplateScrollFrame
 from src.methods import handle_selection_change, get_text_data, popup_showinfo
 
@@ -43,7 +44,7 @@ class CreateAvatar(TemplateScrollFrame):
         name = widgets.name.get()
 
         type_ = widgets.type.get()
-        type_result = get_user_types_ids(type_)
+        type_result = get_user_type_by_name(type_)
 
         strength_lv = int(widgets.strength_lv.get()[6])
         magic_lv = int(widgets.magic_lv.get()[6])
@@ -62,7 +63,7 @@ class CreateAvatar(TemplateScrollFrame):
         title_result = get_entity_ids(widgets.titles_total, title)
 
         ability = handle_selection_change(widgets.ability_entry, widgets.abilities)
-        ability_result = get_entities_ids(widgets.abilities_total, ability)
+        ability_result = get_entity_ids(widgets.abilities_total, ability)
 
         description = get_text_data(widgets.description_entry)
 

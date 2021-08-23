@@ -206,9 +206,11 @@ class TitleWidget(CreateTemplate):
 
         create_button = ttk.Button(
             buttons,
-            text='Create Title',
+            text='  Create Title',
             command=self.create_title,
             style='DarkButton.TButton',
+            image=self.confirm_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         create_button.grid(row=1)

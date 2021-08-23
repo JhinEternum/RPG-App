@@ -196,6 +196,17 @@ def get_user_types():
     return entity
 
 
+def get_user_type_by_name(name: str):
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('SELECT id FROM users_types WHERE name=?', (name,))
+
+        entity = cursor.fetchone()
+
+    return entity[0]
+
+
 def get_user_types_attributes(cursor):
     return [{
         'id': row[0],

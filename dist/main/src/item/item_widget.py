@@ -273,9 +273,11 @@ class ItemWidget(CreateTemplate):
 
         create_button = ttk.Button(
             buttons,
-            text='Create Item',
+            text='  Create Item',
             command=self.create_item,
             style='DarkButton.TButton',
+            image=self.confirm_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         create_button.grid(row=1)

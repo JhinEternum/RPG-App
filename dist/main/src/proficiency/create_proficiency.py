@@ -22,6 +22,8 @@ class CreateProficiency(TemplateScrollFrame):
         self.append_to_frames(self.proficiency_widget)
 
     def create_proficiency(self) -> None:
+        create_proficiency = None
+
         for proficiency_frame in self.template_scroll.frames:
             name = proficiency_frame.name.get()
             description = get_text_data(proficiency_frame.description_entry)
@@ -33,4 +35,4 @@ class CreateProficiency(TemplateScrollFrame):
 
             create_proficiency = proficiency.create_proficiency()
 
-            self.home() if create_proficiency else popup_showinfo('Something went wrong, please, try again!')
+        self.home() if create_proficiency else popup_showinfo('Something went wrong, please, try again!')

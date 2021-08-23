@@ -22,6 +22,8 @@ class CreateTitle(TemplateScrollFrame):
         self.append_to_frames(self.title_widget)
 
     def create_title(self) -> None:
+        create_title = None
+
         for title_frame in self.template_scroll.frames:
             character = handle_selection_change(title_frame.character_entry, title_frame.characters)
             npc = handle_selection_change(title_frame.npc_entry, title_frame.npcs)
@@ -42,4 +44,4 @@ class CreateTitle(TemplateScrollFrame):
 
             create_title = title.create_title()
 
-            self.home() if create_title else popup_showinfo('Something went wrong, please, try again!')
+        self.home() if create_title else popup_showinfo('Something went wrong, please, try again!')

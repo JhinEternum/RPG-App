@@ -1,5 +1,6 @@
 from src.connection.database import get_search_entities
 from src.connection.handle_items import get_items
+from src.images.image import get_confirm
 
 
 class CreateTemplate:
@@ -13,3 +14,5 @@ class CreateTemplate:
         self.npcs = ['None', 'NPC'] + [npc.name for npc in get_search_entities('', 'NPC')]
         self.monsters = ['None', 'Monster'] + [monster.name for monster in get_search_entities('', 'Monster')]
         self.items = ['None', 'Item'] + [item.name for item in get_items()]
+
+        self.confirm_icon = get_confirm()

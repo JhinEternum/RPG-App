@@ -74,6 +74,10 @@ def get_item():
 
 def get_proficiency():
     return PhotoImage(file=f'{ui_directory}proficiency.png')
+
+
+def get_confirm():
+    return PhotoImage(file=f'{ui_directory}confirm.png')
 # UI
 
 

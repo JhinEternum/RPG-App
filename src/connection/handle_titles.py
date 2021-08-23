@@ -39,13 +39,24 @@ def get_titles():
     return entity
 
 
-def get_titles_by_id(title_id):
+def get_titles_by_id(title_id: int):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
         cursor.execute('SELECT * FROM titles WHERE id=?', (title_id,))
 
         entity = get_titles_attributes(cursor)
+
+    return entity
+
+
+def get_titles_by_name(name: str):
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('SELECT id FROM titles WHERE name=?', (name,))
+
+        entity = cursor.fetchall()
 
     return entity
 

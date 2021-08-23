@@ -2,13 +2,14 @@ import tkinter as tk
 from tkinter import ttk, font
 
 from src.avatar.avatar import Avatar
-from src.avatar.avatar_properties import get_entities_ids, get_user_types_ids, get_entity_ids
+from src.avatar.avatar_properties import get_entities_ids, get_entity_ids
 from src.connection.database import get_entity, get_search_entities
 from src.connection.handle_abilities import get_abilities_by_type
 from src.connection.handle_classes import get_classes
 from src.connection.handle_items import get_item_by_type
 from src.connection.handle_proficiencies import get_proficiencies
 from src.connection.handle_titles import get_titles
+from src.connection.handle_users import get_user_type_by_name
 from src.edit.edit_functions import set_stored_items, set_stored_entity
 from src.edit.edit_template import EditTemplate
 from src.methods import handle_selection_change, get_text_data, popup_showinfo
@@ -40,7 +41,7 @@ class EditAvatar(EditTemplate):
         self.titles = ['None'] + [title.name for title in self.titles_total]
 
         self.abilities_total = get_abilities_by_type(1) + get_abilities_by_type(2) + get_abilities_by_type(3)
-        self.abilities = ['None'] + [ability['name'] for ability in self.abilities_total]
+        self.abilities = ['None'] + [ability.name for ability in self.abilities_total]
 
         self.proficiencies_total = get_proficiencies()
         self.proficiencies = ['None'] + [proficiency.name for proficiency in self.proficiencies_total]
@@ -305,7 +306,7 @@ class EditAvatar(EditTemplate):
         )
         self.ability_entry.grid(row=11, column=1, sticky="EW")
 
-        set_stored_items(self.ability_entry, self.entity.abilities, self.abilities)
+        set_stored_entity(self.ability_entry, self.entity.abilities, self.abilities)
 
         ability_scrollbar = ttk.Scrollbar(widgets, orient="vertical")
         ability_scrollbar.config(command=self.ability_entry.yview)
@@ -433,7 +434,7 @@ class EditAvatar(EditTemplate):
         name = self.name.get()
 
         type_ = self.type.get()
-        type_result = get_user_types_ids(type_)
+        type_result = get_user_type_by_name(type_)
 
         strength_lv = int(self.strength_lv.get()[6])
         magic_lv = int(self.magic_lv.get()[6])
@@ -456,7 +457,7 @@ class EditAvatar(EditTemplate):
         title_result = get_entity_ids(self.titles_total, title)
 
         ability = handle_selection_change(self.ability_entry, self.abilities)
-        ability_result = get_entities_ids(self.abilities_total, ability)
+        ability_result = get_entity_ids(self.abilities_total, ability)
 
         description = get_text_data(self.description_entry)
 

@@ -1,12 +1,12 @@
 import tkinter as tk
 from tkinter import ttk, font
 
-from src.avatar.avatar_properties import get_entities_names
 from src.connection.handle_abilities import get_abilities_by_type
 from src.connection.handle_classes import get_classes
 from src.connection.handle_items import get_item_by_type
 from src.connection.handle_proficiencies import get_proficiencies
 from src.connection.handle_titles import get_titles
+from src.images.image import get_confirm
 from styles import BUTTON_BACKGROUND_COLOR2, WHITE_COLOR
 
 
@@ -18,10 +18,12 @@ class AvatarWidget:
 
         self.font = font.Font(size=11)
 
+        self.confirm_icon = get_confirm()
+
         self.type_values = ('Character', 'NPC', 'Monster')
 
         self.classes_total = get_classes()
-        self.classes = ['None'] + get_entities_names(self.classes_total)
+        self.classes = ['None'] + [entity['name'] for entity in self.classes_total]
 
         self.armors_total = get_item_by_type(1)
         self.armors = ['None'] + [armor.name for armor in self.armors_total]
@@ -33,7 +35,7 @@ class AvatarWidget:
         self.titles = ['None'] + [title.name for title in self.titles_total]
 
         self.abilities_total = get_abilities_by_type(1) + get_abilities_by_type(2) + get_abilities_by_type(3)
-        self.abilities = ['None'] + [ability['name'] for ability in self.abilities_total]
+        self.abilities = ['None'] + [ability.name for ability in self.abilities_total]
 
         self.proficiencies_total = get_proficiencies()
         self.proficiencies = ['None'] + [proficiency.name for proficiency in self.proficiencies_total]
@@ -370,9 +372,11 @@ class AvatarWidget:
 
         create_button = ttk.Button(
             buttons,
-            text='Create Avatar',
+            text='  Create Avatar',
             command=self.set_proficiencies,
             style='DarkButton.TButton',
+            image=self.confirm_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         create_button.grid(row=1)

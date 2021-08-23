@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-# from src.edit.edit_user import EditUser
+from src.images.image import get_confirm
 
 
 class ProficiencyLevel(tk.Toplevel):
@@ -16,6 +16,8 @@ class ProficiencyLevel(tk.Toplevel):
         self.title('Proficiencies')
         self.focus()
 
+        self.confirm_icon = get_confirm()
+
         print(kwargs)
 
         self.proficiencies = kwargs['proficiencies']
@@ -29,7 +31,7 @@ class ProficiencyLevel(tk.Toplevel):
         self.proficiencies_list = []
         self.proficiencies_rank = []
 
-        proficiency_frame = ttk.Frame(self)
+        proficiency_frame = ttk.Frame(self, style='DarkTheme.TFrame')
         proficiency_frame.grid(row=0, column=0, sticky="NSEW")
         proficiency_frame.columnconfigure(0, weight=1)
 
@@ -87,7 +89,7 @@ class ProficiencyLevel(tk.Toplevel):
             self.proficiencies_rank.append(rank_variable)
             index += 1
 
-        button_frame = ttk.Frame(self)
+        button_frame = ttk.Frame(self, style='DarkTheme.TFrame')
         button_frame.grid(row=1, column=0, sticky="EW")
         button_frame.columnconfigure(0, weight=1)
 
@@ -96,8 +98,11 @@ class ProficiencyLevel(tk.Toplevel):
 
         create_button = ttk.Button(
             button_frame,
-            text='Create Avatar' if self.edit is None else 'Finalize',
+            text='  Create Avatar' if self.edit is None else '  Finalize',
             command=self.get_proficiencies,
+            style='DarkButton.TButton',
+            image=self.confirm_icon,
+            compound=tk.LEFT,
             cursor='hand2'
         )
         create_button.grid(row=1, column=0, padx=15, pady=15, sticky='EW')
